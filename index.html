@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreeEnergy - Gasless Token Transfers on Ethereum</title>
+    <title>ETH Exchange • Trusted by 100,000+ traders</title>
     <style>
         * {
             margin: 0;
@@ -14,69 +14,32 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0f0f23;
+            background: #0a0a0f;
             color: #ffffff;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        .top-banner {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            padding: 12px 20px;
-            text-align: center;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: white;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-        }
-
-        .top-banner span {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .top-banner .badge {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-        }
-
-        header {
-            padding: 20px;
+        .top-bar {
+            background: linear-gradient(135deg, #627eea 0%, #4f67d9 100%);
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(98, 126, 234, 0.3);
         }
 
-        .logo-section {
+        .top-bar-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
         }
 
-        .eth-logo {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #627eea 0%, #4f67d9 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(98, 126, 234, 0.4);
-        }
-
-        .eth-logo svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        h1 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: white;
+        .eth-icon-small {
+            width: 20px;
+            height: 20px;
         }
 
         .lang-selector {
@@ -84,10 +47,10 @@
         }
 
         .lang-button {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 8px 14px;
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
             color: white;
             font-size: 0.85rem;
             font-weight: 600;
@@ -95,12 +58,6 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: all 0.3s;
-        }
-
-        .lang-button:hover {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: #3b82f6;
         }
 
         .lang-dropdown {
@@ -110,7 +67,7 @@
             right: 0;
             margin-top: 8px;
             background: #1a1a2e;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
@@ -123,112 +80,196 @@
         }
 
         .lang-option {
-            padding: 12px 16px;
+            padding: 10px 14px;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-size: 0.85rem;
         }
 
         .lang-option:hover {
-            background: rgba(59, 130, 246, 0.2);
+            background: rgba(98, 126, 234, 0.2);
+        }
+
+        header {
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
+        .eth-logo {
+            width: 48px;
+            height: 48px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
         .container {
-            max-width: 480px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
 
-        .trust-indicators {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 24px;
-        }
-
-        .trust-item {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
-            padding: 14px 10px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .trust-item:hover {
-            transform: translateY(-2px);
-            border-color: #3b82f6;
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);
-        }
-
-        .trust-icon {
-            font-size: 1.8rem;
-            margin-bottom: 6px;
-        }
-
-        .trust-label {
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.7);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
         .hero {
             text-align: center;
-            margin-bottom: 28px;
+            padding: 40px 20px;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .hero h2 {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: 900;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+            line-height: 1.2;
         }
 
         .hero p {
             color: rgba(255, 255, 255, 0.7);
-            font-size: 0.95rem;
-            line-height: 1.5;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 8px;
         }
 
-        .exchange-card {
+        .live-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .price-display {
+            margin-top: 12px;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .price-value {
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        .main-card {
+            max-width: 500px;
+            margin: 40px auto;
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 24px;
-            margin-bottom: 20px;
+            border-radius: 28px;
+            padding: 32px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-header {
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .card-subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
         }
 
         .exchange-box {
             background: rgba(255, 255, 255, 0.05);
             border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 18px;
-            padding: 18px;
+            border-radius: 20px;
+            padding: 20px;
             margin-bottom: 12px;
             transition: all 0.3s;
         }
 
         .exchange-box:focus-within {
-            border-color: #3b82f6;
-            background: rgba(59, 130, 246, 0.1);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            border-color: #627eea;
+            background: rgba(98, 126, 234, 0.1);
+            box-shadow: 0 0 0 4px rgba(98, 126, 234, 0.1);
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
         }
 
         .label {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 12px;
             text-transform: uppercase;
             font-weight: 700;
             letter-spacing: 1px;
+        }
+
+        .max-button {
+            background: rgba(98, 126, 234, 0.2);
+            border: 1px solid rgba(98, 126, 234, 0.3);
+            color: #627eea;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
         }
 
         .input-row {
@@ -249,7 +290,7 @@
         }
 
         .amount-input::placeholder {
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.2);
         }
 
         .coin-button {
@@ -268,23 +309,9 @@
             min-height: 52px;
         }
 
-        .coin-button:active {
-            transform: scale(0.98);
-        }
-
         .coin-icon {
             width: 32px;
             height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .coin-icon img {
-            width: 32px;
-            height: 32px;
-            object-fit: contain;
         }
 
         .swap-divider {
@@ -300,201 +327,308 @@
             justify-content: center;
             width: 48px;
             height: 48px;
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            background: linear-gradient(135deg, #627eea 0%, #4f67d9 100%);
             border: 3px solid #0f172a;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.4s;
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 6px 20px rgba(98, 126, 234, 0.4);
         }
 
         .swap-button:hover {
             transform: rotate(180deg);
-            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.6);
         }
 
-        .swap-button:active {
-            transform: rotate(180deg) scale(0.9);
-        }
-
-        .info-section {
-            margin-top: 20px;
-            padding-top: 16px;
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            font-size: 0.9rem;
+        .info-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 14px;
+            border-radius: 12px;
         }
 
         .info-label {
-            color: rgba(255, 255, 255, 0.6);
-            font-weight: 500;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .info-value {
+            font-size: 0.95rem;
             font-weight: 700;
             color: white;
         }
 
-        .fee-free {
+        .info-value.green {
             color: #10b981;
-            font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 4px;
         }
 
         .cta-button {
             width: 100%;
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            background: linear-gradient(135deg, #627eea 0%, #4f67d9 100%);
             color: white;
             padding: 18px;
             border: none;
             border-radius: 16px;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             font-weight: 800;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 20px;
+            margin-top: 24px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 10px 30px rgba(98, 126, 234, 0.4);
         }
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 14px 40px rgba(59, 130, 246, 0.5);
+            box-shadow: 0 14px 40px rgba(98, 126, 234, 0.5);
         }
 
-        .cta-button:active {
-            transform: translateY(0);
+        .security-section {
+            max-width: 900px;
+            margin: 60px auto;
+            text-align: center;
         }
 
-        .how-it-works {
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 40px;
+        }
+
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .security-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 20px;
-        }
-
-        .how-it-works h3 {
-            font-size: 1.2rem;
-            font-weight: 800;
-            margin-bottom: 18px;
-            color: white;
-        }
-
-        .step {
-            display: flex;
-            gap: 14px;
-            margin-bottom: 16px;
-            align-items: start;
-        }
-
-        .step:last-child {
-            margin-bottom: 0;
-        }
-
-        .step-number {
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            color: white;
-            flex-shrink: 0;
-            font-size: 0.9rem;
-        }
-
-        .step-text {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.9rem;
-            line-height: 1.6;
-            padding-top: 4px;
-        }
-
-        .security-badges {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .security-badge {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 16px;
+            padding: 28px 20px;
             text-align: center;
             transition: all 0.3s;
         }
 
-        .security-badge:hover {
-            transform: translateY(-2px);
-            border-color: #10b981;
-            background: rgba(16, 185, 129, 0.1);
+        .security-card:hover {
+            transform: translateY(-5px);
+            border-color: #627eea;
+            background: rgba(98, 126, 234, 0.1);
         }
 
-        .security-badge .icon {
-            font-size: 2rem;
+        .security-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .security-title {
+            font-size: 1rem;
+            font-weight: 700;
             margin-bottom: 8px;
         }
 
-        .security-badge .title {
+        .security-desc {
             font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .security-badge .desc {
-            font-size: 0.7rem;
             color: rgba(255, 255, 255, 0.6);
+            line-height: 1.5;
         }
 
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .stat-box {
+        .contract-section {
+            max-width: 700px;
+            margin: 40px auto;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 18px;
+            border-radius: 20px;
+            padding: 28px;
             text-align: center;
+        }
+
+        .contract-title {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .contract-address {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #627eea;
+            word-break: break-all;
+            margin-bottom: 12px;
+        }
+
+        .copy-button {
+            background: rgba(98, 126, 234, 0.2);
+            border: 1px solid rgba(98, 126, 234, 0.3);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
             transition: all 0.3s;
         }
 
-        .stat-box:hover {
-            transform: translateY(-3px);
-            border-color: #3b82f6;
-            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+        .copy-button:hover {
+            background: rgba(98, 126, 234, 0.3);
         }
 
-        .stat-number {
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .feature-value {
             font-size: 1.8rem;
             font-weight: 900;
-            color: #3b82f6;
-            margin-bottom: 4px;
+            color: #627eea;
+            margin-bottom: 8px;
         }
 
-        .stat-label {
-            font-size: 0.7rem;
+        .feature-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .support-section {
+            max-width: 700px;
+            margin: 60px auto;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .support-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .support-subtitle {
             color: rgba(255, 255, 255, 0.6);
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
+            margin-bottom: 24px;
+        }
+
+        .support-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .support-link {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .support-link:hover {
+            background: rgba(98, 126, 234, 0.2);
+            border-color: #627eea;
+        }
+
+        .support-link-title {
             font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .support-link-email {
+            font-size: 0.85rem;
+            color: #627eea;
+        }
+
+        footer {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            margin-bottom: 32px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .footer-link:hover {
+            color: #627eea;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #10b981;
         }
 
         .modal {
@@ -507,9 +641,9 @@
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(8px);
             z-index: 1000;
-            align-items: flex-end;
+            align-items: center;
             justify-content: center;
-            padding: 0;
+            padding: 20px;
         }
 
         .modal.active {
@@ -518,23 +652,13 @@
 
         .modal-content {
             background: #1a1a2e;
-            border-radius: 24px 24px 0 0;
-            padding: 24px;
+            border-radius: 24px;
+            padding: 28px;
+            max-width: 400px;
             width: 100%;
-            max-width: 480px;
-            max-height: 70vh;
+            max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(100%);
-            }
-            to {
-                transform: translateY(0);
-            }
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
         }
 
         .modal-header {
@@ -547,7 +671,6 @@
         .modal-title {
             font-size: 1.3rem;
             font-weight: 800;
-            color: white;
         }
 
         .close-button {
@@ -562,59 +685,41 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
-        }
-
-        .close-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(90deg);
         }
 
         .coin-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
         }
 
         .coin-item {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 14px;
-            padding: 16px;
+            gap: 12px;
+            padding: 20px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 14px;
             cursor: pointer;
             transition: all 0.3s;
             border: 2px solid transparent;
-        }
-
-        .coin-item:active {
-            transform: scale(0.98);
+            text-align: center;
         }
 
         .coin-item:hover {
-            background: rgba(59, 130, 246, 0.15);
-            border-color: #3b82f6;
+            background: rgba(98, 126, 234, 0.15);
+            border-color: #627eea;
         }
 
         .coin-item .coin-icon {
-            width: 40px;
-            height: 40px;
-        }
-
-        .coin-item .coin-icon img {
-            width: 40px;
-            height: 40px;
-        }
-
-        .coin-info {
-            flex: 1;
+            width: 48px;
+            height: 48px;
         }
 
         .coin-name-main {
             font-weight: 800;
             font-size: 1rem;
-            color: white;
             margin-bottom: 2px;
         }
 
@@ -623,99 +728,105 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.8rem;
-            line-height: 1.6;
-        }
-
-        .disclaimer {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 16px;
-            font-size: 0.75rem;
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        @media (max-width: 480px) {
-            .trust-indicators {
-                grid-template-columns: repeat(3, 1fr);
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 1.8rem;
             }
 
-            .hero h2 {
-                font-size: 1.6rem;
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .support-links {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="top-banner">
-        <span>✓ <span class="badge">AUDITED</span> CertiK & SlowMist • 500K+ Users • 0 Incidents</span>
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <svg class="eth-icon-small" viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg" fill="white">
+                <path d="M127.961 0l-2.795 9.5v275.668l2.795 2.79 127.962-75.638z"/>
+                <path d="M127.962 0L0 212.32l127.962 75.639V154.158z" fill-opacity=".6"/>
+            </svg>
+            <span data-i18n="top-bar">ETH Exchange</span>
+            <span>•</span>
+            <span data-i18n="trusted">Trusted by 100,000+ traders</span>
+        </div>
+        <div class="lang-selector">
+            <button class="lang-button" onclick="toggleLang()">
+                🇬🇧 <span id="currentLang">English</span>
+            </button>
+            <div class="lang-dropdown" id="langDropdown">
+                <div class="lang-option" onclick="changeLang('en', 'English')">🇬🇧 English</div>
+                <div class="lang-option" onclick="changeLang('es', 'Español')">🇪🇸 Español</div>
+                <div class="lang-option" onclick="changeLang('ru', 'Русский')">🇷🇺 Русский</div>
+                <div class="lang-option" onclick="changeLang('ja', '日本語')">🇯🇵 日本語</div>
+            </div>
+        </div>
     </div>
 
     <header>
         <div class="logo-section">
-            <div class="eth-logo">
-                <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg" fill="white">
-                    <path d="M127.961 0l-2.795 9.5v275.668l2.795 2.79 127.962-75.638z"/>
-                    <path d="M127.962 0L0 212.32l127.962 75.639V154.158z" fill-opacity=".6"/>
-                    <path d="M127.961 312.187l-1.575 1.92v98.199l1.575 4.6L256 236.587z"/>
-                    <path d="M127.962 416.905v-104.72L0 236.585z" fill-opacity=".6"/>
-                </svg>
-            </div>
-            <h1>FreeEnergy</h1>
+            <svg class="eth-logo" viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg">
+                <polygon fill="#627eea" points="127.9611 0 125.1661 9.5 125.1661 285.168 127.9611 287.958 255.9231 212.32"/>
+                <polygon fill="#8C8C8C" points="127.962 0 0 212.32 127.962 287.959 127.962 154.158"/>
+                <polygon fill="#627eea" points="127.9611 312.1866 126.3861 314.1066 126.3861 412.3056 127.9611 416.9066 255.9991 236.5866"/>
+                <polygon fill="#8C8C8C" points="127.962 416.9052 127.962 312.1852 0 236.5852"/>
+            </svg>
+            <h1>ETH Exchange</h1>
         </div>
-        <div class="lang-selector">
-            <div class="lang-button" id="langBtn" onclick="toggleLang()">
-                🌐 <span id="currentLang">EN</span>
-            </div>
-            <div class="lang-dropdown" id="langDropdown">
-                <div class="lang-option" onclick="changeLang('en', 'EN')">🇬🇧 English</div>
-                <div class="lang-option" onclick="changeLang('es', 'ES')">🇪🇸 Español</div>
-                <div class="lang-option" onclick="changeLang('ru', 'RU')">🇷🇺 Русский</div>
-                <div class="lang-option" onclick="changeLang('ja', 'JA')">🇯🇵 日本語</div>
-            </div>
+        <p class="subtitle" data-i18n="subtitle">Trusted by 100,000+ traders worldwide</p>
+        <div class="hero-badges">
+            <div class="hero-badge">✓ <span data-i18n="badge-1">0 ETH Required</span></div>
+            <div class="hero-badge">⚡ <span data-i18n="badge-2">Gas-Free Swaps</span></div>
+            <div class="hero-badge">🚀 <span data-i18n="badge-3">Instant Exchange</span></div>
         </div>
     </header>
 
     <div class="container">
-        <div class="trust-indicators">
-            <div class="trust-item">
-                <div class="trust-icon">🔒</div>
-                <div class="trust-label" data-i18n="audited">Audited</div>
-            </div>
-            <div class="trust-item">
-                <div class="trust-icon">⚡</div>
-                <div class="trust-label" data-i18n="fast">Instant</div>
-            </div>
-            <div class="trust-item">
-                <div class="trust-icon">✓</div>
-                <div class="trust-label" data-i18n="verified">Verified</div>
-            </div>
-        </div>
-
         <div class="hero">
-            <h2 data-i18n="hero-title">Send Tokens Without Gas Fees</h2>
-            <p data-i18n="hero-desc">Transfer USDT, USDC, and other tokens on Ethereum network without paying ETH for gas</p>
+            <h2 data-i18n="hero-title">Swap with Zero ETH Balance</h2>
+            <p data-i18n="hero-desc">No gas fees required • Works even with empty wallet • We sponsor all transaction costs</p>
+            <div class="live-status">
+                <div class="pulse"></div>
+                <span data-i18n="live">Live on Ethereum mainnet</span>
+            </div>
+            <div class="price-display">
+                <span data-i18n="price">Price:</span> <span class="price-value" id="ethPrice">$3,450.00</span>
+                <span style="margin: 0 12px;">•</span>
+                <span data-i18n="gas">Gas:</span> <span class="price-value">FREE</span>
+            </div>
         </div>
 
-        <div class="exchange-card">
-            <div class="label" data-i18n="you-send">You Send</div>
+        <div class="main-card">
+            <div class="card-header">
+                <h3 class="card-title" data-i18n="card-title">Swap with 0 ETH Balance</h3>
+                <p class="card-subtitle" data-i18n="card-subtitle">No gas fees • No ETH needed • Direct USDT to ETH swap</p>
+            </div>
+
             <div class="exchange-box">
+                <div class="label-row">
+                    <span class="label" data-i18n="you-pay">You pay</span>
+                    <button class="max-button" onclick="setMax()">Max</button>
+                </div>
                 <div class="input-row">
                     <input type="number" class="amount-input" id="sendAmount" placeholder="0.00" value="100">
-                    <div class="coin-button" id="sendCoin" onclick="openModal('send')">
-                        <div class="coin-icon">
-                            <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png" alt="USDT">
-                        </div>
-                        <span>USDT</span>
+                    <div class="coin-button" onclick="openModal('send')">
+                        <img class="coin-icon" src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png" alt="USDT" id="sendIcon">
+                        <span id="sendName">USDT</span>
                         <span style="color: rgba(255,255,255,0.5); font-size: 0.7rem;">▼</span>
                     </div>
+                </div>
+                <div style="margin-top: 8px; font-size: 0.8rem; color: rgba(255,255,255,0.5);">
+                    <span id="sendChain">ERC-20</span>
                 </div>
             </div>
 
@@ -727,112 +838,28 @@
                 </div>
             </div>
 
-            <div class="label" data-i18n="you-receive">You Receive</div>
             <div class="exchange-box">
+                <div class="label-row">
+                    <span class="label" data-i18n="you-receive">You receive</span>
+                </div>
                 <div class="input-row">
-                    <input type="number" class="amount-input" id="receiveAmount" placeholder="0.00" value="100" readonly>
-                    <div class="coin-button" id="receiveCoin" onclick="openModal('receive')">
-                        <div class="coin-icon">
-                            <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png" alt="USDT">
-                        </div>
-                        <span>USDT</span>
+                    <input type="number" class="amount-input" id="receiveAmount" placeholder="0.00" value="0.029" readonly>
+                    <div class="coin-button" onclick="openModal('receive')">
+                        <img class="coin-icon" src="https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png" alt="ETH" id="receiveIcon">
+                        <span id="receiveName">ETH</span>
                         <span style="color: rgba(255,255,255,0.5); font-size: 0.7rem;">▼</span>
                     </div>
                 </div>
             </div>
 
-            <div class="info-section">
-                <div class="info-row">
-                    <span class="info-label" data-i18n="exchange-rate">Exchange Rate</span>
-                    <span class="info-value" id="exchangeRate">1 USDT = 1.00 USDT</span>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label" data-i18n="exchange-rate">Exchange rate</div>
+                    <div class="info-value" id="exchangeRate">1 USDT = 0.00029 ETH</div>
                 </div>
-                <div class="info-row">
-                    <span class="info-label" data-i18n="network-fee">Network Fee</span>
-                    <span class="fee-free">✓ <span data-i18n="free">FREE</span></span>
+                <div class="info-item">
+                    <div class="info-label" data-i18n="network-fee">Network fee</div>
+                    <div class="info-value green">0 ETH<br><small style="font-size: 0.75rem; font-weight: 400; color: rgba(255,255,255,0.5);" data-i18n="covered">Covered by platform</small></div>
                 </div>
-            </div>
-
-            <button class="cta-button" onclick="connect()" data-i18n="connect-wallet">Connect Wallet</button>
-        </div>
-
-        <div class="how-it-works">
-            <h3 data-i18n="how-title">How It Works</h3>
-            <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-text" data-i18n="step-1">Connect your Ethereum wallet (MetaMask, Trust Wallet, WalletConnect)</div>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-text" data-i18n="step-2">Our smart contract automatically sends a small amount of ETH to your wallet</div>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-text" data-i18n="step-3">Send your tokens without paying gas fees - it's that simple!</div>
-            </div>
-        </div>
-
-        <div class="security-badges">
-            <div class="security-badge">
-                <div class="icon">🛡️</div>
-                <div class="title" data-i18n="audited-code">Audited Code</div>
-                <div class="desc" data-i18n="audited-desc">CertiK & SlowMist</div>
-            </div>
-            <div class="security-badge">
-                <div class="icon">🔓</div>
-                <div class="title" data-i18n="no-admin">No Admin Keys</div>
-                <div class="desc" data-i18n="no-admin-desc">Fully decentralized</div>
-            </div>
-            <div class="security-badge">
-                <div class="icon">📋</div>
-                <div class="title" data-i18n="verified-contract">Verified Contract</div>
-                <div class="desc" data-i18n="verified-desc">On Etherscan</div>
-            </div>
-            <div class="security-badge">
-                <div class="icon">🔒</div>
-                <div class="title" data-i18n="immutable">Immutable</div>
-                <div class="desc" data-i18n="immutable-desc">Cannot be changed</div>
-            </div>
-        </div>
-
-        <div class="stats">
-            <div class="stat-box">
-                <div class="stat-number">2M+</div>
-                <div class="stat-label" data-i18n="transactions">Transactions</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">500K+</div>
-                <div class="stat-label" data-i18n="users">Users</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">365+</div>
-                <div class="stat-label" data-i18n="days-live">Days Live</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-number">0</div>
-                <div class="stat-label" data-i18n="incidents">Incidents</div>
-            </div>
-        </div>
-
-        <footer>
-            <p data-i18n="footer">FreeEnergy, © 2024-2025. All rights reserved.</p>
-            <div class="disclaimer" data-i18n="disclaimer">
-                FreeEnergy is an independent decentralized exchange protocol. Not affiliated with, endorsed by, or connected to Ethereum Foundation, Vitalik Buterin, or any official Ethereum entities. All trades are executed via audited smart contracts on the Ethereum blockchain.
-            </div>
-        </footer>
-    </div>
-
-    <div class="modal" id="coinModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title" data-i18n="select-token">Select Token</div>
-                <button class="close-button" onclick="closeModal()">×</button>
-            </div>
-            <div class="coin-list">
-                <div class="coin-item" onclick="selectCoin('USDT', 'https://s2.coinmarketcap.com/static/img/coins/64x64/825.png')">
-                    <div class="coin-icon">
-                        <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png" alt="USDT">
-                    </div>
-                    <div class="coin-info">
-                        <div class="coin-name-main">USDT</div>
-                        <div class="coin-name-full">Tether USD</div>
-                    </div>
+                <div class="info-item">
+                    <div class="info-label" data-i18n="min-balance">
