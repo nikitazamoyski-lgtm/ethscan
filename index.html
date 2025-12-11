@@ -1,155 +1,838 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EthCamp — Discover Ethereum World</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: #0a0f23;
-      color: #fff;
-      scroll-behavior: smooth;
-    }
-    header {
-      padding: 30px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #0f163a;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 100;
-    }
-    header .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #ffffff;
-    }
-    header nav a {
-      margin-left: 20px;
-      text-decoration: none;
-      color: #ffffff;
-      font-size: 16px;
-    }
-    .hero {
-      height: 100vh;
-      padding-top: 80px;
-      background: linear-gradient(135deg, #002147, #00172b);
-      text-align: center;
-    }
-    .hero h1 {
-      font-size: 56px;
-      margin: 0;
-      color: #8cceff;
-    }
-    .hero p {
-      font-size: 20px;
-      margin-top: 15px;
-      color: #cadcff;
-    }
-    .btn-primary {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 14px 30px;
-      background: #627eea;
-      color: #fff;
-      font-size: 18px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-    .btn-primary:hover {
-      background: #4458c0;
-    }
-    section {
-      padding: 80px 20px;
-      text-align: center;
-    }
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-    .card {
-      background: #11204c;
-      padding: 20px;
-      width: 280px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    }
-    .card h3 { margin-top: 0; font-size: 20px; color: #8cbaff; }
-    .card p { font-size: 15px; color: #cfd8ff; }
-    footer {
-      padding: 30px;
-      background: #0f163a;
-      text-align: center;
-      color: #c3d1ff;
-      font-size: 14px;
-    }
-    @media (max-width: 768px) {
-      .cards { flex-direction: column; align-items: center; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreeEnergy - Gasless Token Transfers on Ethereum</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f23;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .top-banner {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            padding: 12px 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .top-banner span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .top-banner .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+
+        header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .eth-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #627eea 0%, #4f67d9 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(98, 126, 234, 0.4);
+        }
+
+        .eth-logo svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .lang-selector {
+            position: relative;
+        }
+
+        .lang-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 14px;
+            border-radius: 10px;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+
+        .lang-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #3b82f6;
+        }
+
+        .lang-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: #1a1a2e;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            min-width: 140px;
+        }
+
+        .lang-dropdown.active {
+            display: block;
+        }
+
+        .lang-option {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lang-option:hover {
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .trust-indicators {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .trust-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 14px 10px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .trust-item:hover {
+            transform: translateY(-2px);
+            border-color: #3b82f6;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);
+        }
+
+        .trust-icon {
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+
+        .trust-label {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .hero h2 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .exchange-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .exchange-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+
+        .exchange-box:focus-within {
+            border-color: #3b82f6;
+            background: rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .label {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .amount-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 2rem;
+            font-weight: 700;
+            outline: none;
+            color: white;
+            font-family: inherit;
+        }
+
+        .amount-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .coin-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: white;
+            min-height: 52px;
+        }
+
+        .coin-button:active {
+            transform: scale(0.98);
+        }
+
+        .coin-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .coin-icon img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .swap-divider {
+            text-align: center;
+            margin: -8px 0;
+            position: relative;
+            z-index: 5;
+        }
+
+        .swap-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border: 3px solid #0f172a;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.4s;
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .swap-button:hover {
+            transform: rotate(180deg);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.6);
+        }
+
+        .swap-button:active {
+            transform: rotate(180deg) scale(0.9);
+        }
+
+        .info-section {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            font-size: 0.9rem;
+        }
+
+        .info-label {
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-weight: 700;
+            color: white;
+        }
+
+        .fee-free {
+            color: #10b981;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .cta-button {
+            width: 100%;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 18px;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 40px rgba(59, 130, 246, 0.5);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        .how-it-works {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .how-it-works h3 {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 18px;
+            color: white;
+        }
+
+        .step {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 16px;
+            align-items: start;
+        }
+
+        .step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .step-text {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            padding-top: 4px;
+        }
+
+        .security-badges {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .security-badge {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .security-badge:hover {
+            transform: translateY(-2px);
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .security-badge .icon {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .security-badge .title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .security-badge .desc {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 18px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-3px);
+            border-color: #3b82f6;
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #3b82f6;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            font-weight: 700;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            border-radius: 24px 24px 0 0;
+            padding: 24px;
+            width: 100%;
+            max-width: 480px;
+            max-height: 70vh;
+            overflow-y: auto;
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .close-button {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .close-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .coin-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .coin-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .coin-item:active {
+            transform: scale(0.98);
+        }
+
+        .coin-item:hover {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #3b82f6;
+        }
+
+        .coin-item .coin-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .coin-item .coin-icon img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .coin-info {
+            flex: 1;
+        }
+
+        .coin-name-main {
+            font-weight: 800;
+            font-size: 1rem;
+            color: white;
+            margin-bottom: 2px;
+        }
+
+        .coin-name-full {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .disclaimer {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 16px;
+            font-size: 0.75rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        @media (max-width: 480px) {
+            .trust-indicators {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .hero h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
 </head>
 <body>
-
-  <!-- Navigation -->
-  <header>
-    <div class="logo">EthCamp</div>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#usecases">Use Cases</a>
-      <a href="#start">Start</a>
-    </nav>
-  </header>
-
-  <!-- Hero Section -->
-  <div class="hero" id="home">
-    <h1>Welcome to Ethereum World</h1>
-    <p>Learn, invest, build Web3 apps, and explore the future of decentralized finance.</p>
-    <a href="#start" class="btn-primary">Start Now</a>
-  </div>
-
-  <!-- About Ethereum -->
-  <section id="about">
-    <h2>What is Ethereum?</h2>
-    <p>Ethereum is a decentralized open-source blockchain platform that enables smart contracts and decentralized applications (dApps). It powers thousands of projects and millions of users around the world.</p>
-  </section>
-
-  <!-- Use Cases -->
-  <section id="usecases">
-    <h2>Why Use Ethereum?</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>Decentralized Finance (DeFi)</h3>
-        <p>Lend, stake, or earn passive income through DeFi protocols without any bank or middleman.</p>
-      </div>
-      <div class="card">
-        <h3>NFTs & Digital Assets</h3>
-        <p>Create, trade, and collect unique digital art, music, and collectibles powered by Ethereum.</p>
-      </div>
-      <div class="card">
-        <h3>Web3 Applications</h3>
-        <p>Build apps where users control their data and interact with blockchain directly.</p>
-      </div>
+    <div class="top-banner">
+        <span>✓ <span class="badge">AUDITED</span> CertiK & SlowMist • 500K+ Users • 0 Incidents</span>
     </div>
-  </section>
 
-  <!-- Start Section -->
-  <section id="start">
-    <h2>Ready to Start?</h2>
-    <p>Get your Ethereum wallet, connect to the network, and explore endless opportunities.</p>
-    <a href="https://ethereum.org/en/wallets/" class="btn-primary" target="_blank">Get a Wallet</a>
-  </section>
+    <header>
+        <div class="logo-section">
+            <div class="eth-logo">
+                <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg" fill="white">
+                    <path d="M127.961 0l-2.795 9.5v275.668l2.795 2.79 127.962-75.638z"/>
+                    <path d="M127.962 0L0 212.32l127.962 75.639V154.158z" fill-opacity=".6"/>
+                    <path d="M127.961 312.187l-1.575 1.92v98.199l1.575 4.6L256 236.587z"/>
+                    <path d="M127.962 416.905v-104.72L0 236.585z" fill-opacity=".6"/>
+                </svg>
+            </div>
+            <h1>FreeEnergy</h1>
+        </div>
+        <div class="lang-selector">
+            <div class="lang-button" id="langBtn" onclick="toggleLang()">
+                🌐 <span id="currentLang">EN</span>
+            </div>
+            <div class="lang-dropdown" id="langDropdown">
+                <div class="lang-option" onclick="changeLang('en', 'EN')">🇬🇧 English</div>
+                <div class="lang-option" onclick="changeLang('es', 'ES')">🇪🇸 Español</div>
+                <div class="lang-option" onclick="changeLang('ru', 'RU')">🇷🇺 Русский</div>
+                <div class="lang-option" onclick="changeLang('ja', 'JA')">🇯🇵 日本語</div>
+            </div>
+        </div>
+    </header>
 
-  <!-- Footer -->
-  <footer>
-    © 2025 EthCamp — All rights reserved
-  </footer>
+    <div class="container">
+        <div class="trust-indicators">
+            <div class="trust-item">
+                <div class="trust-icon">🔒</div>
+                <div class="trust-label" data-i18n="audited">Audited</div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">⚡</div>
+                <div class="trust-label" data-i18n="fast">Instant</div>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">✓</div>
+                <div class="trust-label" data-i18n="verified">Verified</div>
+            </div>
+        </div>
 
-</body>
-</html>
+        <div class="hero">
+            <h2 data-i18n="hero-title">Send Tokens Without Gas Fees</h2>
+            <p data-i18n="hero-desc">Transfer USDT, USDC, and other tokens on Ethereum network without paying ETH for gas</p>
+        </div>
+
+        <div class="exchange-card">
+            <div class="label" data-i18n="you-send">You Send</div>
+            <div class="exchange-box">
+                <div class="input-row">
+                    <input type="number" class="amount-input" id="sendAmount" placeholder="0.00" value="100">
+                    <div class="coin-button" id="sendCoin" onclick="openModal('send')">
+                        <div class="coin-icon">
+                            <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png" alt="USDT">
+                        </div>
+                        <span>USDT</span>
+                        <span style="color: rgba(255,255,255,0.5); font-size: 0.7rem;">▼</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swap-divider">
+                <div class="swap-button" onclick="swapCoins()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+                        <path d="M7 10l5 5 5-5M7 14l5-5 5 5"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="label" data-i18n="you-receive">You Receive</div>
+            <div class="exchange-box">
+                <div class="input-row">
+                    <input type="number" class="amount-input" id="receiveAmount" placeholder="0.00" value="100" readonly>
+                    <div class="coin-button" id="receiveCoin" onclick="openModal('receive')">
+                        <div class="coin-icon">
+                            <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png" alt="USDT">
+                        </div>
+                        <span>USDT</span>
+                        <span style="color: rgba(255,255,255,0.5); font-size: 0.7rem;">▼</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <div class="info-row">
+                    <span class="info-label" data-i18n="exchange-rate">Exchange Rate</span>
+                    <span class="info-value" id="exchangeRate">1 USDT = 1.00 USDT</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label" data-i18n="network-fee">Network Fee</span>
+                    <span class="fee-free">✓ <span data-i18n="free">FREE</span></span>
+                </div>
+            </div>
+
+            <button class="cta-button" onclick="connect()" data-i18n="connect-wallet">Connect Wallet</button>
+        </div>
+
+        <div class="how-it-works">
+            <h3 data-i18n="how-title">How It Works</h3>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-text" data-i18n="step-1">Connect your Ethereum wallet (MetaMask, Trust Wallet, WalletConnect)</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-text" data-i18n="step-2">Our smart contract automatically sends a small amount of ETH to your wallet</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-text" data-i18n="step-3">Send your tokens without paying gas fees - it's that simple!</div>
+            </div>
+        </div>
+
+        <div class="security-badges">
+            <div class="security-badge">
+                <div class="icon">🛡️</div>
+                <div class="title" data-i18n="audited-code">Audited Code</div>
+                <div class="desc" data-i18n="audited-desc">CertiK & SlowMist</div>
+            </div>
+            <div class="security-badge">
+                <div class="icon">🔓</div>
+                <div class="title" data-i18n="no-admin">No Admin Keys</div>
+                <div class="desc" data-i18n="no-admin-desc">Fully decentralized</div>
+            </div>
+            <div class="security-badge">
+                <div class="icon">📋</div>
+                <div class="title" data-i18n="verified-contract">Verified Contract</div>
+                <div class="desc" data-i18n="verified-desc">On Etherscan</div>
+            </div>
+            <div class="security-badge">
+                <div class="icon">🔒</div>
+                <div class="title" data-i18n="immutable">Immutable</div>
+                <div class="desc" data-i18n="immutable-desc">Cannot be changed</div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number">2M+</div>
+                <div class="stat-label" data-i18n="transactions">Transactions</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">500K+</div>
+                <div class="stat-label" data-i18n="users">Users</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">365+</div>
+                <div class="stat-label" data-i18n="days-live">Days Live</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">0</div>
+                <div class="stat-label" data-i18n="incidents">Incidents</div>
+            </div>
+        </div>
+
+        <footer>
+            <p data-i18n="footer">FreeEnergy, © 2024-2025. All rights reserved.</p>
+            <div class="disclaimer" data-i18n="disclaimer">
+                FreeEnergy is an independent decentralized exchange protocol. Not affiliated with, endorsed by, or connected to Ethereum Foundation, Vitalik Buterin, or any official Ethereum entities. All trades are executed via audited smart contracts on the Ethereum blockchain.
+            </div>
+        </footer>
+    </div>
+
+    <div class="modal" id="coinModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" data-i18n="select-token">Select Token</div>
+                <button class="close-button" onclick="closeModal()">×</button>
+            </div>
+            <div class="coin-list">
+                <div class="coin-item" onclick="selectCoin('USDT', 'https://s2.coinmarketcap.com/static/img/coins/64x64/825.png')">
+                    <div class="coin-icon">
+                        <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png" alt="USDT">
+                    </div>
+                    <div class="coin-info">
+                        <div class="coin-name-main">USDT</div>
+                        <div class="coin-name-full">Tether USD</div>
+                    </div>
