@@ -746,6 +746,10 @@
             .support-links {
                 grid-template-columns: 1fr;
             }
+
+            .coin-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
@@ -768,7 +772,9 @@
                 <div class="lang-option" onclick="changeLang('en', 'English')">🇬🇧 English</div>
                 <div class="lang-option" onclick="changeLang('es', 'Español')">🇪🇸 Español</div>
                 <div class="lang-option" onclick="changeLang('ru', 'Русский')">🇷🇺 Русский</div>
+                <div class="lang-option" onclick="changeLang('zh', '中文')">🇨🇳 中文</div>
                 <div class="lang-option" onclick="changeLang('ja', '日本語')">🇯🇵 日本語</div>
+                <div class="lang-option" onclick="changeLang('ko', '한국어')">🇰🇷 한국어</div>
             </div>
         </div>
     </div>
@@ -800,7 +806,7 @@
                 <span data-i18n="live">Live on Ethereum mainnet</span>
             </div>
             <div class="price-display">
-                <span data-i18n="price">Price:</span> <span class="price-value" id="ethPrice">$3,450.00</span>
+                <span data-i18n="price">Price:</span> <span class="price-value" id="ethPrice">Loading...</span>
                 <span style="margin: 0 12px;">•</span>
                 <span data-i18n="gas">Gas:</span> <span class="price-value">FREE</span>
             </div>
@@ -809,7 +815,7 @@
         <div class="main-card">
             <div class="card-header">
                 <h3 class="card-title" data-i18n="card-title">Swap with 0 ETH Balance</h3>
-                <p class="card-subtitle" data-i18n="card-subtitle">No gas fees • No ETH needed • Direct USDT to ETH swap</p>
+                <p class="card-subtitle" data-i18n="card-subtitle">No gas fees • No ETH needed • Direct token swaps</p>
             </div>
 
             <div class="exchange-box">
@@ -820,7 +826,7 @@
                 <div class="input-row">
                     <input type="number" class="amount-input" id="sendAmount" placeholder="0.00" value="100">
                     <div class="coin-button" onclick="openModal('send')">
-                        <img class="coin-icon" src="https://s2.coinmarketcap.com/static/img/coins/64x64/825.png" alt="USDT" id="sendIcon">
+                        <img class="coin-icon" src="https://assets.coingecko.com/coins/images/325/small/Tether.png" alt="USDT" id="sendIcon">
                         <span id="sendName">USDT</span>
                         <span style="color: rgba(255,255,255,0.5); font-size: 0.7rem;">▼</span>
                     </div>
@@ -843,9 +849,9 @@
                     <span class="label" data-i18n="you-receive">You receive</span>
                 </div>
                 <div class="input-row">
-                    <input type="number" class="amount-input" id="receiveAmount" placeholder="0.00" value="0.029" readonly>
+                    <input type="number" class="amount-input" id="receiveAmount" placeholder="0.00" readonly>
                     <div class="coin-button" onclick="openModal('receive')">
-                        <img class="coin-icon" src="https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png" alt="ETH" id="receiveIcon">
+                        <img class="coin-icon" src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" alt="ETH" id="receiveIcon">
                         <span id="receiveName">ETH</span>
                         <span style="color: rgba(255,255,255,0.5); font-size: 0.7rem;">▼</span>
                     </div>
@@ -855,11 +861,625 @@
             <div class="info-grid">
                 <div class="info-item">
                     <div class="info-label" data-i18n="exchange-rate">Exchange rate</div>
-                    <div class="info-value" id="exchangeRate">1 USDT = 0.00029 ETH</div>
+                    <div class="info-value" id="exchangeRate">Loading...</div>
                 </div>
                 <div class="info-item">
                     <div class="info-label" data-i18n="network-fee">Network fee</div>
                     <div class="info-value green">0 ETH<br><small style="font-size: 0.75rem; font-weight: 400; color: rgba(255,255,255,0.5);" data-i18n="covered">Covered by platform</small></div>
                 </div>
                 <div class="info-item">
-                    <div class="info-label" data-i18n="min-balance">
+                    <div class="info-label" data-i18n="min-balance">Min. balance required</div>
+                    <div class="info-value green">0 ETH</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label" data-i18n="processing-time">Processing time</div>
+                    <div class="info-value">~30 sec</div>
+                </div>
+            </div>
+
+            <button class="cta-button" onclick="connectWallet()">
+                <span data-i18n="connect-wallet">Connect Wallet</span>
+            </button>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-value">$2.8B+</div>
+                <div class="feature-label" data-i18n="volume">24h Volume</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-value">100K+</div>
+                <div class="feature-label" data-i18n="users">Active Users</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-value">0.1%</div>
+                <div class="feature-label" data-i18n="fee">Exchange Fee</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-value">24/7</div>
+                <div class="feature-label" data-i18n="support">Support</div>
+            </div>
+        </div>
+
+        <div class="security-section">
+            <h2 class="section-title" data-i18n="security-title">Security & Trust</h2>
+            <div class="security-grid">
+                <div class="security-card">
+                    <div class="security-icon">🔒</div>
+                    <div class="security-title" data-i18n="sec-1-title">Smart Contract</div>
+                    <div class="security-desc" data-i18n="sec-1-desc">Audited by leading security firms</div>
+                </div>
+                <div class="security-card">
+                    <div class="security-icon">⚡</div>
+                    <div class="security-title" data-i18n="sec-2-title">Instant Swaps</div>
+                    <div class="security-desc" data-i18n="sec-2-desc">Transactions in under 30 seconds</div>
+                </div>
+                <div class="security-card">
+                    <div class="security-icon">💎</div>
+                    <div class="security-title" data-i18n="sec-3-title">Best Rates</div>
+                    <div class="security-desc" data-i18n="sec-3-desc">Aggregated liquidity from top DEXs</div>
+                </div>
+                <div class="security-card">
+                    <div class="security-icon">🛡️</div>
+                    <div class="security-title" data-i18n="sec-4-title">Non-Custodial</div>
+                    <div class="security-desc" data-i18n="sec-4-desc">You always control your funds</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contract-section">
+            <div class="contract-title" data-i18n="contract-title">Smart Contract Address</div>
+            <div class="contract-address" id="contractAddress">0x...</div>
+            <button class="copy-button" onclick="copyContract()">
+                <span data-i18n="copy">Copy Address</span>
+            </button>
+        </div>
+
+        <div class="support-section">
+            <h3 class="support-title" data-i18n="support-title">Need Help?</h3>
+            <p class="support-subtitle" data-i18n="support-subtitle">Our team is here to assist you 24/7</p>
+            <div class="support-links">
+                <a href="#" class="support-link">
+                    <div class="support-link-title" data-i18n="telegram">Telegram</div>
+                    <div class="support-link-email">@ethexchange</div>
+                </a>
+                <a href="#" class="support-link">
+                    <div class="support-link-title" data-i18n="email">Email</div>
+                    <div class="support-link-email">support@ethexchange.com</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <svg width="24" height="39" viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg">
+                        <polygon fill="#627eea" points="127.9611 0 125.1661 9.5 125.1661 285.168 127.9611 287.958 255.9231 212.32"/>
+                        <polygon fill="#8C8C8C" points="127.962 0 0 212.32 127.962 287.959 127.962 154.158"/>
+                    </svg>
+                    ETH Exchange
+                </div>
+                <p style="color: rgba(255,255,255,0.5); font-size: 0.85rem;">The most trusted Ethereum exchange platform</p>
+            </div>
+            <div class="footer-links">
+                <a href="#" class="footer-link" data-i18n="about">About</a>
+                <a href="#" class="footer-link" data-i18n="how-it-works">How it works</a>
+                <a href="#" class="footer-link" data-i18n="terms">Terms</a>
+                <a href="#" class="footer-link" data-i18n="privacy">Privacy</a>
+                <a href="#" class="footer-link" data-i18n="docs">Documentation</a>
+                <a href="#" class="footer-link" data-i18n="api">API</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2024 ETH Exchange. <span data-i18n="rights">All rights reserved.</span></div>
+            <div class="footer-status">
+                <div class="pulse"></div>
+                <span data-i18n="status">All systems operational</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for coin selection -->
+    <div class="modal" id="coinModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" data-i18n="select-token">Select a token</h3>
+                <button class="close-button" onclick="closeModal()">×</button>
+            </div>
+            <div class="coin-list" id="coinList">
+                <!-- Coins will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                'top-bar': 'ETH Exchange',
+                'trusted': 'Trusted by 100,000+ traders',
+                'subtitle': 'Trusted by 100,000+ traders worldwide',
+                'badge-1': '0 ETH Required',
+                'badge-2': 'Gas-Free Swaps',
+                'badge-3': 'Instant Exchange',
+                'hero-title': 'Swap with Zero ETH Balance',
+                'hero-desc': 'No gas fees required • Works even with empty wallet • We sponsor all transaction costs',
+                'live': 'Live on Ethereum mainnet',
+                'price': 'Price:',
+                'gas': 'Gas:',
+                'card-title': 'Swap with 0 ETH Balance',
+                'card-subtitle': 'No gas fees • No ETH needed • Direct token swaps',
+                'you-pay': 'You pay',
+                'you-receive': 'You receive',
+                'exchange-rate': 'Exchange rate',
+                'network-fee': 'Network fee',
+                'covered': 'Covered by platform',
+                'min-balance': 'Min. balance required',
+                'processing-time': 'Processing time',
+                'connect-wallet': 'Connect Wallet',
+                'volume': '24h Volume',
+                'users': 'Active Users',
+                'fee': 'Exchange Fee',
+                'support': 'Support',
+                'security-title': 'Security & Trust',
+                'sec-1-title': 'Smart Contract',
+                'sec-1-desc': 'Audited by leading security firms',
+                'sec-2-title': 'Instant Swaps',
+                'sec-2-desc': 'Transactions in under 30 seconds',
+                'sec-3-title': 'Best Rates',
+                'sec-3-desc': 'Aggregated liquidity from top DEXs',
+                'sec-4-title': 'Non-Custodial',
+                'sec-4-desc': 'You always control your funds',
+                'contract-title': 'Smart Contract Address',
+                'copy': 'Copy Address',
+                'support-title': 'Need Help?',
+                'support-subtitle': 'Our team is here to assist you 24/7',
+                'telegram': 'Telegram',
+                'email': 'Email',
+                'about': 'About',
+                'how-it-works': 'How it works',
+                'terms': 'Terms',
+                'privacy': 'Privacy',
+                'docs': 'Documentation',
+                'api': 'API',
+                'rights': 'All rights reserved.',
+                'status': 'All systems operational',
+                'select-token': 'Select a token'
+            },
+            ru: {
+                'top-bar': 'ETH обменник',
+                'trusted': 'Доверяют 100,000+ трейдеров',
+                'subtitle': 'Доверяют 100,000+ трейдеров по всему миру',
+                'badge-1': '0 ETH требуется',
+                'badge-2': 'Без комиссий',
+                'badge-3': 'Мгновенный обмен',
+                'hero-title': 'Обмен с нулевым балансом ETH',
+                'hero-desc': 'Без комиссий за газ • Работает даже с пустым кошельком • Мы покрываем все расходы',
+                'live': 'Работает в Ethereum mainnet',
+                'price': 'Цена:',
+                'gas': 'Газ:',
+                'card-title': 'Обмен с 0 ETH на балансе',
+                'card-subtitle': 'Без газа • Без ETH • Прямой обмен токенов',
+                'you-pay': 'Вы отдаёте',
+                'you-receive': 'Вы получаете',
+                'exchange-rate': 'Курс обмена',
+                'network-fee': 'Комиссия сети',
+                'covered': 'Покрывается платформой',
+                'min-balance': 'Мин. баланс',
+                'processing-time': 'Время обработки',
+                'connect-wallet': 'Подключить кошелёк',
+                'volume': 'Объём 24ч',
+                'users': 'Активных пользователей',
+                'fee': 'Комиссия обмена',
+                'support': 'Поддержка',
+                'security-title': 'Безопасность и доверие',
+                'sec-1-title': 'Смарт-контракт',
+                'sec-1-desc': 'Проверен ведущими компаниями',
+                'sec-2-title': 'Мгновенный обмен',
+                'sec-2-desc': 'Транзакции за 30 секунд',
+                'sec-3-title': 'Лучшие курсы',
+                'sec-3-desc': 'Агрегированная ликвидность с топ DEX',
+                'sec-4-title': 'Без хранения',
+                'sec-4-desc': 'Вы всегда контролируете свои средства',
+                'contract-title': 'Адрес смарт-контракта',
+                'copy': 'Копировать адрес',
+                'support-title': 'Нужна помощь?',
+                'support-subtitle': 'Наша команда всегда на связи 24/7',
+                'telegram': 'Telegram',
+                'email': 'Email',
+                'about': 'О нас',
+                'how-it-works': 'Как это работает',
+                'terms': 'Условия',
+                'privacy': 'Конфиденциальность',
+                'docs': 'Документация',
+                'api': 'API',
+                'rights': 'Все права защищены.',
+                'status': 'Все системы работают',
+                'select-token': 'Выберите токен'
+            },
+            es: {
+                'top-bar': 'ETH Exchange',
+                'trusted': 'Confiado por 100,000+ traders',
+                'subtitle': 'Confiado por 100,000+ traders en todo el mundo',
+                'badge-1': '0 ETH requerido',
+                'badge-2': 'Sin comisiones',
+                'badge-3': 'Intercambio instantáneo',
+                'hero-title': 'Intercambio sin saldo de ETH',
+                'hero-desc': 'Sin tarifas de gas • Funciona con billetera vacía • Cubrimos todos los costos',
+                'live': 'En vivo en Ethereum mainnet',
+                'price': 'Precio:',
+                'gas': 'Gas:',
+                'card-title': 'Intercambio con 0 saldo de ETH',
+                'card-subtitle': 'Sin gas • Sin ETH necesario • Intercambio directo de tokens',
+                'you-pay': 'Pagas',
+                'you-receive': 'Recibes',
+                'exchange-rate': 'Tasa de cambio',
+                'network-fee': 'Tarifa de red',
+                'covered': 'Cubierto por la plataforma',
+                'min-balance': 'Saldo mínimo',
+                'processing-time': 'Tiempo de procesamiento',
+                'connect-wallet': 'Conectar Billetera',
+                'volume': 'Volumen 24h',
+                'users': 'Usuarios activos',
+                'fee': 'Tarifa de intercambio',
+                'support': 'Soporte',
+                'security-title': 'Seguridad y confianza',
+                'sec-1-title': 'Contrato inteligente',
+                'sec-1-desc': 'Auditado por empresas líderes',
+                'sec-2-title': 'Intercambios instantáneos',
+                'sec-2-desc': 'Transacciones en menos de 30 segundos',
+                'sec-3-title': 'Mejores tasas',
+                'sec-3-desc': 'Liquidez agregada de los principales DEX',
+                'sec-4-title': 'Sin custodia',
+                'sec-4-desc': 'Siempre controlas tus fondos',
+                'contract-title': 'Dirección del contrato inteligente',
+                'copy': 'Copiar dirección',
+                'support-title': '¿Necesitas ayuda?',
+                'support-subtitle': 'Nuestro equipo está aquí para ayudarte 24/7',
+                'telegram': 'Telegram',
+                'email': 'Email',
+                'about': 'Acerca de',
+                'how-it-works': 'Cómo funciona',
+                'terms': 'Términos',
+                'privacy': 'Privacidad',
+                'docs': 'Documentación',
+                'api': 'API',
+                'rights': 'Todos los derechos reservados.',
+                'status': 'Todos los sistemas operativos',
+                'select-token': 'Selecciona un token'
+            },
+            zh: {
+                'top-bar': 'ETH 交易所',
+                'trusted': '100,000+ 交易者信赖',
+                'subtitle': '全球 100,000+ 交易者信赖',
+                'badge-1': '无需 ETH',
+                'badge-2': '免 Gas 费',
+                'badge-3': '即时交换',
+                'hero-title': '零 ETH 余额交换',
+                'hero-desc': '无需 Gas 费 • 空钱包也能使用 • 我们承担所有交易成本',
+                'live': 'Ethereum 主网实时运行',
+                'price': '价格：',
+                'gas': 'Gas：',
+                'card-title': '0 ETH 余额交换',
+                'card-subtitle': '无 Gas • 无需 ETH • 直接代币交换',
+                'you-pay': '您支付',
+                'you-receive': '您收到',
+                'exchange-rate': '兑换率',
+                'network-fee': '网络费用',
+                'covered': '平台承担',
+                'min-balance': '最低余额',
+                'processing-time': '处理时间',
+                'connect-wallet': '连接钱包',
+                'volume': '24小时交易量',
+                'users': '活跃用户',
+                'fee': '交换费用',
+                'support': '支持',
+                'security-title': '安全与信任',
+                'sec-1-title': '智能合约',
+                'sec-1-desc': '经领先安全公司审计',
+                'sec-2-title': '即时交换',
+                'sec-2-desc': '30秒内完成交易',
+                'sec-3-title': '最佳汇率',
+                'sec-3-desc': '聚合顶级 DEX 的流动性',
+                'sec-4-title': '非托管',
+                'sec-4-desc': '您始终控制您的资金',
+                'contract-title': '智能合约地址',
+                'copy': '复制地址',
+                'support-title': '需要帮助？',
+                'support-subtitle': '我们的团队 24/7 随时为您服务',
+                'telegram': 'Telegram',
+                'email': '邮箱',
+                'about': '关于',
+                'how-it-works': '工作原理',
+                'terms': '条款',
+                'privacy': '隐私',
+                'docs': '文档',
+                'api': 'API',
+                'rights': '版权所有。',
+                'status': '所有系统正常运行',
+                'select-token': '选择代币'
+            },
+            ja: {
+                'top-bar': 'ETH Exchange',
+                'trusted': '100,000+ トレーダーに信頼されています',
+                'subtitle': '世界中の100,000+トレーダーに信頼されています',
+                'badge-1': 'ETH不要',
+                'badge-2': 'ガス代無料',
+                'badge-3': '即時交換',
+                'hero-title': 'ETH残高ゼロで交換',
+                'hero-desc': 'ガス代不要 • 空のウォレットでも機能 • すべての取引コストをカバー',
+                'live': 'Ethereumメインネットで稼働中',
+                'price': '価格：',
+                'gas': 'ガス：',
+                'card-title': 'ETH残高0で交換',
+                'card-subtitle': 'ガス不要 • ETH不要 • 直接トークン交換',
+                'you-pay': '支払い',
+                'you-receive': '受取',
+                'exchange-rate': '交換レート',
+                'network-fee': 'ネットワーク手数料',
+                'covered': 'プラットフォームがカバー',
+                'min-balance': '最小残高',
+                'processing-time': '処理時間',
+                'connect-wallet': 'ウォレット接続',
+                'volume': '24時間取引量',
+                'users': 'アクティブユーザー',
+                'fee': '交換手数料',
+                'support': 'サポート',
+                'security-title': 'セキュリティと信頼',
+                'sec-1-title': 'スマートコントラクト',
+                'sec-1-desc': '主要なセキュリティ企業による監査済み',
+                'sec-2-title': '即時交換',
+                'sec-2-desc': '30秒以内の取引',
+                'sec-3-title': '最良レート',
+                'sec-3-desc': 'トップDEXからの流動性を集約',
+                'sec-4-title': '非カストディアル',
+                'sec-4-desc': '常に資金を管理できます',
+                'contract-title': 'スマートコントラクトアドレス',
+                'copy': 'アドレスをコピー',
+                'support-title': 'お困りですか？',
+                'support-subtitle': '24時間365日サポートいたします',
+                'telegram': 'Telegram',
+                'email': 'メール',
+                'about': '概要',
+                'how-it-works': '仕組み',
+                'terms': '利用規約',
+                'privacy': 'プライバシー',
+                'docs': 'ドキュメント',
+                'api': 'API',
+                'rights': '全著作権所有。',
+                'status': 'すべてのシステムが稼働中',
+                'select-token': 'トークンを選択'
+            },
+            ko: {
+                'top-bar': 'ETH Exchange',
+                'trusted': '100,000+ 트레이더가 신뢰',
+                'subtitle': '전 세계 100,000+ 트레이더가 신뢰',
+                'badge-1': 'ETH 불필요',
+                'badge-2': '가스비 무료',
+                'badge-3': '즉시 교환',
+                'hero-title': 'ETH 잔액 없이 교환',
+                'hero-desc': '가스비 불필요 • 빈 지갑도 사용 가능 • 모든 거래 비용 지원',
+                'live': 'Ethereum 메인넷에서 실시간 운영',
+                'price': '가격:',
+                'gas': '가스:',
+                'card-title': '0 ETH 잔액으로 교환',
+                'card-subtitle': '가스 없음 • ETH 불필요 • 직접 토큰 교환',
+                'you-pay': '지불',
+                'you-receive': '받기',
+                'exchange-rate': '환율',
+                'network-fee': '네트워크 수수료',
+                'covered': '플랫폼이 부담',
+                'min-balance': '최소 잔액',
+                'processing-time': '처리 시간',
+                'connect-wallet': '지갑 연결',
+                'volume': '24시간 거래량',
+                'users': '활성 사용자',
+                'fee': '교환 수수료',
+                'support': '지원',
+                'security-title': '보안 및 신뢰',
+                'sec-1-title': '스마트 계약',
+                'sec-1-desc': '주요 보안 업체의 감사 완료',
+                'sec-2-title': '즉시 교환',
+                'sec-2-desc': '30초 이내 거래',
+                'sec-3-title': '최적 가격',
+                'sec-3-desc': '주요 DEX의 유동성 통합',
+                'sec-4-title': '비수탁형',
+                'sec-4-desc': '항상 자금을 통제할 수 있습니다',
+                'contract-title': '스마트 계약 주소',
+                'copy': '주소 복사',
+                'support-title': '도움이 필요하신가요?',
+                'support-subtitle': '24/7 지원 팀이 대기 중입니다',
+                'telegram': 'Telegram',
+                'email': '이메일',
+                'about': '소개',
+                'how-it-works': '작동 방식',
+                'terms': '약관',
+                'privacy': '개인정보',
+                'docs': '문서',
+                'api': 'API',
+                'rights': '모든 권리 보유.',
+                'status': '모든 시스템 정상 작동',
+                'select-token': '토큰 선택'
+            }
+        };
+
+        let currentLang = 'en';
+        let currentModal = null;
+
+        // Available tokens
+        const tokens = [
+            { id: 'ethereum', symbol: 'ETH', name: 'Ethereum', icon: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png', chain: '' },
+            { id: 'tether', symbol: 'USDT', name: 'Tether', icon: 'https://assets.coingecko.com/coins/images/325/small/Tether.png', chain: 'ERC-20' },
+            { id: 'usd-coin', symbol: 'USDC', name: 'USD Coin', icon: 'https://assets.coingecko.com/coins/images/6319/small/usdc.png', chain: 'ERC-20' },
+            { id: 'dai', symbol: 'DAI', name: 'Dai', icon: 'https://assets.coingecko.com/coins/images/9956/small/Badge_Dai.png', chain: 'ERC-20' },
+            { id: 'uniswap', symbol: 'UNI', name: 'Uniswap', icon: 'https://assets.coingecko.com/coins/images/12504/small/uni.jpg', chain: 'ERC-20' },
+            { id: 'chainlink', symbol: 'LINK', name: 'Chainlink', icon: 'https://assets.coingecko.com/coins/images/877/small/chainlink-new-logo.png', chain: 'ERC-20' },
+            { id: 'wrapped-bitcoin', symbol: 'WBTC', name: 'Wrapped BTC', icon: 'https://assets.coingecko.com/coins/images/7598/small/wrapped_bitcoin_wbtc.png', chain: 'ERC-20' },
+            { id: 'aave', symbol: 'AAVE', name: 'Aave', icon: 'https://assets.coingecko.com/coins/images/12645/small/aave-token-round.png', chain: 'ERC-20' },
+            { id: 'maker', symbol: 'MKR', name: 'Maker', icon: 'https://assets.coingecko.com/coins/images/1364/small/Mark_Maker.png', chain: 'ERC-20' }
+        ];
+
+        let prices = {};
+
+        // Fetch prices from CoinGecko
+        async function fetchPrices() {
+            try {
+                const ids = tokens.map(t => t.id).join(',');
+                const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`);
+                const data = await response.json();
+                prices = data;
+                
+                // Update ETH price display
+                if (data.ethereum) {
+                    document.getElementById('ethPrice').textContent = '$' + data.ethereum.usd.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                }
+                
+                updateExchangeRate();
+            } catch (error) {
+                console.error('Error fetching prices:', error);
+            }
+        }
+
+        // Update exchange rate
+        function updateExchangeRate() {
+            const sendAmount = parseFloat(document.getElementById('sendAmount').value) || 0;
+            const sendName = document.getElementById('sendName').textContent;
+            const receiveName = document.getElementById('receiveName').textContent;
+            
+            const sendToken = tokens.find(t => t.symbol === sendName);
+            const receiveToken = tokens.find(t => t.symbol === receiveName);
+            
+            if (sendToken && receiveToken && prices[sendToken.id] && prices[receiveToken.id]) {
+                const sendPrice = prices[sendToken.id].usd;
+                const receivePrice = prices[receiveToken.id].usd;
+                const rate = sendPrice / receivePrice;
+                const receiveAmount = sendAmount * rate;
+                
+                document.getElementById('receiveAmount').value = receiveAmount.toFixed(6);
+                document.getElementById('exchangeRate').textContent = `1 ${sendName} = ${rate.toFixed(6)} ${receiveName}`;
+            }
+        }
+
+        // Language functions
+        function toggleLang() {
+            document.getElementById('langDropdown').classList.toggle('active');
+        }
+
+        function changeLang(lang, name) {
+            currentLang = lang;
+            document.getElementById('currentLang').textContent = name;
+            document.getElementById('langDropdown').classList.remove('active');
+            applyTranslations();
+        }
+
+        function applyTranslations() {
+            const trans = translations[currentLang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (trans[key]) {
+                    el.textContent = trans[key];
+                }
+            });
+        }
+
+        // Modal functions
+        function openModal(type) {
+            currentModal = type;
+            const modal = document.getElementById('coinModal');
+            const coinList = document.getElementById('coinList');
+            
+            coinList.innerHTML = tokens.map(token => `
+                <div class="coin-item" onclick="selectCoin('${token.symbol}', '${token.icon}', '${token.chain}')">
+                    <img src="${token.icon}" alt="${token.symbol}" class="coin-icon">
+                    <div>
+                        <div class="coin-name-main">${token.symbol}</div>
+                        <div class="coin-name-full">${token.name}</div>
+                    </div>
+                </div>
+            `).join('');
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('coinModal').classList.remove('active');
+        }
+
+        function selectCoin(symbol, icon, chain) {
+            if (currentModal === 'send') {
+                document.getElementById('sendName').textContent = symbol;
+                document.getElementById('sendIcon').src = icon;
+                document.getElementById('sendChain').textContent = chain;
+            } else {
+                document.getElementById('receiveName').textContent = symbol;
+                document.getElementById('receiveIcon').src = icon;
+            }
+            closeModal();
+            updateExchangeRate();
+        }
+
+        // Swap coins
+        function swapCoins() {
+            const sendName = document.getElementById('sendName').textContent;
+            const sendIcon = document.getElementById('sendIcon').src;
+            const sendChain = document.getElementById('sendChain').textContent;
+            
+            const receiveName = document.getElementById('receiveName').textContent;
+            const receiveIcon = document.getElementById('receiveIcon').src;
+            
+            document.getElementById('sendName').textContent = receiveName;
+            document.getElementById('sendIcon').src = receiveIcon;
+            const receiveToken = tokens.find(t => t.symbol === receiveName);
+            document.getElementById('sendChain').textContent = receiveToken ? receiveToken.chain : '';
+            
+            document.getElementById('receiveName').textContent = sendName;
+            document.getElementById('receiveIcon').src = sendIcon;
+            
+            updateExchangeRate();
+        }
+
+        // Set max amount
+        function setMax() {
+            document.getElementById('sendAmount').value = '1000';
+            updateExchangeRate();
+        }
+
+        // Connect wallet
+        function connectWallet() {
+            alert('Wallet connection feature coming soon!\n\nSupported wallets:\n• MetaMask\n• WalletConnect\n• Coinbase Wallet');
+        }
+
+        // Copy contract address
+        function copyContract() {
+            const address = document.getElementById('contractAddress').textContent;
+            navigator.clipboard.writeText(address).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        // Close modal on outside click
+        document.getElementById('coinModal').addEventListener('click', (e) => {
+            if (e.target.id === 'coinModal') {
+                closeModal();
+            }
+        });
+
+        // Update amount on input
+        document.getElementById('sendAmount').addEventListener('input', updateExchangeRate);
+
+        // Initialize
+        fetchPrices();
+        setInterval(fetchPrices, 30000); // Update prices every 30 seconds
+
+        // Set contract address (example)
+        document.getElementById('contractAddress').textContent = '0x1234567890123456789012345678901234567890';
+    </script>
+</body>
+</html>
