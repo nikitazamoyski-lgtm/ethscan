@@ -812,7 +812,7 @@
     <div class="container">
         <div class="hero">
             <h2 data-i18n="hero-title">Swap with Zero ETH Balance</h2>
-            <p data-i18n="hero-desc">No gas fees required • Works even with empty wallet • We sponsor all transaction costs</p>
+            <p data-i18n="hero-desc">No gas fees required • We sponsor all transaction costs</p>
             <div class="live-status">
                 <div class="pulse"></div>
                 <span data-i18n="live">Live on Ethereum mainnet</span>
@@ -833,15 +833,14 @@
             <div class="exchange-box">
                 <div class="label-row">
                     <span class="label" data-i18n="you-pay">You pay</span>
-                    <button class="max-button" onclick="setMax()">Max</button>
                 </div>
                 <div class="input-row">
-                    <input type="number" class="amount-input" id="sendAmount" placeholder="0.00" value="100">
-                    <div class="coin-button" onclick="openModal('send')">
+                    <div class="coin-button" onclick="openModal('send')" style="order: -1;">
                         <img class="coin-icon" src="https://assets.coingecko.com/coins/images/325/small/Tether.png" alt="USDT" id="sendIcon">
                         <span id="sendName">USDT</span>
                         <span style="color: rgba(255,255,255,0.5); font-size: 0.7rem;">▼</span>
                     </div>
+                    <input type="number" class="amount-input" id="sendAmount" placeholder="0.00" value="100">
                 </div>
                 <div style="margin-top: 8px; font-size: 0.8rem; color: rgba(255,255,255,0.5);">
                     <span id="sendChain">ERC-20</span>
@@ -861,12 +860,12 @@
                     <span class="label" data-i18n="you-receive">You receive</span>
                 </div>
                 <div class="input-row">
-                    <input type="number" class="amount-input" id="receiveAmount" placeholder="0.00" readonly>
-                    <div class="coin-button" onclick="openModal('receive')">
+                    <div class="coin-button" onclick="openModal('receive')" style="order: -1;">
                         <img class="coin-icon" src="https://assets.coingecko.com/coins/images/279/small/ethereum.png" alt="ETH" id="receiveIcon">
                         <span id="receiveName">ETH</span>
                         <span style="color: rgba(255,255,255,0.5); font-size: 0.7rem;">▼</span>
                     </div>
+                    <input type="number" class="amount-input" id="receiveAmount" placeholder="0.00" readonly>
                 </div>
             </div>
 
@@ -949,7 +948,7 @@
                 </a>
                 <a href="#" class="support-link">
                     <div class="support-link-title" data-i18n="email">Email</div>
-                    <div class="support-link-email">support@nofeesolutions.com</div>
+                    <div class="support-link-email">support@nofee.solutions</div>
                 </a>
             </div>
             <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
@@ -1028,7 +1027,7 @@
                 'badge-2': 'Gas-Free Swaps',
                 'badge-3': 'Instant Exchange',
                 'hero-title': 'Swap with Zero ETH Balance',
-                'hero-desc': 'No gas fees required • Works even with empty wallet • We sponsor all transaction costs',
+                'hero-desc': 'No gas fees required • We sponsor all transaction costs',
                 'live': 'Live on Ethereum mainnet',
                 'price': 'Price:',
                 'gas': 'Gas:',
@@ -1079,7 +1078,7 @@
                 'badge-2': 'Без комиссий',
                 'badge-3': 'Мгновенный обмен',
                 'hero-title': 'Обмен с нулевым балансом ETH',
-                'hero-desc': 'Без комиссий за газ • Работает даже с пустым кошельком • Мы покрываем все расходы',
+                'hero-desc': 'Без комиссий за газ • Мы покрываем все расходы',
                 'live': 'Работает в Ethereum mainnet',
                 'price': 'Цена:',
                 'gas': 'Газ:',
@@ -1130,7 +1129,7 @@
                 'badge-2': 'Sin comisiones',
                 'badge-3': 'Intercambio instantáneo',
                 'hero-title': 'Intercambio sin saldo de ETH',
-                'hero-desc': 'Sin tarifas de gas • Funciona con billetera vacía • Cubrimos todos los costos',
+                'hero-desc': 'Sin tarifas de gas • Cubrimos todos los costos',
                 'live': 'En vivo en Ethereum mainnet',
                 'price': 'Precio:',
                 'gas': 'Gas:',
@@ -1181,7 +1180,7 @@
                 'badge-2': '免 Gas 费',
                 'badge-3': '即时交换',
                 'hero-title': '零 ETH 余额交换',
-                'hero-desc': '无需 Gas 费 • 空钱包也能使用 • 我们承担所有交易成本',
+                'hero-desc': '无需 Gas 费 • 我们承担所有交易成本',
                 'live': 'Ethereum 主网实时运行',
                 'price': '价格：',
                 'gas': 'Gas：',
@@ -1232,7 +1231,7 @@
                 'badge-2': 'ガス代無料',
                 'badge-3': '即時交換',
                 'hero-title': 'ETH残高ゼロで交換',
-                'hero-desc': 'ガス代不要 • 空のウォレットでも機能 • すべての取引コストをカバー',
+                'hero-desc': 'ガス代不要 • すべての取引コストをカバー',
                 'live': 'Ethereumメインネットで稼働中',
                 'price': '価格：',
                 'gas': 'ガス：',
@@ -1283,7 +1282,7 @@
                 'badge-2': '가스비 무료',
                 'badge-3': '즉시 교환',
                 'hero-title': 'ETH 잔액 없이 교환',
-                'hero-desc': '가스비 불필요 • 빈 지갑도 사용 가능 • 모든 거래 비용 지원',
+                'hero-desc': '가스비 불필요 • 모든 거래 비용 지원',
                 'live': 'Ethereum 메인넷에서 실시간 운영',
                 'price': '가격:',
                 'gas': '가스:',
