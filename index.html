@@ -1451,15 +1451,75 @@
         }
 
         footer {
-            text-align: center;
-            padding: 50px 20px;
             margin-top: 80px;
-            border-top: 1px solid rgba(0, 255, 65, 0.2);
+            padding: 50px 20px 30px;
+            border-top: 2px solid rgba(0, 255, 65, 0.2);
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 255, 65, 0.03) 100%);
+        }
+
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-company {
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--neon-green);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+        }
+
+        .footer-tagline {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .footer-office {
+            margin: 35px 0;
+            padding: 25px;
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .office-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .office-address {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-bottom {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(0, 255, 65, 0.15);
         }
 
         .footer-text {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.85rem;
             letter-spacing: 1px;
         }
 
@@ -1467,6 +1527,32 @@
             .logo {
                 font-size: 2.8rem;
                 letter-spacing: 5px;
+            }
+
+            .footer-logo {
+                font-size: 1.5rem;
+                letter-spacing: 3px;
+            }
+
+            .footer-tagline {
+                font-size: 0.8rem;
+            }
+
+            .footer-office {
+                margin: 25px 0;
+                padding: 20px 15px;
+            }
+
+            .office-label {
+                font-size: 0.75rem;
+            }
+
+            .office-address {
+                font-size: 0.85rem;
+            }
+
+            .footer-text {
+                font-size: 0.75rem;
             }
 
             .main-card, .fee-modal {
@@ -1618,9 +1704,8 @@
 
     <div class="container">
         <header>
-            <h1 class="logo">FLASH USDT</h1>
+            <h1 class="logo">TOKEN LAB LTD</h1>
             <p class="subtitle" data-translate="subtitle">Futuristic Generator</p>
-            <p class="tagline" data-translate="tagline">Powered by Next-Gen Blockchain Technology</p>
         </header>
 
         <div class="smart-contract-banner">
@@ -1862,7 +1947,22 @@
     </div>
 
     <footer>
-        <p class="footer-text">© 2025 Flash USDT Generator | Powered by Quantum Blockchain Technology</p>
+        <div class="footer-content">
+            <div class="footer-company">
+                <div class="footer-logo">TOKEN LAB LTD</div>
+                <div class="footer-tagline">Next-Generation Blockchain Solutions</div>
+            </div>
+            <div class="footer-office">
+                <div class="office-label">🏢 Global Headquarters</div>
+                <div class="office-address">
+                    10 Anson Road, #23-14 International Plaza<br>
+                    Singapore 079903
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-text">© 2025 Token Lab Ltd. All rights reserved. | Powered by Quantum Blockchain Technology</p>
+            </div>
+        </div>
     </footer>
 
     <script>
@@ -1958,7 +2058,7 @@
                 feature3_title: "Security",
                 feature3_desc: "We use advanced encryption protocols to protect your transactions",
                 feature4_title: "Flexible Duration",
-                feature4_desc: "Customizable Flash USDT lifetime from 30 minutes to 24 hours",
+                feature4_desc: "Customizable Flash USDT lifetime from 7 days to 90 days",
                 fee_title: "Fee Payment",
                 fee_description: "To complete the Flash USDT generation, you need to pay the processing fee. This is a mandatory payment to activate the smart contract on the blockchain.",
                 flash_amount: "Flash USDT Amount:",
@@ -2008,7 +2108,7 @@
                 feature3_title: "Безопасность",
                 feature3_desc: "Используем передовые протоколы шифрования для защиты ваших транзакций",
                 feature4_title: "Гибкая длительность",
-                feature4_desc: "Настраиваемое время действия Flash USDT от 30 минут до 24 часов",
+                feature4_desc: "Настраиваемое время действия Flash USDT от 7 до 90 дней",
                 fee_title: "Оплата комиссии",
                 fee_description: "Для завершения генерации Flash USDT необходимо внести комиссию за обработку транзакции. Это обязательный платеж для активации смарт-контракта в блокчейне.",
                 flash_amount: "Сумма Flash USDT:",
@@ -2058,7 +2158,7 @@
                 feature3_title: "Seguridad",
                 feature3_desc: "Utilizamos protocolos de encriptación avanzados para proteger sus transacciones",
                 feature4_title: "Duración Flexible",
-                feature4_desc: "Tiempo de vida personalizable de Flash USDT de 30 minutos a 24 horas",
+                feature4_desc: "Tiempo de vida personalizable de Flash USDT de 7 días a 90 días",
                 fee_title: "Pago de Tarifa",
                 fee_description: "Para completar la generación de Flash USDT, debe pagar la tarifa de procesamiento. Este es un pago obligatorio para activar el contrato inteligente en blockchain.",
                 flash_amount: "Cantidad Flash USDT:",
@@ -2108,7 +2208,7 @@
                 feature3_title: "安全性",
                 feature3_desc: "我们使用先进的加密协议来保护您的交易",
                 feature4_title: "灵活的持续时间",
-                feature4_desc: "可自定义的 Flash USDT 生命周期，从 30 分钟到 24 小时",
+                feature4_desc: "可自定义的 Flash USDT 生命周期，从 7 天到 90 天",
                 fee_title: "费用支付",
                 fee_description: "要完成 Flash USDT 生成，您需要支付处理费用。这是激活区块链智能合约的强制性付款。",
                 flash_amount: "Flash USDT 金额：",
@@ -2338,38 +2438,6 @@
             return nativeAmount.toFixed(6);
         }
 
-        function updateCommission() {
-            const amount = parseFloat(document.getElementById('amountInput').value) || 0;
-            const networkSelect = document.getElementById('network');
-            const network = networkSelect.value;
-            
-            currentAmount = amount;
-            currentNetwork = network;
-            
-            const commissionInfo = document.getElementById('commissionInfo');
-            const commissionAmount = document.getElementById('commissionAmount');
-            
-            if (!network || network === '') {
-                commissionInfo.style.display = 'block';
-                commissionAmount.textContent = '-- Select Network First --';
-                return;
-            }
-            
-            const commissionUSDT = calculateCommission(amount);
-            const currency = networkCurrency[network];
-            const nativeAmount = convertToNative(commissionUSDT, network);
-            
-            commissionInfo.style.display = 'block';
-            commissionAmount.textContent = nativeAmount + ' ' + currency.symbol;
-        }
-
-        function setAmount(amount) {
-            document.getElementById('amountInput').value = amount;
-            updateCommission();
-        }
-
-        document.getElementById('amountInput').addEventListener('input', updateCommission);
-
         async function connectWallet() {
             const connectBtn = document.getElementById('connectBtn');
             const disconnectBtn = document.getElementById('disconnectBtn');
@@ -2387,16 +2455,23 @@
                     disconnectBtn.style.display = 'block';
                 } catch (error) {
                     console.error('User rejected connection:', error);
-                    alert('Connection rejected by user');
+                    const messages = {
+                        en: 'Connection rejected by user',
+                        ru: 'Соединение отклонено пользователем',
+                        es: 'Conexión rechazada por el usuario',
+                        zh: '用户拒绝连接'
+                    };
+                    alert(messages[currentLang] || messages.en);
                 }
             } else {
-                userAddress = '0x' + Math.random().toString(16).substring(2, 42);
-                isWalletConnected = true;
-                
-                walletAddressEl.textContent = userAddress.substring(0, 6) + '...' + userAddress.substring(userAddress.length - 4);
-                connectBtn.classList.add('connected');
-                connectBtn.innerHTML = translations[currentLang]['connected'];
-                disconnectBtn.style.display = 'block';
+                // Браузер не поддерживает Web3
+                const messages = {
+                    en: '⚠️ This browser does not support wallet connection.\n\nPlease use MetaMask or another Web3-enabled browser to connect your wallet.',
+                    ru: '⚠️ Этот браузер не поддерживает подключение кошелька.\n\nПожалуйста, используйте MetaMask или другой браузер с поддержкой Web3 для подключения вашего кошелька.',
+                    es: '⚠️ Este navegador no admite la conexión de billetera.\n\nUtilice MetaMask u otro navegador habilitado para Web3 para conectar su billetera.',
+                    zh: '⚠️ 此浏览器不支持钱包连接。\n\n请使用 MetaMask 或其他支持 Web3 的浏览器来连接您的钱包。'
+                };
+                alert(messages[currentLang] || messages.en);
             }
         }
 
