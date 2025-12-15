@@ -72,60 +72,45 @@
         }
 
         .pixel-logo {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 60px;
             position: relative;
             animation: float 3s ease-in-out infinite;
         }
 
-        /* 8-bit ETH Diamond */
+        /* Real Ethereum Diamond Logo - Elongated */
         .pixel-logo.eth-logo {
             position: relative;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 60px;
         }
 
         .pixel-logo.eth-logo::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 50px;
-            height: 50px;
-            background:
-                /* Row 1 - top pixel */
-                linear-gradient(#8b9fff, #8b9fff) 22px 2px / 6px 6px,
-                /* Row 2 */
-                linear-gradient(#8b9fff, #8b9fff) 16px 8px / 6px 6px,
-                linear-gradient(#627eea, #627eea) 22px 8px / 6px 6px,
-                linear-gradient(#8b9fff, #8b9fff) 28px 8px / 6px 6px,
-                /* Row 3 */
-                linear-gradient(#8b9fff, #8b9fff) 10px 14px / 6px 6px,
-                linear-gradient(#627eea, #627eea) 16px 14px / 6px 6px,
-                linear-gradient(#627eea, #627eea) 22px 14px / 6px 6px,
-                linear-gradient(#8b9fff, #8b9fff) 28px 14px / 6px 6px,
-                linear-gradient(#627eea, #627eea) 34px 14px / 6px 6px,
-                /* Row 4 - middle */
-                linear-gradient(#4c51bf, #4c51bf) 4px 20px / 6px 6px,
-                linear-gradient(#627eea, #627eea) 10px 20px / 6px 6px,
-                linear-gradient(#627eea, #627eea) 16px 20px / 6px 6px,
-                linear-gradient(#627eea, #627eea) 22px 20px / 6px 6px,
-                linear-gradient(#627eea, #627eea) 28px 20px / 6px 6px,
-                linear-gradient(#627eea, #627eea) 34px 20px / 6px 6px,
-                linear-gradient(#4c51bf, #4c51bf) 40px 20px / 6px 6px,
-                /* Row 5 */
-                linear-gradient(#4c51bf, #4c51bf) 10px 26px / 6px 6px,
-                linear-gradient(#627eea, #627eea) 16px 26px / 6px 6px,
-                linear-gradient(#627eea, #627eea) 22px 26px / 6px 6px,
-                linear-gradient(#627eea, #627eea) 28px 26px / 6px 6px,
-                linear-gradient(#4c51bf, #4c51bf) 34px 26px / 6px 6px,
-                /* Row 6 */
-                linear-gradient(#4c51bf, #4c51bf) 16px 32px / 6px 6px,
-                linear-gradient(#627eea, #627eea) 22px 32px / 6px 6px,
-                linear-gradient(#4c51bf, #4c51bf) 28px 32px / 6px 6px,
-                /* Row 7 - bottom */
-                linear-gradient(#4c51bf, #4c51bf) 22px 38px / 6px 6px;
-            background-repeat: no-repeat;
+            top: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 16px solid transparent;
+            border-right: 16px solid transparent;
+            border-bottom: 28px solid #8b9fff;
+            filter: drop-shadow(0 0 3px rgba(139, 159, 255, 0.5));
+        }
+
+        .pixel-logo.eth-logo::after {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 16px solid transparent;
+            border-right: 16px solid transparent;
+            border-top: 28px solid #627eea;
+            filter: drop-shadow(0 0 3px rgba(98, 126, 234, 0.5));
         }
 
         @keyframes float {
@@ -505,9 +490,9 @@
                 <div class="pixel-logo eth-logo"></div>
             </div>
             <div class="platform-description">
-                <p class="desc-main">WE AGGREGATE ALL AVAILABLE AIRDROPS FROM TOP PLATFORMS</p>
-                <p class="desc-detail">SERVICE FEE: $1 • YOU GET PRIORITY WHITELIST ACCESS</p>
-                <p class="desc-sub">PAY ONCE - GET FIRST IN LINE FOR ALL UPCOMING AIRDROPS</p>
+                <p class="desc-main">WE AGGREGATE ALL ETHEREUM AIRDROPS FROM TOP L2 PLATFORMS</p>
+                <p class="desc-detail">SERVICE FEE: $5 • YOU GET PRIORITY WHITELIST ACCESS</p>
+                <p class="desc-sub">PAY ONCE - GET FIRST IN LINE FOR ALL UPCOMING ETH AIRDROPS</p>
             </div>
         </header>
 
