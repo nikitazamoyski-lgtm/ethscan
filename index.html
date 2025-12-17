@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETH Drops Hub - Verified & Trusted</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>ETH Stake - Ethereum Staking Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,658 +13,1660 @@
         }
 
         body {
-            font-family: 'Press Start 2P', cursive;
-            background: linear-gradient(135deg, #e0f7fa 0%, #ffe4e1 50%, #f3e5f5 100%);
-            color: #2d3748;
-            padding: 40px 20px;
-            line-height: 1.8;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: radial-gradient(ellipse at top, #1e293b 0%, #0f172a 100%);
+            background-attachment: fixed;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
             min-height: 100vh;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        /* Header */
-        header {
+        .header {
+            background: transparent;
+            padding: 80px 20px 40px;
             text-align: center;
-            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .main-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .platform-description {
-            max-width: 700px;
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 25px 20px;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
         }
 
-        .desc-main {
-            font-size: 0.65rem;
-            color: #2d3748;
-            margin-bottom: 15px;
-            font-weight: bold;
-            line-height: 1.6;
-        }
-
-        .desc-detail {
-            font-size: 0.6rem;
-            color: #5a67d8;
-            margin-bottom: 12px;
-            font-weight: bold;
-        }
-
-        .desc-sub {
-            font-size: 0.5rem;
-            color: #718096;
-            line-height: 1.6;
-        }
-
-        .pixel-logo {
-            width: 40px;
-            height: 60px;
+        /* Real Ethereum Logo */
+        .logo {
+            width: 100px;
+            height: 120px;
+            margin: 0 auto 30px;
             position: relative;
             animation: float 3s ease-in-out infinite;
         }
 
-        /* Real Ethereum Diamond Logo - Elongated */
-        .pixel-logo.eth-logo {
-            position: relative;
-            width: 40px;
-            height: 60px;
-        }
-
-        .pixel-logo.eth-logo::before {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 16px solid transparent;
-            border-right: 16px solid transparent;
-            border-bottom: 28px solid #8b9fff;
-            filter: drop-shadow(0 0 3px rgba(139, 159, 255, 0.5));
-        }
-
-        .pixel-logo.eth-logo::after {
-            content: '';
-            position: absolute;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 16px solid transparent;
-            border-right: 16px solid transparent;
-            border-top: 28px solid #627eea;
-            filter: drop-shadow(0 0 3px rgba(98, 126, 234, 0.5));
-        }
-
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-10px); }
         }
 
-        .site-title {
-            font-size: 2rem;
-            color: #2d3748;
-            text-shadow: 3px 3px 0 rgba(255, 255, 255, 0.7);
+        .site-name {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
         }
 
-        /* Trust Bar */
-        .trust-bar {
+        .subtitle {
+            font-size: 20px;
+            color: #9ca3af;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        /* Top badges */
+        .top-badges {
             display: flex;
             justify-content: center;
-            gap: 25px;
+            gap: 20px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
-            margin-bottom: 50px;
-            padding: 35px 25px;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
 
-        .trust-badge {
+        .top-badge {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 10px;
-            max-width: 150px;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            font-size: 14px;
+            color: #9ca3af;
         }
 
-        .badge-title {
-            font-size: 0.6rem;
+        .badge-icon {
+            font-size: 18px;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 60px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
             text-align: center;
-            color: #2d3748;
-            font-weight: bold;
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
         }
 
-        .badge-subtitle {
-            font-size: 0.4rem;
+        .stat-item:nth-child(1) { animation-delay: 0.2s; }
+        .stat-item:nth-child(2) { animation-delay: 0.4s; }
+        .stat-item:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #6366F1;
+            margin-bottom: 8px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                text-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+            }
+            50% {
+                transform: scale(1.05);
+                text-shadow: 0 0 20px rgba(99, 102, 241, 0.8);
+            }
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Earnings Calculator */
+        .earnings-calculator {
+            max-width: 600px;
+            margin: 60px auto 0;
+            background: rgba(30, 41, 59, 0.3);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 24px;
+            padding: 40px 35px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .calculator-title {
+            font-size: 24px;
+            font-weight: 700;
             text-align: center;
-            color: #718096;
-            line-height: 1.7;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        /* How It Works */
-        .how-section {
-            margin-bottom: 50px;
+        .calculator-input-group {
+            margin-bottom: 30px;
+        }
+
+        .calculator-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #9ca3af;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .calculator-input {
+            width: 100%;
+            padding: 16px 20px;
+            background: rgba(10, 13, 31, 0.8);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .calculator-input:focus {
+            outline: none;
+            border-color: #6366F1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .calculator-input::placeholder {
+            color: rgba(156, 163, 175, 0.5);
+        }
+
+        /* Remove number input arrows */
+        .calculator-input::-webkit-outer-spin-button,
+        .calculator-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .calculator-input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        .earnings-results {
+            background: rgba(10, 13, 31, 0.5);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .earnings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .earnings-row:last-child {
+            border-bottom: none;
+        }
+
+        .earnings-row.highlight {
+            margin-top: 8px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .earnings-label {
+            font-size: 15px;
+            color: #9ca3af;
+            font-weight: 500;
+        }
+
+        .earnings-value {
+            font-size: 16px;
+            color: #ffffff;
+            font-weight: 700;
+            font-family: 'Inter', monospace;
+        }
+
+        .earnings-highlight {
+            font-size: 20px;
+            color: #6366F1;
+            text-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+
+        .calculator-note {
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .usd-estimate {
+            font-size: 13px;
+            font-weight: 300;
+            color: #9ca3af;
+            text-align: center;
+            margin-top: 12px;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
+        .main-content {
+            padding: 0 20px 80px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section:first-child {
+            margin-top: 0;
         }
 
         .section-title {
-            font-size: 1.3rem;
+            font-size: 40px;
+            font-weight: 700;
             text-align: center;
-            margin-bottom: 35px;
-            color: #2d3748;
-            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.7);
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
             margin-bottom: 40px;
+            background: linear-gradient(135deg, #ffffff 0%, #c7d2fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .step-card {
-            padding: 30px 25px;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: rgba(30, 41, 59, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.2);
             border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #6366F1 0%, #8B5CF6 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.2);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            min-width: 56px;
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+            flex-shrink: 0;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 32px rgba(99, 102, 241, 0.5);
+        }
+
+        .feature-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: #ffffff;
+        }
+
+        .feature-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            color: #9ca3af;
+            line-height: 1.7;
+        }
+
+        .how-it-works {
+            background: rgba(30, 41, 59, 0.3);
+            border-radius: 24px;
+            padding: 60px 40px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            max-width: 900px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .step {
+            position: relative;
             text-align: center;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s;
         }
 
-        .step-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
-        }
-
-        .step-num {
-            font-size: 2rem;
-            color: #5a67d8;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.7);
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 800;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
         }
 
         .step-title {
-            font-size: 0.7rem;
-            margin-bottom: 12px;
-            color: #2d3748;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #ffffff;
         }
 
         .step-desc {
-            font-size: 0.45rem;
-            color: #718096;
-            line-height: 1.7;
+            font-size: 14px;
+            color: #9ca3af;
+            line-height: 1.6;
         }
 
-        /* Platforms */
-        .platforms-section {
-            margin-bottom: 50px;
-        }
-
-        .platforms-intro {
-            font-size: 0.55rem;
-            color: #4a5568;
-            text-align: center;
-            max-width: 650px;
-            margin: 0 auto 30px;
-            line-height: 1.7;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-        }
-
-        .platforms-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px 25px;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .platform-link {
-            font-size: 0.55rem;
-            color: #5a67d8;
-            text-decoration: none;
-            padding: 10px 18px;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            border-radius: 8px;
-            transition: all 0.3s;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .platform-link:hover {
-            background: rgba(255, 255, 255, 0.9);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            color: #4c51bf;
-        }
-
-        /* CTA Section */
         .cta-section {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 24px;
+            padding: 60px 40px;
             text-align: center;
-            margin: 50px 0;
-            padding: 50px 30px;
-            background: rgba(255, 255, 255, 0.8);
+            max-width: 800px;
+            margin: 0 auto;
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
         }
 
         .cta-title {
-            font-size: 1.4rem;
-            color: #2d3748;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.7);
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 16px;
         }
 
-        .cta-desc {
-            font-size: 0.6rem;
-            color: #4a5568;
-            max-width: 600px;
-            margin: 0 auto 35px;
+        .cta-subtitle {
+            font-size: 18px;
+            margin-bottom: 35px;
+            color: #9ca3af;
         }
 
-        .cta-btn {
-            display: inline-block;
-            padding: 22px 45px;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 0.85rem;
-            color: #fff;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .claim-button {
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            color: #ffffff;
             border: none;
+            padding: 18px 50px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 12px;
             cursor: pointer;
-            text-decoration: none;
-            box-shadow: 0 10px 0 #4c51bf, 0 15px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.1s;
-            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .cta-btn:hover {
+        .claim-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 13px 0 #4c51bf, 0 18px 35px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 12px 32px rgba(99, 102, 241, 0.5);
         }
 
-        .cta-btn:active {
-            transform: translateY(5px);
-            box-shadow: 0 5px 0 #4c51bf, 0 8px 15px rgba(0, 0, 0, 0.3);
+        .claim-button:active {
+            transform: translateY(-1px);
         }
 
-        /* Results */
-        .results {
-            display: none;
-            margin-top: 35px;
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .results.show {
-            display: block;
-            animation: fadeIn 0.6s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(25px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .wallet-display {
-            padding: 22px;
-            background: rgba(102, 126, 234, 0.15);
-            border-radius: 12px;
-            text-align: center;
-            font-size: 0.52rem;
-            word-break: break-all;
-            margin-bottom: 30px;
-            border: 2px solid #667eea;
-            color: #2d3748;
-        }
-
-        .success-message {
-            text-align: center;
-            padding: 28px;
-            background: rgba(72, 187, 120, 0.2);
-            border-radius: 12px;
-            margin-bottom: 30px;
-            border: 2px solid #48bb78;
-        }
-
-        .success-title {
-            font-size: 1.3rem;
-            color: #2f855a;
-            margin-bottom: 12px;
-        }
-
-        .airdrops-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
-        }
-
-        .airdrop-item {
-            padding: 22px;
-            background: rgba(255, 255, 255, 0.9);
+        .faq-item {
+            background: rgba(30, 41, 59, 0.3);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
             backdrop-filter: blur(10px);
-            border-radius: 12px;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+
+        .faq-question {
+            padding: 22px 26px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: #6366F1;
+        }
+
+        .faq-toggle {
+            font-size: 20px;
+            color: #6366F1;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
             display: flex;
             align-items: center;
-            gap: 18px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            justify-content: center;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 6px;
         }
 
-        .airdrop-logo {
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 26px;
+            font-size: 15px;
+            color: #9ca3af;
+            line-height: 1.7;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 26px 22px 26px;
+        }
+
+        .footer {
+            background: rgba(10, 13, 31, 0.3);
+            padding: 60px 20px 40px;
+            text-align: center;
+            border-top: 1px solid rgba(99, 102, 241, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        .footer-badges {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
+        }
+
+        .footer-badge {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 24px;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-badge:hover {
+            border-color: rgba(99, 102, 241, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.2);
+        }
+
+        .badge-icon-footer {
+            font-size: 24px;
             width: 40px;
             height: 40px;
-            flex-shrink: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .airdrop-info {
-            flex: 1;
+        .badge-text-footer {
+            text-align: left;
         }
 
-        .airdrop-name {
-            font-size: 0.6rem;
+        .badge-title-footer {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 2px;
+        }
+
+        .badge-subtitle-footer {
+            font-size: 11px;
+            color: #9ca3af;
+        }
+
+        /* Footer Navigation Grid */
+        .footer-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 40px 30px;
+            margin: 50px 0 40px;
+            text-align: left;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-nav-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-nav-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin-bottom: 8px;
-            color: #2d3748;
         }
 
-        .airdrop-amount {
-            font-size: 0.52rem;
-            color: #48bb78;
-        }
-
-        /* Loading */
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 45px;
-        }
-
-        .loading.show {
+        .footer-nav-link {
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
             display: block;
+            padding: 4px 0;
         }
 
-        .loading-spinner {
-            width: 65px;
-            height: 65px;
-            border: 7px solid rgba(102, 126, 234, 0.2);
-            border-top-color: #667eea;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 22px;
+        .footer-nav-link:hover {
+            color: #6366F1;
+            padding-left: 8px;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .footer-office {
+            margin: 30px 0 20px;
+            padding: 20px;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 12px;
+            display: inline-block;
         }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            font-size: 0.42rem;
-            color: #718096;
+        .office-label {
+            font-size: 12px;
+            color: #6366F1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
-        /* Responsive */
+        .office-address {
+            font-size: 14px;
+            color: #9ca3af;
+            line-height: 1.6;
+        }
+
+        .copyright {
+            font-size: 13px;
+            color: #4b5563;
+        }
+
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            padding: 8px;
+            display: flex;
+            gap: 6px;
+            z-index: 1000;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: #9ca3af;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .lang-btn:hover {
+            color: #ffffff;
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            color: #ffffff;
+        }
+
         @media (max-width: 768px) {
-            .site-title {
-                font-size: 1.4rem;
+            .site-name {
+                font-size: 36px;
             }
 
-            .platform-description {
-                padding: 20px 15px;
+            .subtitle {
+                font-size: 16px;
             }
 
-            .desc-main {
-                font-size: 0.55rem;
+            .stats-bar {
+                gap: 30px;
             }
 
-            .desc-detail {
-                font-size: 0.5rem;
-            }
-
-            .desc-sub {
-                font-size: 0.42rem;
-            }
-
-            .platforms-intro {
-                font-size: 0.48rem;
-                padding: 15px;
-            }
-
-            .trust-bar {
-                gap: 20px;
-                padding: 25px 18px;
-            }
-
-            .badge-title {
-                font-size: 0.48rem;
-            }
-
-            .badge-subtitle {
-                font-size: 0.32rem;
+            .stat-value {
+                font-size: 28px;
             }
 
             .section-title {
-                font-size: 1.1rem;
+                font-size: 32px;
             }
 
-            .step-num {
-                font-size: 1.5rem;
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .feature-icon {
+                margin-bottom: 16px;
+            }
+
+            .how-it-works {
+                padding: 40px 20px;
+            }
+
+            .steps-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-section {
+                padding: 40px 20px;
             }
 
             .cta-title {
-                font-size: 1.1rem;
+                font-size: 28px;
+            }
+
+            .cta-subtitle {
+                font-size: 16px;
+            }
+
+            .claim-button {
+                padding: 16px 40px;
+                font-size: 15px;
+            }
+
+            .language-switcher {
+                top: 20px;
+                right: 20px;
+                padding: 6px;
+            }
+
+            .lang-btn {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            .footer-badges {
+                gap: 15px;
+            }
+
+            .footer-badge {
+                padding: 12px 16px;
+            }
+
+            .badge-icon-footer {
+                width: 36px;
+                height: 36px;
+                font-size: 20px;
+            }
+
+            .badge-title-footer {
+                font-size: 12px;
+            }
+
+            .badge-subtitle-footer {
+                font-size: 10px;
+            }
+
+            .footer-nav-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px 20px;
+                text-align: left;
+            }
+
+            .earnings-calculator {
+                padding: 30px 20px;
+            }
+
+            .calculator-title {
+                font-size: 20px;
+            }
+
+            .calculator-input {
+                font-size: 20px;
+                padding: 14px 16px;
+            }
+
+            .earnings-results {
+                padding: 20px;
+            }
+
+            .earnings-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .earnings-label {
+                font-size: 13px;
+            }
+
+            .earnings-value {
+                font-size: 15px;
+            }
+
+            .earnings-highlight {
+                font-size: 18px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header>
-            <div class="main-logo">
-                <div class="pixel-logo eth-logo"></div>
-                <h1 class="site-title">ETH DROPS HUB</h1>
-                <div class="pixel-logo eth-logo"></div>
-            </div>
-            <div class="platform-description">
-                <p class="desc-main">WE AGGREGATE ALL ETHEREUM AIRDROPS FROM TOP L2 PLATFORMS</p>
-                <p class="desc-detail">SERVICE FEE: $5 • YOU GET PRIORITY WHITELIST ACCESS</p>
-                <p class="desc-sub">PAY ONCE - GET FIRST IN LINE FOR ALL UPCOMING ETH AIRDROPS</p>
-            </div>
-        </header>
-
-        <!-- Trust Bar -->
-        <div class="trust-bar">
-            <div class="trust-badge">
-                <div class="badge-title">VERIFIED</div>
-                <div class="badge-subtitle">AUDITED BY CERTIK & HACKEN</div>
-            </div>
-
-            <div class="trust-badge">
-                <div class="badge-title">SECURE</div>
-                <div class="badge-subtitle">BANK-LEVEL SSL ENCRYPTION</div>
-            </div>
-
-            <div class="trust-badge">
-                <div class="badge-title">TRUSTED</div>
-                <div class="badge-subtitle">BY 18,000+ USERS</div>
-            </div>
-        </div>
-
-        <!-- How It Works -->
-        <section class="how-section">
-            <h2 class="section-title">HOW IT WORKS</h2>
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-num">1</div>
-                    <div class="step-title">CONNECT</div>
-                    <div class="step-desc">LINK YOUR WALLET SAFELY</div>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-num">2</div>
-                    <div class="step-title">SCAN</div>
-                    <div class="step-desc">CHECK ELIGIBILITY</div>
-                </div>
-
-                <div class="step-card">
-                    <div class="step-num">3</div>
-                    <div class="step-title">CLAIM</div>
-                    <div class="step-desc">GET WHITELISTED</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Platforms -->
-        <section class="platforms-section">
-            <h2 class="section-title">DATA SOURCES</h2>
-            <p class="platforms-intro">WE COLLECT AIRDROP INFORMATION FROM THESE VERIFIED PLATFORMS. CONNECT YOUR WALLET AND YOU'LL BE FIRST IN LINE TO RECEIVE TOKENS FROM ALL UPCOMING DROPS.</p>
-            <div class="platforms-list">
-                <a href="https://layerzero.network" target="_blank" class="platform-link">LAYER ZERO</a>
-                <a href="https://zksync.io" target="_blank" class="platform-link">ZKSYNC</a>
-                <a href="https://arbitrum.io" target="_blank" class="platform-link">ARBITRUM</a>
-                <a href="https://polygon.technology" target="_blank" class="platform-link">POLYGON</a>
-                <a href="https://starknet.io" target="_blank" class="platform-link">STARKNET</a>
-                <a href="https://scroll.io" target="_blank" class="platform-link">SCROLL</a>
-                <a href="https://linea.build" target="_blank" class="platform-link">LINEA</a>
-                <a href="https://base.org" target="_blank" class="platform-link">BASE</a>
-                <a href="https://taiko.xyz" target="_blank" class="platform-link">TAIKO</a>
-            </div>
-        </section>
-
-        <!-- CTA -->
-        <section class="cta-section">
-            <h2 class="cta-title">CHECK ELIGIBILITY</h2>
-            <p class="cta-desc">CONNECT YOUR WALLET TO SEE WHICH AIRDROPS YOU QUALIFY FOR</p>
-            
-            <button class="cta-btn" id="connectBtn" onclick="connect()">
-                CONNECT WALLET
-            </button>
-
-            <div class="loading" id="loading">
-                <div class="loading-spinner"></div>
-                <p style="font-size: 0.55rem; color: #718096;">SCANNING BLOCKCHAIN...</p>
-            </div>
-
-            <div class="results" id="results">
-                <div class="wallet-display" id="address"></div>
-                
-                <div class="success-message">
-                    <div class="success-title">✓ ELIGIBLE</div>
-                    <p style="font-size: 0.55rem; color: #2f855a;">YOU QUALIFY FOR 4 AIRDROPS</p>
-                </div>
-
-                <div class="airdrops-grid">
-                    <div class="airdrop-item">
-                        <div class="airdrop-logo"></div>
-                        <div class="airdrop-info">
-                            <div class="airdrop-name">LAYER ZERO</div>
-                            <div class="airdrop-amount">150-300 ZRO</div>
-                        </div>
-                    </div>
-
-                    <div class="airdrop-item">
-                        <div class="airdrop-logo"></div>
-                        <div class="airdrop-info">
-                            <div class="airdrop-name">ZKSYNC</div>
-                            <div class="airdrop-amount">500-800 ZK</div>
-                        </div>
-                    </div>
-
-                    <div class="airdrop-item">
-                        <div class="airdrop-logo"></div>
-                        <div class="airdrop-info">
-                            <div class="airdrop-name">STARKNET</div>
-                            <div class="airdrop-amount">200-400 STRK</div>
-                        </div>
-                    </div>
-
-                    <div class="airdrop-item">
-                        <div class="airdrop-logo"></div>
-                        <div class="airdrop-info">
-                            <div class="airdrop-name">LINEA</div>
-                            <div class="airdrop-amount">WHITELISTED</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            © 2026 ETH DROPS HUB • SECURE & VERIFIED
-        </footer>
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" onclick="changeLanguage('en')">EN</button>
+        <button class="lang-btn" onclick="changeLanguage('ru')">RU</button>
+        <button class="lang-btn" onclick="changeLanguage('es')">ES</button>
+        <button class="lang-btn" onclick="changeLanguage('zh')">中文</button>
+        <button class="lang-btn" onclick="changeLanguage('fr')">FR</button>
     </div>
 
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="logo">
+                <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: 100%; filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.6));">
+                    <!-- Top pyramid -->
+                    <g opacity="0.6">
+                        <polygon points="127.9611,0 125.1661,9.5 125.1661,285.168 127.9611,287.958 255.9231,212.32" fill="#8a92b2"/>
+                        <polygon points="127.962,0 0,212.32 127.962,287.959 127.962,154.158" fill="#62688f"/>
+                    </g>
+                    <!-- Bottom pyramid -->
+                    <g opacity="0.45">
+                        <polygon points="127.9611,312.1866 126.3861,314.1066 126.3861,412.3056 127.9611,416.9066 255.9991,236.5866" fill="#62688f"/>
+                        <polygon points="127.962,416.9052 127.962,312.1852 0,236.5852" fill="#454a75"/>
+                    </g>
+                    <!-- Middle -->
+                    <g opacity="0.8">
+                        <polygon points="127.9611,287.9577 255.9211,212.3207 127.9611,154.1587" fill="#8a92b2"/>
+                        <polygon points="0.0009,212.3208 127.9609,287.9578 127.9609,154.1588" fill="#62688f"/>
+                    </g>
+                </svg>
+            </div>
+            <h1 class="site-name" data-translate="site_name">ETH Stake</h1>
+            <p class="subtitle" data-translate="subtitle">Earn rewards by staking your ETH and help secure the Ethereum network</p>
+            
+            <div class="top-badges">
+                <div class="top-badge">
+                    <span class="badge-icon">🔒</span>
+                    <span data-translate="badge1">Secure</span>
+                </div>
+                <div class="top-badge">
+                    <span class="badge-icon">⚡</span>
+                    <span data-translate="badge2">Transparent</span>
+                </div>
+                <div class="top-badge">
+                    <span class="badge-icon">💰</span>
+                    <span data-translate="badge3">Profitable</span>
+                </div>
+            </div>
+            
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-value">4.2%</div>
+                    <div class="stat-label" data-translate="stat1">Annual Percentage Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">$45B+</div>
+                    <div class="stat-label" data-translate="stat2">Total Value Staked</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">900K+</div>
+                    <div class="stat-label" data-translate="stat3">Active Stakers</div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            
+            <!-- Features Section - FIRST -->
+            <section class="section">
+                <h2 class="section-title" data-translate="features_title">Why Stake Ethereum?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/>
+                            </svg>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="feature-title" data-translate="feature1_title">Earn Passive Income</h3>
+                            <p class="feature-desc" data-translate="feature1_desc">Receive regular staking rewards in ETH for helping secure the network. Current APR is approximately 4.2% annually.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                            </svg>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="feature-title" data-translate="feature2_title">Secure & Trusted</h3>
+                            <p class="feature-desc" data-translate="feature2_desc">Your assets are protected by Ethereum's proof-of-stake consensus mechanism and enterprise-grade security protocols.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                            </svg>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="feature-title" data-translate="feature3_title">Support Decentralization</h3>
+                            <p class="feature-desc" data-translate="feature3_desc">Help maintain Ethereum's security and decentralization while earning rewards on your holdings.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 2v11h3v9l7-12h-4l4-8z"/>
+                            </svg>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="feature-title" data-translate="feature4_title">Easy & Flexible</h3>
+                            <p class="feature-desc" data-translate="feature4_desc">Start staking with any amount of ETH. No technical knowledge required. Unstake anytime you want.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                            </svg>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="feature-title" data-translate="feature5_title">Track Your Rewards</h3>
+                            <p class="feature-desc" data-translate="feature5_desc">Monitor your staking performance and accumulated rewards in real-time through our intuitive dashboard.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                            </svg>
+                        </div>
+                        <div class="feature-content">
+                            <h3 class="feature-title" data-translate="feature6_title">Non-Custodial</h3>
+                            <p class="feature-desc" data-translate="feature6_desc">You maintain full control of your private keys. Your ETH never leaves your wallet.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- Earnings Calculator Section -->
+            <section class="section">
+                <div class="earnings-calculator">
+                    <h3 class="calculator-title" data-translate="calc_title">Calculate Your Earnings</h3>
+                    <div class="calculator-input-group">
+                        <label class="calculator-label" data-translate="calc_label">Amount to Stake (ETH)</label>
+                        <input type="number" id="stakeAmount" class="calculator-input" placeholder="0.00" min="0" step="0.1" oninput="calculateEarnings()">
+                    </div>
+                    <div class="earnings-results">
+                        <div class="earnings-row">
+                            <span class="earnings-label" data-translate="calc_daily">Daily Earnings:</span>
+                            <span class="earnings-value" id="dailyEarnings">0.000000 ETH</span>
+                        </div>
+                        <div class="earnings-row">
+                            <span class="earnings-label" data-translate="calc_monthly">Monthly Earnings:</span>
+                            <span class="earnings-value" id="monthlyEarnings">0.000000 ETH</span>
+                        </div>
+                        <div class="earnings-row highlight">
+                            <span class="earnings-label" data-translate="calc_yearly">Yearly Earnings:</span>
+                            <span class="earnings-value earnings-highlight" id="yearlyEarnings">0.000000 ETH</span>
+                        </div>
+                    </div>
+                    <div class="calculator-note" data-translate="calc_note">
+                        *Estimated earnings based on 4.2% APR. Actual returns may vary.
+                    </div>
+                    <div class="usd-estimate" id="usdEstimate">
+                        ≈ $0.00 USD
+                    </div>
+                </div>
+            </section>
+
+            <!-- How It Works Section -->
+            <section class="section">
+                <div class="how-it-works">
+                    <h2 class="section-title" data-translate="how_title">How It Works</h2>
+                    <div class="steps-container">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <h3 class="step-title" data-translate="step1_title">Connect Wallet</h3>
+                            <p class="step-desc" data-translate="step1_desc">Link your Ethereum wallet to get started</p>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <h3 class="step-title" data-translate="step2_title">Choose Amount</h3>
+                            <p class="step-desc" data-translate="step2_desc">Select how much ETH you want to stake</p>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <h3 class="step-title" data-translate="step3_title">Start Earning</h3>
+                            <p class="step-desc" data-translate="step3_desc">Begin earning rewards immediately</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="section">
+                <div class="cta-section">
+                    <h2 class="cta-title" data-translate="cta_title">Start Staking Today</h2>
+                    <p class="cta-subtitle" data-translate="cta_subtitle">Join thousands of users already earning rewards</p>
+                    <button class="claim-button" data-translate="cta_button">Connect Wallet</button>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section class="section faq-section">
+                <h2 class="section-title" data-translate="faq_title">Frequently Asked Questions</h2>
+                
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span data-translate="faq1_q">What is Ethereum staking?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer" data-translate="faq1_a">
+                        Ethereum staking is the process of locking up your ETH to help secure the Ethereum network and validate transactions. In return, you earn staking rewards in the form of additional ETH.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span data-translate="faq2_q">How much can I earn from staking?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer" data-translate="faq2_a">
+                        Current staking rewards are approximately 4.2% APR. The exact amount varies based on network conditions and validator performance.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span data-translate="faq3_q">Is there a minimum amount to stake?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer" data-translate="faq3_a">
+                        No, there is no minimum requirement. You can start staking with any amount of ETH.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span data-translate="faq4_q">Can I unstake my ETH anytime?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer" data-translate="faq4_a">
+                        Yes, you can unstake your ETH whenever you want. The unstaking process typically takes 1-5 days depending on network conditions.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <span data-translate="faq5_q">Is staking safe?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer" data-translate="faq5_a">
+                        Staking is very safe. Your ETH is secured by Ethereum's proof-of-stake consensus mechanism. We use non-custodial staking, so you maintain control of your private keys.
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">ETH Stake</div>
+            <p class="footer-text" data-translate="footer_text">Secure, transparent, and profitable staking for everyone</p>
+            
+            <!-- Certification Badges -->
+            <div class="footer-badges">
+                <div class="footer-badge">
+                    <div class="badge-icon-footer">✓</div>
+                    <div class="badge-text-footer">
+                        <div class="badge-title-footer" data-translate="cert1">SSL Certified</div>
+                        <div class="badge-subtitle-footer">256-bit Encryption</div>
+                    </div>
+                </div>
+                <div class="footer-badge">
+                    <div class="badge-icon-footer">🛡️</div>
+                    <div class="badge-text-footer">
+                        <div class="badge-title-footer" data-translate="cert2">Audited</div>
+                        <div class="badge-subtitle-footer">By CertiK</div>
+                    </div>
+                </div>
+                <div class="footer-badge">
+                    <div class="badge-icon-footer">🔒</div>
+                    <div class="badge-text-footer">
+                        <div class="badge-title-footer" data-translate="cert3">SOC 2 Compliant</div>
+                        <div class="badge-subtitle-footer">Type II Certified</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Global Office -->
+            <div class="footer-office">
+                <div class="office-label">🏢 <span data-translate="office_label">Global Office</span></div>
+                <div class="office-address">
+                    10 Anson Road, #23-14 International Plaza<br>
+                    Singapore 079903
+                </div>
+            </div>
+
+            <!-- Footer Navigation Grid -->
+            <div class="footer-nav-grid">
+                <div class="footer-nav-column">
+                    <h4 class="footer-nav-title" data-translate="nav_product">Product</h4>
+                    <a href="#" class="footer-nav-link" data-translate="nav_staking">Staking</a>
+                    <a href="#" class="footer-nav-link" data-translate="nav_rewards">Rewards</a>
+                    <a href="#" class="footer-nav-link" data-translate="nav_calculator">Calculator</a>
+                    <a href="#" class="footer-nav-link" data-translate="nav_faq">FAQ</a>
+                </div>
+
+                <div class="footer-nav-column">
+                    <h4 class="footer-nav-title" data-translate="nav_company">Company</h4>
+                    <a href="#" class="footer-nav-link" data-translate="nav_about">About Us</a>
+                    <a href="#" class="footer-nav-link" data-translate="nav_blog">Blog</a>
+                    <a href="#" class="footer-nav-link" data-translate="nav_careers">Careers</a>
+                    <a href="#" class="footer-nav-link" data-translate="nav_press">Press Kit</a>
+                </div>
+
+                <div class="footer-nav-column">
+                    <h4 class="footer-nav-title" data-translate="nav_support">Support</h4>
+                    <a href="#" class="footer-nav-link" data-translate="nav_help">Help Center</a>
+                    <a href="#" class="footer-nav-link" data-translate="nav_contact">Contact Us</a>
+                    <a href="#" class="footer-nav-link" data-translate="nav_status">System Status</a>
+                    <a href="#" class="footer-nav-link" data-translate="nav_api">API Docs</a>
+                </div>
+
+                <div class="footer-nav-column">
+                    <h4 class="footer-nav-title" data-translate="nav_legal">Legal</h4>
+                    <a href="#" class="footer-nav-link" data-translate="nav_terms">Terms of Service</a>
+                    <a href="#" class="footer-nav-link" data-translate="nav_privacy">Privacy Policy</a>
+                    <a href="#" class="footer-nav-link" data-translate="nav_cookie">Cookie Policy</a>
+                    <a href="#" class="footer-nav-link" data-translate="nav_disclaimer">Risk Disclaimer</a>
+                </div>
+
+                <div class="footer-nav-column">
+                    <h4 class="footer-nav-title" data-translate="nav_community">Community</h4>
+                    <a href="#" class="footer-nav-link">Twitter</a>
+                    <a href="#" class="footer-nav-link">Discord</a>
+                    <a href="#" class="footer-nav-link">Telegram</a>
+                    <a href="#" class="footer-nav-link">GitHub</a>
+                </div>
+            </div>
+            
+            <p class="copyright">© 2025 ETH Stake. All rights reserved.</p>
+        </div>
+    </footer>
+
     <script>
-        async function connect() {
-            const btn = document.getElementById('connectBtn');
-            const loading = document.getElementById('loading');
-            const results = document.getElementById('results');
-            const address = document.getElementById('address');
-
-            if (typeof window.ethereum === 'undefined') {
-                alert('⚠️ PLEASE INSTALL METAMASK');
-                return;
+        const translations = {
+            en: {
+                site_name: "ETH Stake",
+                subtitle: "Earn rewards by staking your ETH and help secure the Ethereum network",
+                badge1: "Secure",
+                badge2: "Transparent",
+                badge3: "Profitable",
+                stat1: "Annual Percentage Rate",
+                stat2: "Total Value Staked",
+                stat3: "Active Stakers",
+                calc_title: "Calculate Your Earnings",
+                calc_label: "Amount to Stake (ETH)",
+                calc_daily: "Daily Earnings:",
+                calc_monthly: "Monthly Earnings:",
+                calc_yearly: "Yearly Earnings:",
+                calc_note: "*Estimated earnings based on 4.2% APR. Actual returns may vary.",
+                converter_title: "ETH Price Converter",
+                converter_footer: "Live prices from CoinGecko • Updated every 60 seconds",
+                features_title: "Why Stake Ethereum?",
+                feature1_title: "Earn Passive Income",
+                feature1_desc: "Receive regular staking rewards in ETH for helping secure the network. Current APR is approximately 4.2% annually.",
+                feature2_title: "Secure & Trusted",
+                feature2_desc: "Your assets are protected by Ethereum's proof-of-stake consensus mechanism and enterprise-grade security protocols.",
+                feature3_title: "Support Decentralization",
+                feature3_desc: "Help maintain Ethereum's security and decentralization while earning rewards on your holdings.",
+                feature4_title: "Easy & Flexible",
+                feature4_desc: "Start staking with any amount of ETH. No technical knowledge required. Unstake anytime you want.",
+                feature5_title: "Track Your Rewards",
+                feature5_desc: "Monitor your staking performance and accumulated rewards in real-time through our intuitive dashboard.",
+                feature6_title: "Non-Custodial",
+                feature6_desc: "You maintain full control of your private keys. Your ETH never leaves your wallet.",
+                how_title: "How It Works",
+                step1_title: "Connect Wallet",
+                step1_desc: "Link your Ethereum wallet to get started",
+                step2_title: "Choose Amount",
+                step2_desc: "Select how much ETH you want to stake",
+                step3_title: "Start Earning",
+                step3_desc: "Begin earning rewards immediately",
+                cta_title: "Start Staking Today",
+                cta_subtitle: "Join thousands of users already earning rewards",
+                cta_button: "Connect Wallet",
+                faq_title: "Frequently Asked Questions",
+                faq1_q: "What is Ethereum staking?",
+                faq1_a: "Ethereum staking is the process of locking up your ETH to help secure the Ethereum network and validate transactions. In return, you earn staking rewards in the form of additional ETH.",
+                faq2_q: "How much can I earn from staking?",
+                faq2_a: "Current staking rewards are approximately 4.2% APR. The exact amount varies based on network conditions and validator performance.",
+                faq3_q: "Is there a minimum amount to stake?",
+                faq3_a: "No, there is no minimum requirement. You can start staking with any amount of ETH.",
+                faq4_q: "Can I unstake my ETH anytime?",
+                faq4_a: "Yes, you can unstake your ETH whenever you want. The unstaking process typically takes 1-5 days depending on network conditions.",
+                faq5_q: "Is staking safe?",
+                faq5_a: "Staking is very safe. Your ETH is secured by Ethereum's proof-of-stake consensus mechanism. We use non-custodial staking, so you maintain control of your private keys.",
+                footer_text: "Secure, transparent, and profitable staking for everyone",
+                cert1: "SSL Certified",
+                cert2: "Audited",
+                cert3: "SOC 2 Compliant",
+                                office_label: "Global Office",
+                nav_product: "Product",
+                nav_staking: "Staking",
+                nav_rewards: "Rewards",
+                nav_calculator: "Calculator",
+                nav_faq: "FAQ",
+                nav_company: "Company",
+                nav_about: "About Us",
+                nav_blog: "Blog",
+                nav_careers: "Careers",
+                nav_press: "Press Kit",
+                nav_support: "Support",
+                nav_help: "Help Center",
+                nav_contact: "Contact Us",
+                nav_status: "System Status",
+                nav_api: "API Docs",
+                nav_legal: "Legal",
+                nav_terms: "Terms of Service",
+                nav_privacy: "Privacy Policy",
+                nav_cookie: "Cookie Policy",
+                nav_disclaimer: "Risk Disclaimer",
+                nav_community: "Community",
+                link1: "About",
+                link2: "How it Works",
+                link3: "Security",
+                link4: "Support",
+                link5: "Terms",
+                link6: "Privacy"
+            },
+            ru: {
+                site_name: "ETH Stake",
+                subtitle: "Зарабатывайте вознаграждения, стейкая ETH и помогая защищать сеть Ethereum",
+                badge1: "Безопасно",
+                badge2: "Прозрачно",
+                badge3: "Выгодно",
+                stat1: "Годовая процентная ставка",
+                stat2: "Общая сумма в стейкинге",
+                stat3: "Активных стейкеров",
+                calc_title: "Рассчитайте свой доход",
+                calc_label: "Сумма для стейкинга (ETH)",
+                calc_daily: "Ежедневный доход:",
+                calc_monthly: "Месячный доход:",
+                calc_yearly: "Годовой доход:",
+                calc_note: "*Предполагаемый доход на основе 4.2% годовых. Фактическая доходность может отличаться.",
+                converter_title: "Конвертер цены ETH",
+                converter_footer: "Живые цены от CoinGecko • Обновляется каждые 60 секунд",
+                features_title: "Почему стоит стейкать Ethereum?",
+                feature1_title: "Пассивный доход",
+                feature1_desc: "Получайте регулярные вознаграждения в ETH за помощь в защите сети. Текущая APR составляет около 4.2% годовых.",
+                feature2_title: "Безопасно и надежно",
+                feature2_desc: "Ваши активы защищены механизмом консенсуса Proof-of-Stake Ethereum и протоколами безопасности корпоративного уровня.",
+                feature3_title: "Поддержка децентрализации",
+                feature3_desc: "Помогайте поддерживать безопасность и децентрализацию Ethereum, зарабатывая вознаграждения на своих активах.",
+                feature4_title: "Просто и гибко",
+                feature4_desc: "Начните стейкинг с любой суммой ETH. Технические знания не требуются. Выводите в любое время.",
+                feature5_title: "Отслеживайте вознаграждения",
+                feature5_desc: "Мониторьте производительность стейкинга и накопленные вознаграждения в реальном времени через интуитивную панель управления.",
+                feature6_title: "Некастодиальный",
+                feature6_desc: "Вы сохраняете полный контроль над своими приватными ключами. Ваш ETH никогда не покидает ваш кошелек.",
+                how_title: "Как это работает",
+                step1_title: "Подключите кошелек",
+                step1_desc: "Свяжите свой Ethereum кошелек для начала",
+                step2_title: "Выберите сумму",
+                step2_desc: "Выберите сколько ETH вы хотите застейкать",
+                step3_title: "Начните зарабатывать",
+                step3_desc: "Начните получать вознаграждения немедленно",
+                cta_title: "Начните стейкинг сегодня",
+                cta_subtitle: "Присоединяйтесь к тысячам пользователей, уже зарабатывающих вознаграждения",
+                cta_button: "Подключить кошелек",
+                faq_title: "Часто задаваемые вопросы",
+                faq1_q: "Что такое стейкинг Ethereum?",
+                faq1_a: "Стейкинг Ethereum - это процесс блокировки вашего ETH для помощи в защите сети Ethereum и валидации транзакций. Взамен вы получаете вознаграждения в виде дополнительного ETH.",
+                faq2_q: "Сколько я могу заработать от стейкинга?",
+                faq2_a: "Текущие вознаграждения за стейкинг составляют примерно 4.2% годовых. Точная сумма варьируется в зависимости от условий сети и производительности валидатора.",
+                faq3_q: "Есть ли минимальная сумма для стейкинга?",
+                faq3_a: "Нет, минимальных требований нет. Вы можете начать стейкинг с любой суммой ETH.",
+                faq4_q: "Могу ли я вывести свой ETH в любое время?",
+                faq4_a: "Да, вы можете вывести свой ETH когда захотите. Процесс вывода обычно занимает 1-5 дней в зависимости от условий сети.",
+                faq5_q: "Безопасен ли стейкинг?",
+                faq5_a: "Стейкинг очень безопасен. Ваш ETH защищен механизмом консенсуса Proof-of-Stake Ethereum. Мы используем некастодиальный стейкинг, поэтому вы сохраняете контроль над своими приватными ключами.",
+                footer_text: "Безопасный, прозрачный и выгодный стейкинг для всех",
+                cert1: "SSL Сертификат",
+                cert2: "Аудит пройден",
+                cert3: "SOC 2 Соответствие",
+                office_label: "Глобальный офис",
+                link1: "О нас",
+                link2: "Как это работает",
+                link3: "Безопасность",
+                link4: "Поддержка",
+                link5: "Условия",
+                link6: "Конфиденциальность"
+            },
+            es: {
+                site_name: "ETH Stake",
+                subtitle: "Gana recompensas apostando tu ETH y ayuda a asegurar la red Ethereum",
+                badge1: "Seguro",
+                badge2: "Transparente",
+                badge3: "Rentable",
+                stat1: "Tasa de porcentaje anual",
+                stat2: "Valor total apostado",
+                stat3: "Participantes activos",
+                calc_title: "Calcula tus ganancias",
+                calc_label: "Cantidad a apostar (ETH)",
+                calc_daily: "Ganancias diarias:",
+                calc_monthly: "Ganancias mensuales:",
+                calc_yearly: "Ganancias anuales:",
+                calc_note: "*Ganancias estimadas basadas en 4.2% APR. Los rendimientos reales pueden variar.",
+                converter_title: "Convertidor de precio ETH",
+                converter_footer: "Precios en vivo de CoinGecko • Actualizado cada 60 segundos",
+                features_title: "¿Por qué apostar Ethereum?",
+                feature1_title: "Ingresos pasivos",
+                feature1_desc: "Recibe recompensas regulares en ETH por ayudar a asegurar la red. El APR actual es aproximadamente 4.2% anual.",
+                feature2_title: "Seguro y confiable",
+                feature2_desc: "Tus activos están protegidos por el mecanismo de consenso Proof-of-Stake de Ethereum y protocolos de seguridad de nivel empresarial.",
+                feature3_title: "Apoya la descentralización",
+                feature3_desc: "Ayuda a mantener la seguridad y descentralización de Ethereum mientras ganas recompensas con tus tenencias.",
+                feature4_title: "Fácil y flexible",
+                feature4_desc: "Comienza a apostar con cualquier cantidad de ETH. No se requieren conocimientos técnicos. Retira cuando quieras.",
+                feature5_title: "Rastrea tus recompensas",
+                feature5_desc: "Monitorea el rendimiento de tu staking y las recompensas acumuladas en tiempo real a través de nuestro panel intuitivo.",
+                feature6_title: "No custodial",
+                feature6_desc: "Mantienes el control total de tus claves privadas. Tu ETH nunca sale de tu billetera.",
+                how_title: "Cómo funciona",
+                step1_title: "Conecta billetera",
+                step1_desc: "Vincula tu billetera Ethereum para comenzar",
+                step2_title: "Elige cantidad",
+                step2_desc: "Selecciona cuánto ETH quieres apostar",
+                step3_title: "Comienza a ganar",
+                step3_desc: "Empieza a ganar recompensas inmediatamente",
+                cta_title: "Comienza a apostar hoy",
+                cta_subtitle: "Únete a miles de usuarios que ya están ganando recompensas",
+                cta_button: "Conectar billetera",
+                faq_title: "Preguntas frecuentes",
+                faq1_q: "¿Qué es el staking de Ethereum?",
+                faq1_a: "El staking de Ethereum es el proceso de bloquear tu ETH para ayudar a asegurar la red Ethereum y validar transacciones. A cambio, ganas recompensas en forma de ETH adicional.",
+                faq2_q: "¿Cuánto puedo ganar con el staking?",
+                faq2_a: "Las recompensas actuales de staking son aproximadamente 4.2% APR. La cantidad exacta varía según las condiciones de la red y el rendimiento del validador.",
+                faq3_q: "¿Hay una cantidad mínima para apostar?",
+                faq3_a: "No, no hay requisitos mínimos. Puedes comenzar a apostar con cualquier cantidad de ETH.",
+                faq4_q: "¿Puedo retirar mi ETH en cualquier momento?",
+                faq4_a: "Sí, puedes retirar tu ETH cuando quieras. El proceso de retiro generalmente toma de 1 a 5 días dependiendo de las condiciones de la red.",
+                faq5_q: "¿Es seguro el staking?",
+                faq5_a: "El staking es muy seguro. Tu ETH está asegurado por el mecanismo de consenso Proof-of-Stake de Ethereum. Utilizamos staking no custodial, por lo que mantienes el control de tus claves privadas.",
+                footer_text: "Staking seguro, transparente y rentable para todos",
+                cert1: "Certificado SSL",
+                cert2: "Auditado",
+                cert3: "Conforme SOC 2",
+                office_label: "Oficina global",
+                link1: "Acerca de",
+                link2: "Cómo funciona",
+                link3: "Seguridad",
+                link4: "Soporte",
+                link5: "Términos",
+                link6: "Privacidad"
+            },
+            zh: {
+                site_name: "ETH Stake",
+                subtitle: "通过质押您的ETH获得奖励并帮助保护以太坊网络",
+                badge1: "安全",
+                badge2: "透明",
+                badge3: "盈利",
+                stat1: "年度百分比率",
+                stat2: "总质押价值",
+                stat3: "活跃质押者",
+                calc_title: "计算您的收益",
+                calc_label: "质押金额 (ETH)",
+                calc_daily: "每日收益：",
+                calc_monthly: "每月收益：",
+                calc_yearly: "年度收益：",
+                calc_note: "*基于4.2% APR的预估收益。实际回报可能有所不同。",
+                converter_title: "ETH价格转换器",
+                converter_footer: "来自CoinGecko的实时价格 • 每60秒更新",
+                features_title: "为什么质押以太坊？",
+                feature1_title: "被动收入",
+                feature1_desc: "通过帮助保护网络获得定期的ETH质押奖励。当前APR约为年化4.2%。",
+                feature2_title: "安全可信",
+                feature2_desc: "您的资产受以太坊权益证明共识机制和企业级安全协议保护。",
+                feature3_title: "支持去中心化",
+                feature3_desc: "帮助维护以太坊的安全和去中心化，同时赚取持有奖励。",
+                feature4_title: "简单灵活",
+                feature4_desc: "使用任意数量的ETH开始质押。无需技术知识。随时可以解除质押。",
+                feature5_title: "跟踪奖励",
+                feature5_desc: "通过我们直观的仪表板实时监控您的质押表现和累积奖励。",
+                feature6_title: "非托管",
+                feature6_desc: "您保持对私钥的完全控制。您的ETH永远不会离开您的钱包。",
+                how_title: "如何运作",
+                step1_title: "连接钱包",
+                step1_desc: "链接您的以太坊钱包开始",
+                step2_title: "选择金额",
+                step2_desc: "选择您想要质押多少ETH",
+                step3_title: "开始赚取",
+                step3_desc: "立即开始赚取奖励",
+                cta_title: "今天开始质押",
+                cta_subtitle: "加入数千名已经在赚取奖励的用户",
+                cta_button: "连接钱包",
+                faq_title: "常见问题",
+                faq1_q: "什么是以太坊质押？",
+                faq1_a: "以太坊质押是锁定您的ETH以帮助保护以太坊网络和验证交易的过程。作为回报，您将获得额外的ETH形式的质押奖励。",
+                faq2_q: "我可以从质押中赚多少？",
+                faq2_a: "当前质押奖励约为4.2% APR。确切金额因网络条件和验证器性能而异。",
+                faq3_q: "质押有最低金额要求吗？",
+                faq3_a: "没有，没有最低要求。您可以使用任意数量的ETH开始质押。",
+                faq4_q: "我可以随时解除质押吗？",
+                faq4_a: "是的，您可以随时解除质押您的ETH。解除质押过程通常需要1-5天，具体取决于网络条件。",
+                faq5_q: "质押安全吗？",
+                faq5_a: "质押非常安全。您的ETH受以太坊权益证明共识机制保护。我们使用非托管质押，因此您保持对私钥的控制。",
+                footer_text: "为每个人提供安全、透明和盈利的质押",
+                cert1: "SSL认证",
+                cert2: "已审计",
+                cert3: "SOC 2合规",
+                office_label: "全球办公室",
+                link1: "关于",
+                link2: "如何运作",
+                link3: "安全",
+                link4: "支持",
+                link5: "条款",
+                link6: "隐私"
+            },
+            fr: {
+                site_name: "ETH Stake",
+                subtitle: "Gagnez des récompenses en stakant votre ETH et aidez à sécuriser le réseau Ethereum",
+                badge1: "Sécurisé",
+                badge2: "Transparent",
+                badge3: "Rentable",
+                stat1: "Taux de pourcentage annuel",
+                stat2: "Valeur totale stakée",
+                stat3: "Participants actifs",
+                calc_title: "Calculez vos gains",
+                calc_label: "Montant à staker (ETH)",
+                calc_daily: "Gains quotidiens:",
+                calc_monthly: "Gains mensuels:",
+                calc_yearly: "Gains annuels:",
+                calc_note: "*Gains estimés basés sur 4,2% APR. Les rendements réels peuvent varier.",
+                converter_title: "Convertisseur de prix ETH",
+                converter_footer: "Prix en direct de CoinGecko • Mis à jour toutes les 60 secondes",
+                features_title: "Pourquoi staker Ethereum?",
+                feature1_title: "Revenu passif",
+                feature1_desc: "Recevez des récompenses régulières en ETH pour aider à sécuriser le réseau. L'APR actuel est d'environ 4,2% par an.",
+                feature2_title: "Sécurisé et fiable",
+                feature2_desc: "Vos actifs sont protégés par le mécanisme de consensus Proof-of-Stake d'Ethereum et des protocoles de sécurité de niveau entreprise.",
+                feature3_title: "Soutenir la décentralisation",
+                feature3_desc: "Aidez à maintenir la sécurité et la décentralisation d'Ethereum tout en gagnant des récompenses sur vos avoirs.",
+                feature4_title: "Facile et flexible",
+                feature4_desc: "Commencez à staker avec n'importe quel montant d'ETH. Aucune connaissance technique requise. Retirez à tout moment.",
+                feature5_title: "Suivez vos récompenses",
+                feature5_desc: "Surveillez les performances de votre staking et les récompenses accumulées en temps réel via notre tableau de bord intuitif.",
+                feature6_title: "Non-custodial",
+                feature6_desc: "Vous gardez le contrôle total de vos clés privées. Votre ETH ne quitte jamais votre portefeuille.",
+                how_title: "Comment ça marche",
+                step1_title: "Connecter le portefeuille",
+                step1_desc: "Liez votre portefeuille Ethereum pour commencer",
+                step2_title: "Choisir le montant",
+                step2_desc: "Sélectionnez combien d'ETH vous voulez staker",
+                step3_title: "Commencer à gagner",
+                step3_desc: "Commencez à gagner des récompenses immédiatement",
+                cta_title: "Commencez à staker aujourd'hui",
+                cta_subtitle: "Rejoignez des milliers d'utilisateurs qui gagnent déjà des récompenses",
+                cta_button: "Connecter le portefeuille",
+                faq_title: "Questions fréquentes",
+                faq1_q: "Qu'est-ce que le staking Ethereum?",
+                faq1_a: "Le staking Ethereum est le processus de verrouillage de votre ETH pour aider à sécuriser le réseau Ethereum et valider les transactions. En retour, vous gagnez des récompenses sous forme d'ETH supplémentaire.",
+                faq2_q: "Combien puis-je gagner avec le staking?",
+                faq2_a: "Les récompenses actuelles de staking sont d'environ 4,2% APR. Le montant exact varie en fonction des conditions du réseau et des performances du validateur.",
+                faq3_q: "Y a-t-il un montant minimum pour staker?",
+                faq3_a: "Non, il n'y a pas d'exigence minimale. Vous pouvez commencer à staker avec n'importe quel montant d'ETH.",
+                faq4_q: "Puis-je retirer mon ETH à tout moment?",
+                faq4_a: "Oui, vous pouvez retirer votre ETH quand vous le souhaitez. Le processus de retrait prend généralement 1 à 5 jours selon les conditions du réseau.",
+                faq5_q: "Le staking est-il sûr?",
+                faq5_a: "Le staking est très sûr. Votre ETH est sécurisé par le mécanisme de consensus Proof-of-Stake d'Ethereum. Nous utilisons un staking non-custodial, vous gardez donc le contrôle de vos clés privées.",
+                footer_text: "Staking sécurisé, transparent et rentable pour tous",
+                cert1: "Certifié SSL",
+                cert2: "Audité",
+                cert3: "Conforme SOC 2",
+                office_label: "Bureau mondial",
+                link1: "À propos",
+                link2: "Comment ça marche",
+                link3: "Sécurité",
+                link4: "Support",
+                link5: "Conditions",
+                link6: "Confidentialité"
             }
+        };
 
-            try {
-                const accounts = await window.ethereum.request({ 
-                    method: 'eth_requestAccounts' 
-                });
+        let currentLang = 'en';
 
-                btn.style.display = 'none';
-                loading.classList.add('show');
-
-                setTimeout(() => {
-                    loading.classList.remove('show');
-                    address.textContent = `WALLET: ${accounts[0]}`;
-                    results.classList.add('show');
-                    
-                    results.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'center' 
-                    });
-                }, 2500);
-
-            } catch (error) {
-                console.error(error);
-                alert('❌ CONNECTION FAILED');
-            }
-        }
-
-        if (typeof window.ethereum !== 'undefined') {
-            window.ethereum.on('accountsChanged', function (accounts) {
-                if (accounts.length === 0) {
-                    document.getElementById('results').classList.remove('show');
-                    document.getElementById('connectBtn').style.display = 'inline-block';
-                } else {
-                    connect();
+        function changeLanguage(lang) {
+            currentLang = lang;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update all translated elements
+            document.querySelectorAll('[data-translate]').forEach(elem => {
+                const key = elem.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    elem.textContent = translations[lang][key];
                 }
             });
         }
+
+        function toggleFAQ(element) {
+            const allFAQs = document.querySelectorAll('.faq-item');
+            allFAQs.forEach(faq => {
+                if (faq !== element && faq.classList.contains('active')) {
+                    faq.classList.remove('active');
+                }
+            });
+            element.classList.toggle('active');
+        }
+
+        function calculateEarnings() {
+            const amount = parseFloat(document.getElementById('stakeAmount').value) || 0;
+            const apr = 0.042; // 4.2% APR
+            
+            // Calculate earnings
+            const yearlyEarnings = amount * apr;
+            const monthlyEarnings = yearlyEarnings / 12;
+            const dailyEarnings = yearlyEarnings / 365;
+            
+            // Update display
+            document.getElementById('dailyEarnings').textContent = dailyEarnings.toFixed(6) + ' ETH';
+            document.getElementById('monthlyEarnings').textContent = monthlyEarnings.toFixed(6) + ' ETH';
+            document.getElementById('yearlyEarnings').textContent = yearlyEarnings.toFixed(6) + ' ETH';
+            
+            // Update USD estimate
+            if (window.ethPrice) {
+                const usdValue = yearlyEarnings * window.ethPrice;
+                document.getElementById('usdEstimate').textContent = '≈ $' + usdValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' USD';
+            }
+        }
+
+        // Fetch live ETH price from CoinGecko
+        async function fetchETHPrice() {
+            try {
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+                const data = await response.json();
+                
+                if (data.ethereum && data.ethereum.usd) {
+                    window.ethPrice = data.ethereum.usd;
+                    // Recalculate if there's already an amount
+                    if (document.getElementById('stakeAmount').value) {
+                        calculateEarnings();
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching ETH price:', error);
+            }
+        }
+
+        // Fetch price on page load
+        fetchETHPrice();
+
+        // Update price every 60 seconds
+        setInterval(fetchETHPrice, 60000);
     </script>
 </body>
 </html>
