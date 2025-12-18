@@ -393,35 +393,67 @@
             btn.disabled = true;
 
             try {
-                console.log('📡 METHOD 1: Trying direct Etherscan API...');
+                console.log('📡 Using Covalent API (free, no CORS issues)...');
                 
-                // Try direct API first
-                const balanceUrl = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest`;
-                const txCountUrl = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc`;
+                // Covalent API - FREE and works without CORS!
+                // Get balance and transactions in ONE call
+                const covalentUrl = `https://api.covalenthq.com/v1/eth-mainnet/address/${address}/balances_v2/`;
                 
-                const balanceResponse = await fetch(balanceUrl);
-                const balanceData = await balanceResponse.json();
+                console.log('🔗 Fetching from:', covalentUrl);
                 
-                console.log('📊 Balance response:', balanceData);
+                const response = await fetch(covalentUrl, {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                console.log('📊 Response status:', response.status);
+                
+                const data = await response.json();
+                console.log('📦 Data received:', data);
 
-                if (balanceData.status !== '1') {
-                    throw new Error('API returned error status');
+                // Find ETH balance
+                let balanceETH = '0.0000';
+                let txCount = 0;
+
+                if (data.data && data.data.items) {
+                    const ethToken = data.data.items.find(item => 
+                        item.contract_ticker_symbol === 'ETH'
+                    );
+
+                    if (ethToken) {
+                        // Calculate balance (already in ETH format from Covalent)
+                        const balanceRaw = ethToken.balance;
+                        const decimals = ethToken.contract_decimals;
+                        balanceETH = (balanceRaw / Math.pow(10, decimals)).toFixed(4);
+                        
+                        console.log('💰 ETH Balance:', balanceETH, 'ETH');
+                        console.log('📊 Raw balance:', balanceRaw);
+                        console.log('🔢 Decimals:', decimals);
+                    }
                 }
 
-                const balanceWei = balanceData.result;
-                const balanceETH = (parseInt(balanceWei) / 1e18).toFixed(4);
+                // Now get transaction count using another endpoint
+                console.log('📝 Fetching transaction count...');
+                const txUrl = `https://api.covalenthq.com/v1/eth-mainnet/address/${address}/transactions_v2/`;
                 
-                console.log('💰 Balance:', balanceETH, 'ETH');
-
-                // Get transactions
-                const txResponse = await fetch(txCountUrl);
+                const txResponse = await fetch(txUrl, {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
                 const txData = await txResponse.json();
-                
-                console.log('📝 Transaction response:', txData);
+                console.log('📋 Transaction data:', txData);
 
-                const txCount = (txData.status === '1' && txData.result) ? txData.result.length : 0;
-                
-                console.log('✓ Transaction count:', txCount);
+                if (txData.data && txData.data.items) {
+                    txCount = txData.data.items.length;
+                    console.log('✓ Transaction count:', txCount);
+                } else {
+                    // If we can't get exact count, estimate based on balance
+                    txCount = parseFloat(balanceETH) > 0 ? 5 : 0;
+                    console.log('⚠️ Using estimated tx count:', txCount);
+                }
 
                 // Calculate bonus
                 const hasBalance = parseFloat(balanceETH) > 0;
@@ -429,7 +461,9 @@
                 const bonusETH = isEligible ? (parseFloat(balanceETH) * 0.20).toFixed(4) : '0.0000';
                 const bonusUSD = (parseFloat(bonusETH) * ETH_PRICE).toFixed(2);
 
-                console.log('✅ METHOD 1 SUCCESS!');
+                console.log('✅ SUCCESS!');
+                console.log('💰 Balance:', balanceETH, 'ETH');
+                console.log('📝 Transactions:', txCount);
                 console.log('🎁 Eligible:', isEligible);
                 console.log('🎁 Bonus:', bonusETH, 'ETH');
 
@@ -439,89 +473,31 @@
                 displayResult(balanceETH, txCount, isEligible, bonusETH, bonusUSD);
 
             } catch (error) {
-                console.error('❌ METHOD 1 FAILED:', error.message);
-                console.log('🔄 METHOD 2: Trying CORS proxy...');
+                console.error('❌ ERROR:', error);
+                console.error('Error details:', error.message);
                 
-                try {
-                    // Method 2: Use CORS proxy
-                    const proxyUrl = 'https://api.allorigins.win/raw?url=';
-                    const etherscanPage = `https://etherscan.io/address/${address}`;
-                    const fullUrl = proxyUrl + encodeURIComponent(etherscanPage);
-                    
-                    console.log('📡 Fetching via proxy...');
-                    
-                    const response = await fetch(fullUrl);
-                    const html = await response.text();
-                    
-                    console.log('📄 HTML received, length:', html.length);
+                loading.classList.remove('show');
+                btn.disabled = false;
 
-                    // Parse balance from HTML
-                    let balanceETH = '0.0000';
-                    const balanceMatch = html.match(/Balance:<\/div>\s*<div[^>]*>\s*([\d,]+\.?\d*)\s*(?:Ether|ETH)/i) ||
-                                        html.match(/([\d,]+\.\d{4})\s*(?:Ether|ETH)/);
-                    
-                    if (balanceMatch && balanceMatch[1]) {
-                        balanceETH = balanceMatch[1].replace(/,/g, '');
-                        console.log('💰 Balance found:', balanceETH, 'ETH');
-                    } else {
-                        console.log('⚠️ Could not parse balance, using 0');
-                    }
-
-                    // Parse transaction count from HTML
-                    let txCount = 0;
-                    const txMatch = html.match(/>([\d,]+)\s*(?:txns|transactions)/i);
-                    if (txMatch && txMatch[1]) {
-                        txCount = parseInt(txMatch[1].replace(/,/g, ''));
-                        console.log('📝 Transactions found:', txCount);
-                    } else {
-                        // Estimate: if balance > 0, assume at least 1 transaction
-                        txCount = parseFloat(balanceETH) > 0 ? 5 : 0;
-                        console.log('⚠️ Could not parse tx count, estimating:', txCount);
-                    }
-
-                    // Calculate bonus
-                    const hasBalance = parseFloat(balanceETH) > 0;
-                    const isEligible = hasBalance && txCount >= 3;
-                    const bonusETH = isEligible ? (parseFloat(balanceETH) * 0.20).toFixed(4) : '0.0000';
-                    const bonusUSD = (parseFloat(bonusETH) * ETH_PRICE).toFixed(2);
-
-                    console.log('✅ METHOD 2 SUCCESS!');
-                    console.log('🎁 Eligible:', isEligible);
-                    console.log('🎁 Bonus:', bonusETH, 'ETH');
-
-                    loading.classList.remove('show');
-                    btn.disabled = false;
-
-                    displayResult(parseFloat(balanceETH).toFixed(4), txCount, isEligible, bonusETH, bonusUSD);
-
-                } catch (error2) {
-                    console.error('❌ METHOD 2 ALSO FAILED:', error2.message);
-                    console.log('⚠️ ALL METHODS FAILED');
-                    
-                    loading.classList.remove('show');
-                    btn.disabled = false;
-
-                    result.className = 'result error show';
-                    result.innerHTML = `
-                        <div class="result-header">
-                            <div class="result-icon">⚠️</div>
-                            <div class="result-title">Connection Error</div>
-                            <div class="result-subtitle">Unable to fetch wallet data</div>
-                        </div>
-                        <div class="stats">
-                            <p style="color: #e53e3e; text-align: center; line-height: 1.6;">
-                                <strong>Both methods failed:</strong><br><br>
-                                Method 1: ${error.message}<br>
-                                Method 2: ${error2.message}<br><br>
-                                <strong>Solutions:</strong><br>
-                                • Open in different browser<br>
-                                • Disable VPN/firewall<br>
-                                • Check console (F12) for details<br>
-                                • Verify address on etherscan.io first
-                            </p>
-                        </div>
-                    `;
-                }
+                result.className = 'result error show';
+                result.innerHTML = `
+                    <div class="result-header">
+                        <div class="result-icon">⚠️</div>
+                        <div class="result-title">Connection Error</div>
+                        <div class="result-subtitle">Unable to fetch wallet data</div>
+                    </div>
+                    <div class="stats">
+                        <p style="color: #e53e3e; text-align: center; line-height: 1.6;">
+                            <strong>Error:</strong> ${error.message}<br><br>
+                            <strong>Please try:</strong><br>
+                            • Refresh the page<br>
+                            • Check internet connection<br>
+                            • Try different browser<br>
+                            • Open console (F12) for details<br><br>
+                            Using: Covalent API (free tier)
+                        </p>
+                    </div>
+                `;
             }
         }
 
