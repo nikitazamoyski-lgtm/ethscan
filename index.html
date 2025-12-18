@@ -365,7 +365,7 @@
         <div id="result"></div>
 
         <div class="footer">
-            Powered by Etherscan API
+            Powered by Ethereum Public RPC
         </div>
     </div>
 
@@ -375,37 +375,59 @@
         const checkButton = document.getElementById('checkButton');
         const resultDiv = document.getElementById('result');
 
-        // Используем публичный API Etherscan (без ключа, но с ограничениями)
-        const ETHERSCAN_API = 'https://api.etherscan.io/api';
+        // Публичные RPC endpoints (бесплатно, без регистрации)
+        const RPC_ENDPOINTS = [
+            'https://eth.llamarpc.com',
+            'https://rpc.ankr.com/eth',
+            'https://ethereum.publicnode.com',
+            'https://1rpc.io/eth',
+            'https://eth.drpc.org'
+        ];
 
         function isValidAddress(address) {
             return /^0x[a-fA-F0-9]{40}$/.test(address);
         }
 
         function formatBalance(wei) {
-            const eth = parseFloat(wei) / 1e18;
+            // Конвертируем hex в decimal, потом в ETH
+            const weiDecimal = parseInt(wei, 16);
+            const eth = weiDecimal / 1e18;
             return eth.toFixed(4);
         }
 
         async function checkWallet(address) {
-            try {
-                const response = await fetch(
-                    `${ETHERSCAN_API}?module=account&action=balance&address=${address}&tag=latest`
-                );
-                
-                const data = await response.json();
-                
-                if (data.status === '1' && data.message === 'OK') {
-                    return {
-                        success: true,
-                        balance: data.result
-                    };
-                } else {
-                    throw new Error(data.message || 'Failed to fetch balance');
+            // Пробуем разные RPC endpoints пока не получим ответ
+            for (const rpcUrl of RPC_ENDPOINTS) {
+                try {
+                    const response = await fetch(rpcUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            jsonrpc: '2.0',
+                            method: 'eth_getBalance',
+                            params: [address, 'latest'],
+                            id: 1
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.result) {
+                        return {
+                            success: true,
+                            balance: data.result
+                        };
+                    }
+                } catch (error) {
+                    // Если один RPC не работает, пробуем следующий
+                    console.log(`RPC ${rpcUrl} failed, trying next...`);
+                    continue;
                 }
-            } catch (error) {
-                throw new Error('Ошибка подключения к сети Ethereum');
             }
+            
+            throw new Error('Не удалось подключиться к сети Ethereum. Попробуйте позже.');
         }
 
         function showResult(isEligible, balance = null, error = null) {
