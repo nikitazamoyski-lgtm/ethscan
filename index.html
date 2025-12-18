@@ -81,19 +81,37 @@
         }
 
         .language-selector select {
-            padding: 8px 12px;
-            background: rgba(18, 18, 26, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            padding: 10px 16px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 204, 255, 0.1) 100%);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
             color: var(--text-primary);
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.85rem;
+            font-weight: 600;
             cursor: pointer;
             outline: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .language-selector select:hover {
-            border-color: var(--accent);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 204, 255, 0.2) 100%);
+            border-color: #00ccff;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .language-selector select:focus {
+            box-shadow: 0 0 0 3px var(--accent-dim);
+        }
+
+        .language-selector select option {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 10px;
         }
 
         .container {
@@ -366,33 +384,33 @@
 <body>
     <div class="language-selector">
         <select id="languageSelect" onchange="changeLanguage(this.value)">
-            <option value="en">English</option>
-            <option value="es">Español</option>
-            <option value="fr">Français</option>
-            <option value="de">Deutsch</option>
-            <option value="it">Italiano</option>
-            <option value="pt">Português</option>
-            <option value="ru">Русский</option>
-            <option value="uk">Українська</option>
-            <option value="zh">中文</option>
-            <option value="ja">日本語</option>
-            <option value="ko">한국어</option>
-            <option value="ar">العربية</option>
-            <option value="hi">हिन्दी</option>
-            <option value="tr">Türkçe</option>
-            <option value="nl">Nederlands</option>
-            <option value="pl">Polski</option>
-            <option value="sv">Svenska</option>
-            <option value="no">Norsk</option>
-            <option value="da">Dansk</option>
-            <option value="fi">Suomi</option>
-            <option value="el">Ελληνικά</option>
-            <option value="cs">Čeština</option>
-            <option value="hu">Magyar</option>
-            <option value="ro">Română</option>
-            <option value="th">ไทย</option>
-            <option value="vi">Tiếng Việt</option>
-            <option value="id">Bahasa Indonesia</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="fr">🇫🇷 Français</option>
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="it">🇮🇹 Italiano</option>
+            <option value="pt">🇵🇹 Português</option>
+            <option value="ru">🇷🇺 Русский</option>
+            <option value="uk">🇺🇦 Українська</option>
+            <option value="zh">🇨🇳 中文</option>
+            <option value="ja">🇯🇵 日本語</option>
+            <option value="ko">🇰🇷 한국어</option>
+            <option value="ar">🇸🇦 العربية</option>
+            <option value="hi">🇮🇳 हिन्दी</option>
+            <option value="tr">🇹🇷 Türkçe</option>
+            <option value="nl">🇳🇱 Nederlands</option>
+            <option value="pl">🇵🇱 Polski</option>
+            <option value="sv">🇸🇪 Svenska</option>
+            <option value="no">🇳🇴 Norsk</option>
+            <option value="da">🇩🇰 Dansk</option>
+            <option value="fi">🇫🇮 Suomi</option>
+            <option value="el">🇬🇷 Ελληνικά</option>
+            <option value="cs">🇨🇿 Čeština</option>
+            <option value="hu">🇭🇺 Magyar</option>
+            <option value="ro">🇷🇴 Română</option>
+            <option value="th">🇹🇭 ไทย</option>
+            <option value="vi">🇻🇳 Tiếng Việt</option>
+            <option value="id">🇮🇩 Bahasa Indonesia</option>
         </select>
     </div>
 
