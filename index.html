@@ -1538,4 +1538,16 @@
         // Close modal when clicking outside
         document.getElementById('termsModal').addEventListener('click', function(e) {
             if (e.target === this) {
-                closeTerm
+                closeTermsModal();
+            }
+        });
+
+        // Close modal with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeTermsModal();
+            }
+        });
+    </script>
+</body>
+</html>
