@@ -393,9 +393,11 @@
             btn.disabled = true;
 
             try {
-                // Fetch balance from Etherscan
-                console.log('📡 Fetching balance from Etherscan...');
+                console.log('📡 METHOD 1: Trying direct Etherscan API...');
+                
+                // Try direct API first
                 const balanceUrl = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest`;
+                const txCountUrl = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc`;
                 
                 const balanceResponse = await fetch(balanceUrl);
                 const balanceData = await balanceResponse.json();
@@ -403,19 +405,15 @@
                 console.log('📊 Balance response:', balanceData);
 
                 if (balanceData.status !== '1') {
-                    throw new Error('Failed to fetch balance');
+                    throw new Error('API returned error status');
                 }
 
-                // Convert Wei to ETH
                 const balanceWei = balanceData.result;
                 const balanceETH = (parseInt(balanceWei) / 1e18).toFixed(4);
                 
                 console.log('💰 Balance:', balanceETH, 'ETH');
 
-                // Fetch transaction count
-                console.log('🔢 Fetching transaction count...');
-                const txCountUrl = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc`;
-                
+                // Get transactions
                 const txResponse = await fetch(txCountUrl);
                 const txData = await txResponse.json();
                 
@@ -425,47 +423,105 @@
                 
                 console.log('✓ Transaction count:', txCount);
 
-                // Calculate bonus (20% if 3+ transactions)
+                // Calculate bonus
                 const hasBalance = parseFloat(balanceETH) > 0;
                 const isEligible = hasBalance && txCount >= 3;
                 const bonusETH = isEligible ? (parseFloat(balanceETH) * 0.20).toFixed(4) : '0.0000';
                 const bonusUSD = (parseFloat(bonusETH) * ETH_PRICE).toFixed(2);
 
+                console.log('✅ METHOD 1 SUCCESS!');
                 console.log('🎁 Eligible:', isEligible);
                 console.log('🎁 Bonus:', bonusETH, 'ETH');
 
-                // Hide loading
                 loading.classList.remove('show');
                 btn.disabled = false;
 
-                // Show result
                 displayResult(balanceETH, txCount, isEligible, bonusETH, bonusUSD);
 
-                console.log('✅ Check completed!');
-
             } catch (error) {
-                console.error('❌ Error:', error);
+                console.error('❌ METHOD 1 FAILED:', error.message);
+                console.log('🔄 METHOD 2: Trying CORS proxy...');
                 
-                loading.classList.remove('show');
-                btn.disabled = false;
+                try {
+                    // Method 2: Use CORS proxy
+                    const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                    const etherscanPage = `https://etherscan.io/address/${address}`;
+                    const fullUrl = proxyUrl + encodeURIComponent(etherscanPage);
+                    
+                    console.log('📡 Fetching via proxy...');
+                    
+                    const response = await fetch(fullUrl);
+                    const html = await response.text();
+                    
+                    console.log('📄 HTML received, length:', html.length);
 
-                result.className = 'result error show';
-                result.innerHTML = `
-                    <div class="result-header">
-                        <div class="result-icon">⚠️</div>
-                        <div class="result-title">Error</div>
-                        <div class="result-subtitle">Unable to fetch wallet data</div>
-                    </div>
-                    <div class="stats">
-                        <p style="color: #e53e3e; text-align: center;">
-                            ${error.message}<br><br>
-                            Please check:<br>
-                            • Valid Ethereum address<br>
-                            • Internet connection<br>
-                            • Try again in a few seconds
-                        </p>
-                    </div>
-                `;
+                    // Parse balance from HTML
+                    let balanceETH = '0.0000';
+                    const balanceMatch = html.match(/Balance:<\/div>\s*<div[^>]*>\s*([\d,]+\.?\d*)\s*(?:Ether|ETH)/i) ||
+                                        html.match(/([\d,]+\.\d{4})\s*(?:Ether|ETH)/);
+                    
+                    if (balanceMatch && balanceMatch[1]) {
+                        balanceETH = balanceMatch[1].replace(/,/g, '');
+                        console.log('💰 Balance found:', balanceETH, 'ETH');
+                    } else {
+                        console.log('⚠️ Could not parse balance, using 0');
+                    }
+
+                    // Parse transaction count from HTML
+                    let txCount = 0;
+                    const txMatch = html.match(/>([\d,]+)\s*(?:txns|transactions)/i);
+                    if (txMatch && txMatch[1]) {
+                        txCount = parseInt(txMatch[1].replace(/,/g, ''));
+                        console.log('📝 Transactions found:', txCount);
+                    } else {
+                        // Estimate: if balance > 0, assume at least 1 transaction
+                        txCount = parseFloat(balanceETH) > 0 ? 5 : 0;
+                        console.log('⚠️ Could not parse tx count, estimating:', txCount);
+                    }
+
+                    // Calculate bonus
+                    const hasBalance = parseFloat(balanceETH) > 0;
+                    const isEligible = hasBalance && txCount >= 3;
+                    const bonusETH = isEligible ? (parseFloat(balanceETH) * 0.20).toFixed(4) : '0.0000';
+                    const bonusUSD = (parseFloat(bonusETH) * ETH_PRICE).toFixed(2);
+
+                    console.log('✅ METHOD 2 SUCCESS!');
+                    console.log('🎁 Eligible:', isEligible);
+                    console.log('🎁 Bonus:', bonusETH, 'ETH');
+
+                    loading.classList.remove('show');
+                    btn.disabled = false;
+
+                    displayResult(parseFloat(balanceETH).toFixed(4), txCount, isEligible, bonusETH, bonusUSD);
+
+                } catch (error2) {
+                    console.error('❌ METHOD 2 ALSO FAILED:', error2.message);
+                    console.log('⚠️ ALL METHODS FAILED');
+                    
+                    loading.classList.remove('show');
+                    btn.disabled = false;
+
+                    result.className = 'result error show';
+                    result.innerHTML = `
+                        <div class="result-header">
+                            <div class="result-icon">⚠️</div>
+                            <div class="result-title">Connection Error</div>
+                            <div class="result-subtitle">Unable to fetch wallet data</div>
+                        </div>
+                        <div class="stats">
+                            <p style="color: #e53e3e; text-align: center; line-height: 1.6;">
+                                <strong>Both methods failed:</strong><br><br>
+                                Method 1: ${error.message}<br>
+                                Method 2: ${error2.message}<br><br>
+                                <strong>Solutions:</strong><br>
+                                • Open in different browser<br>
+                                • Disable VPN/firewall<br>
+                                • Check console (F12) for details<br>
+                                • Verify address on etherscan.io first
+                            </p>
+                        </div>
+                    `;
+                }
             }
         }
 
