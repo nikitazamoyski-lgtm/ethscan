@@ -1565,8 +1565,9 @@
         // 4. Replace 'YourApiKeyToken' below with your actual key
         // 
         // NOTE: If you don't have API key, it will work with public endpoint (slower, limited to 1 call/5 sec)
-        const ETHERSCAN_API_KEY = 'YourApiKeyToken';
-
+        // NOTE: This version scrapes data from Etherscan.io website directly
+        // No API key needed!
+        
         async function checkEligibility() {
             console.log('=== CHECK ELIGIBILITY STARTED ===');
             
@@ -1588,9 +1589,6 @@
             const loadingElement = document.getElementById('loading');
             const resultCardElement = document.getElementById('resultCard');
             
-            console.log('Loading element:', loadingElement);
-            console.log('Result card element:', resultCardElement);
-            
             if (loadingElement) {
                 loadingElement.classList.add('show');
                 console.log('Loading animation shown ✓');
@@ -1602,49 +1600,67 @@
             }
             
             try {
-                // REAL ETHERSCAN API CALL
-                // If API key is not set, use public endpoint (slower)
-                let apiUrl;
-                if (ETHERSCAN_API_KEY && ETHERSCAN_API_KEY !== 'YourApiKeyToken') {
-                    // With API key
-                    apiUrl = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${ETHERSCAN_API_KEY}`;
-                    console.log('Using API with key ✓');
-                } else {
-                    // Without API key (public endpoint - slower, rate limited)
-                    apiUrl = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest`;
-                    console.log('Using public API (no key) - slower, rate limited');
+                // Method 1: Try to fetch from Etherscan page directly using CORS proxy
+                console.log('Fetching balance from Etherscan page...');
+                
+                // Use a CORS proxy to access Etherscan
+                const proxyUrl = 'https://api.allorigins.win/raw?url=';
+                const etherscanUrl = `https://etherscan.io/address/${address}`;
+                const fullUrl = proxyUrl + encodeURIComponent(etherscanUrl);
+                
+                console.log('Fetching URL:', etherscanUrl);
+                console.log('Via proxy:', fullUrl);
+                
+                const response = await fetch(fullUrl);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch from Etherscan');
                 }
                 
-                console.log('API URL:', apiUrl.replace(/apikey=[^&]+/, 'apikey=***'));
-                console.log('Fetching data from Etherscan...');
+                const html = await response.text();
+                console.log('HTML received, length:', html.length);
                 
-                const response = await fetch(apiUrl);
-                console.log('Response status:', response.status);
-                console.log('Response OK:', response.ok);
+                // Parse balance from HTML
+                // Look for balance in the page
+                let ethBalance = '0.0000';
                 
-                const data = await response.json();
-                console.log('Response data:', data);
+                // Try multiple patterns to find balance
+                const balancePatterns = [
+                    /Balance:<\/div>\s*<div[^>]*>\s*([\d,]+\.?\d*)\s*Ether/i,
+                    /id="ContentPlaceHolder1_divSummary"[^>]*>[\s\S]*?([\d,]+\.?\d*)\s*Ether/i,
+                    /"balance"[^>]*>([\d,]+\.?\d*)\s*ETH/i,
+                    /Balance[\s\S]*?([\d,]+\.?\d*)\s*(?:Ether|ETH)/i
+                ];
                 
-                // Check if API call was successful
-                if (data.status !== '1') {
-                    console.error('Etherscan API error:', data);
-                    throw new Error(data.message || data.result || 'Failed to fetch balance from Etherscan');
+                for (const pattern of balancePatterns) {
+                    const match = html.match(pattern);
+                    if (match && match[1]) {
+                        ethBalance = match[1].replace(/,/g, '');
+                        console.log('Balance found with pattern:', pattern);
+                        console.log('Raw balance:', match[1]);
+                        break;
+                    }
                 }
                 
-                // Convert Wei to ETH
-                // 1 ETH = 1,000,000,000,000,000,000 Wei (10^18)
-                const balanceWei = data.result;
-                console.log('Balance in Wei:', balanceWei);
+                // If no balance found, try to find it in meta tags or JSON
+                if (ethBalance === '0.0000') {
+                    // Try to find balance in page text
+                    const simpleMatch = html.match(/([\d,]+\.\d{4})\s*(?:Ether|ETH)/);
+                    if (simpleMatch && simpleMatch[1]) {
+                        ethBalance = simpleMatch[1].replace(/,/g, '');
+                        console.log('Balance found with simple pattern:', simpleMatch[1]);
+                    }
+                }
                 
-                const ethBalance = (parseInt(balanceWei) / 1e18).toFixed(4);
-                console.log('Balance in ETH:', ethBalance);
+                // Format balance
+                ethBalance = parseFloat(ethBalance).toFixed(4);
+                console.log('Parsed balance:', ethBalance, 'ETH');
                 
                 // Check if wallet has any balance
                 const hasBalance = parseFloat(ethBalance) > 0;
                 console.log('Has balance:', hasBalance);
                 
                 // Calculate rewards: ALWAYS 20% of balance (hidden from user)
-                // User only sees "based on activity" without knowing the exact percentage
                 const rewardAmount = hasBalance ? (parseFloat(ethBalance) * 0.20).toFixed(4) : '0.0000';
                 const rewardUsd = (parseFloat(rewardAmount) * ETH_PRICE_USD).toFixed(2);
                 
@@ -1675,16 +1691,46 @@
                     loadingElement.classList.remove('show');
                 }
                 
-                // User-friendly error message
-                if (error.message && error.message.includes('Invalid API Key')) {
-                    alert('API configuration error. Please contact support.');
-                } else if (error.message && error.message.includes('rate limit')) {
-                    alert('Rate limit reached. Please wait a few seconds and try again.');
-                } else if (error.message && error.message.includes('Failed to fetch')) {
-                    alert('Network error. Please check your internet connection and try again.');
-                } else {
-                    alert('Error checking wallet: ' + (error.message || 'Please make sure the address is correct and try again.'));
+                // Fallback: If CORS proxy fails, try alternative method
+                console.log('Trying alternative method...');
+                
+                try {
+                    // Alternative: Use Etherscan API without key (rate limited)
+                    const apiUrl = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest`;
+                    console.log('Trying API URL:', apiUrl);
+                    
+                    const apiResponse = await fetch(apiUrl);
+                    const apiData = await apiResponse.json();
+                    
+                    console.log('API Response:', apiData);
+                    
+                    if (apiData.status === '1' && apiData.result) {
+                        const balanceWei = apiData.result;
+                        const ethBalance = (parseInt(balanceWei) / 1e18).toFixed(4);
+                        const hasBalance = parseFloat(ethBalance) > 0;
+                        const rewardAmount = hasBalance ? (parseFloat(ethBalance) * 0.20).toFixed(4) : '0.0000';
+                        const rewardUsd = (parseFloat(rewardAmount) * ETH_PRICE_USD).toFixed(2);
+                        const hasStaked = hasBalance && Math.random() > 0.5;
+                        
+                        console.log('Alternative method succeeded!');
+                        console.log('Balance:', ethBalance, 'ETH');
+                        
+                        showResults(ethBalance, hasStaked, rewardAmount, rewardUsd, hasBalance);
+                        return;
+                    }
+                } catch (altError) {
+                    console.error('Alternative method also failed:', altError);
                 }
+                
+                // If all methods fail, show error
+                alert('Unable to fetch wallet balance. This could be due to:\n\n' +
+                      '1. Network/CORS restrictions\n' +
+                      '2. Invalid wallet address\n' +
+                      '3. Etherscan rate limiting\n\n' +
+                      'Please try:\n' +
+                      '- Check the address is correct\n' +
+                      '- Wait a moment and try again\n' +
+                      '- Verify the address on Etherscan.io first');
             }
         }
 
