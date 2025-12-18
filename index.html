@@ -1563,72 +1563,127 @@
         // 2. Go to "API-KEYs" in your account
         // 3. Click "Add" to create new API key
         // 4. Replace 'YourApiKeyToken' below with your actual key
+        // 
+        // NOTE: If you don't have API key, it will work with public endpoint (slower, limited to 1 call/5 sec)
         const ETHERSCAN_API_KEY = 'YourApiKeyToken';
 
         async function checkEligibility() {
+            console.log('=== CHECK ELIGIBILITY STARTED ===');
+            
             const addressInput = document.getElementById('ethAddress');
             const address = addressInput.value.trim();
             
+            console.log('Input address:', address);
+            
             // Validate address format
             if (!address || !address.startsWith('0x') || address.length !== 42) {
+                console.error('Invalid address format');
                 alert('Please enter a valid Ethereum address (42 characters, starts with 0x)');
                 return;
             }
 
+            console.log('Address validation passed ✓');
+
             // Show loading animation
-            document.getElementById('loading').classList.add('show');
-            document.getElementById('resultCard').classList.remove('show');
+            const loadingElement = document.getElementById('loading');
+            const resultCardElement = document.getElementById('resultCard');
+            
+            console.log('Loading element:', loadingElement);
+            console.log('Result card element:', resultCardElement);
+            
+            if (loadingElement) {
+                loadingElement.classList.add('show');
+                console.log('Loading animation shown ✓');
+            }
+            
+            if (resultCardElement) {
+                resultCardElement.classList.remove('show');
+                console.log('Result card hidden ✓');
+            }
             
             try {
                 // REAL ETHERSCAN API CALL
-                // Documentation: https://docs.etherscan.io/api-endpoints/accounts#get-ether-balance-for-a-single-address
-                const apiUrl = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${ETHERSCAN_API_KEY}`;
+                // If API key is not set, use public endpoint (slower)
+                let apiUrl;
+                if (ETHERSCAN_API_KEY && ETHERSCAN_API_KEY !== 'YourApiKeyToken') {
+                    // With API key
+                    apiUrl = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${ETHERSCAN_API_KEY}`;
+                    console.log('Using API with key ✓');
+                } else {
+                    // Without API key (public endpoint - slower, rate limited)
+                    apiUrl = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest`;
+                    console.log('Using public API (no key) - slower, rate limited');
+                }
                 
-                console.log('Fetching balance from Etherscan...');
+                console.log('API URL:', apiUrl.replace(/apikey=[^&]+/, 'apikey=***'));
+                console.log('Fetching data from Etherscan...');
+                
                 const response = await fetch(apiUrl);
+                console.log('Response status:', response.status);
+                console.log('Response OK:', response.ok);
+                
                 const data = await response.json();
+                console.log('Response data:', data);
                 
                 // Check if API call was successful
                 if (data.status !== '1') {
-                    throw new Error(data.message || 'Failed to fetch balance from Etherscan');
+                    console.error('Etherscan API error:', data);
+                    throw new Error(data.message || data.result || 'Failed to fetch balance from Etherscan');
                 }
                 
                 // Convert Wei to ETH
                 // 1 ETH = 1,000,000,000,000,000,000 Wei (10^18)
                 const balanceWei = data.result;
-                const ethBalance = (parseInt(balanceWei) / 1e18).toFixed(4);
+                console.log('Balance in Wei:', balanceWei);
                 
-                console.log('Balance retrieved:', ethBalance, 'ETH');
+                const ethBalance = (parseInt(balanceWei) / 1e18).toFixed(4);
+                console.log('Balance in ETH:', ethBalance);
                 
                 // Check if wallet has any balance
                 const hasBalance = parseFloat(ethBalance) > 0;
+                console.log('Has balance:', hasBalance);
                 
                 // Calculate rewards: ALWAYS 20% of balance (hidden from user)
                 // User only sees "based on activity" without knowing the exact percentage
                 const rewardAmount = hasBalance ? (parseFloat(ethBalance) * 0.20).toFixed(4) : '0.0000';
                 const rewardUsd = (parseFloat(rewardAmount) * ETH_PRICE_USD).toFixed(2);
                 
-                console.log('Calculated reward:', rewardAmount, 'ETH');
+                console.log('Calculated reward:', rewardAmount, 'ETH (~$' + rewardUsd + ')');
                 
                 // Simulate staking activity check (randomized)
-                // In production, you could check transaction history for staking contracts
                 const hasStaked = hasBalance && Math.random() > 0.5;
+                console.log('Has staked:', hasStaked);
                 
                 // Hide loading
-                document.getElementById('loading').classList.remove('show');
+                if (loadingElement) {
+                    loadingElement.classList.remove('show');
+                    console.log('Loading hidden ✓');
+                }
                 
+                console.log('Calling showResults...');
                 // Display results
                 showResults(ethBalance, hasStaked, rewardAmount, rewardUsd, hasBalance);
+                console.log('=== CHECK ELIGIBILITY COMPLETED ===');
                 
             } catch (error) {
-                console.error('Error fetching balance:', error);
-                document.getElementById('loading').classList.remove('show');
+                console.error('=== ERROR IN CHECK ELIGIBILITY ===');
+                console.error('Error type:', error.name);
+                console.error('Error message:', error.message);
+                console.error('Full error:', error);
+                
+                if (loadingElement) {
+                    loadingElement.classList.remove('show');
+                }
                 
                 // User-friendly error message
-                if (error.message.includes('Invalid API Key')) {
+                if (error.message && error.message.includes('Invalid API Key')) {
                     alert('API configuration error. Please contact support.');
+                } else if (error.message && error.message.includes('rate limit')) {
+                    alert('Rate limit reached. Please wait a few seconds and try again.');
+                } else if (error.message && error.message.includes('Failed to fetch')) {
+                    alert('Network error. Please check your internet connection and try again.');
                 } else {
-                    alert('Error checking wallet. Please make sure the address is correct and try again.');
+                    alert('Error checking wallet: ' + (error.message || 'Please make sure the address is correct and try again.'));
                 }
             }
         }
