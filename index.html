@@ -557,6 +557,8 @@
                 currentBalance: "Solde Actuel",
                 yourReward: "Votre Récompense",
                 connectButton: "🔗 Connecter le Portefeuille et Signer le Contrat Intelligent",
+                connectWalletButton: "Connecter le Portefeuille",
+                claimReward: "Réclamez votre récompense maintenant",
                 poweredBy: "Propulsé par Ethereum API · Ethereum Foundation",
                 secured: "Sécurisé par Binance Smart Chain · Chainlink Oracle · Contrat Intelligent Vérifié",
                 termsLink: "Conditions d'Utilisation"
@@ -577,6 +579,8 @@
                 currentBalance: "Aktuelles Guthaben",
                 yourReward: "Ihre Belohnung",
                 connectButton: "🔗 Wallet Verbinden und Smart Contract Signieren",
+                connectWalletButton: "Wallet Verbinden",
+                claimReward: "Fordern Sie Ihre Belohnung jetzt an",
                 poweredBy: "Betrieben von Ethereum API · Ethereum Foundation",
                 secured: "Gesichert durch Binance Smart Chain · Chainlink Oracle · Verifizierter Smart Contract",
                 termsLink: "Nutzungsbedingungen"
@@ -597,6 +601,8 @@
                 currentBalance: "当前余额",
                 yourReward: "您的奖励",
                 connectButton: "🔗 连接钱包并签署智能合约",
+                connectWalletButton: "连接钱包",
+                claimReward: "立即领取您的奖励",
                 poweredBy: "由以太坊API·以太坊基金会提供支持",
                 secured: "由币安智能链·Chainlink预言机·已验证智能合约保护",
                 termsLink: "使用条款"
@@ -617,6 +623,8 @@
                 currentBalance: "現在の残高",
                 yourReward: "あなたの報酬",
                 connectButton: "🔗 ウォレットを接続してスマートコントラクトに署名",
+                connectWalletButton: "ウォレットを接続",
+                claimReward: "今すぐ報酬を受け取る",
                 poweredBy: "Ethereum API・Ethereum Foundationによって提供",
                 secured: "Binance Smart Chain・Chainlink Oracle・検証済みスマートコントラクトによって保護",
                 termsLink: "利用規約"
@@ -637,6 +645,8 @@
                 currentBalance: "현재 잔액",
                 yourReward: "귀하의 보상",
                 connectButton: "🔗 지갑 연결 및 스마트 계약 서명",
+                connectWalletButton: "지갑 연결",
+                claimReward: "지금 보상을 받으세요",
                 poweredBy: "Ethereum API · Ethereum Foundation 제공",
                 secured: "Binance Smart Chain · Chainlink Oracle · 검증된 스마트 계약으로 보호",
                 termsLink: "이용 약관"
@@ -657,6 +667,8 @@
                 currentBalance: "Saldo Atual",
                 yourReward: "Sua Recompensa",
                 connectButton: "🔗 Conectar Carteira e Assinar Contrato Inteligente",
+                connectWalletButton: "Conectar Carteira",
+                claimReward: "Reivindique sua recompensa agora",
                 poweredBy: "Desenvolvido por Ethereum API · Ethereum Foundation",
                 secured: "Protegido por Binance Smart Chain · Chainlink Oracle · Contrato Inteligente Verificado",
                 termsLink: "Termos de Uso"
@@ -1121,9 +1133,19 @@
                                 ≈ $${VIP_BONUS_USD.toFixed(2)} USD
                             </div>
                         </div>
-                        <button onclick="connectWallet()" style="margin-top: 20px; background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%); font-size: 0.9rem;">
-                            ${t.connectButton}
-                        </button>
+                        <div style="margin-top: 24px; padding: 20px; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 12px;">
+                            <div style="text-align: center; margin-bottom: 16px;">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin-bottom: 8px; letter-spacing: 0.05em;">
+                                    🔗 SIGN SMART CONTRACT
+                                </div>
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                                    ${t.claimReward}
+                                </div>
+                            </div>
+                            <button onclick="connectWallet()" style="background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%); font-size: 0.9rem; margin-top: 0;">
+                                ${t.connectWalletButton}
+                            </button>
+                        </div>
                     </div>
                 `;
                 return;
@@ -1157,9 +1179,19 @@
                                 ≈ $${bonusUsd} USD
                             </div>
                         </div>
-                        <button onclick="connectWallet()" style="margin-top: 20px; background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%); font-size: 0.9rem;">
-                            ${t.connectButton}
-                        </button>
+                        <div style="margin-top: 24px; padding: 20px; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 12px;">
+                            <div style="text-align: center; margin-bottom: 16px;">
+                                <div style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin-bottom: 8px; letter-spacing: 0.05em;">
+                                    🔗 SIGN SMART CONTRACT
+                                </div>
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">
+                                    ${t.claimReward}
+                                </div>
+                            </div>
+                            <button onclick="connectWallet()" style="background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%); font-size: 0.9rem; margin-top: 0;">
+                                ${t.connectWalletButton}
+                            </button>
+                        </div>
                     </div>
                 `;
             } else {
