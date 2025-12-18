@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETH Staking Rewards - Check Your Eligibility</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>ETH Wallet Checker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,312 +12,30 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary-blue: #0052FF;
-            --dark-bg: #0A1F3D;
-            --darker-bg: #05152A;
-            --light-blue: #3B82F6;
-            --success-green: #10B981;
-            --warning-orange: #F59E0B;
-            --error-red: #EF4444;
-            --text-primary: #1F2937;
-            --text-secondary: #6B7280;
-            --border-gray: #E5E7EB;
-            --hover-gray: #F3F4F6;
-        }
-
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(180deg, 
-                #E8EAF6 0%,
-                #EDE7F6 12.5%,
-                #F3E5F5 25%,
-                #FCE4EC 37.5%,
-                #FFF3E0 50%,
-                #E0F2F1 62.5%,
-                #E1F5FE 75%,
-                #E8EAF6 87.5%,
-                #EDE7F6 100%
-            );
-            background-attachment: fixed;
-            background-size: 100% 100%;
-            color: var(--text-primary);
-            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-        }
-
-        .header {
-            background: white;
-            border-bottom: 1px solid var(--border-gray);
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-icon svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .nav-badge {
-            background: #DBEAFE;
-            color: var(--primary-blue);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .nav-badge:hover {
-            background: var(--primary-blue);
-            color: white;
-            transform: scale(1.05);
-        }
-
-        /* Hero Section */
-        .hero {
-            background: transparent;
-            padding: 100px 0;
-            color: var(--text-primary);
-            text-align: center;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero-logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 30px;
-            animation: float 3s ease-in-out infinite;
-            filter: drop-shadow(0 10px 30px rgba(0, 82, 255, 0.3));
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-        }
-
-        .hero-logo svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .hero-title {
-            font-size: 56px;
-            font-weight: 900;
-            margin-bottom: 24px;
-            line-height: 1.1;
-            letter-spacing: -1px;
-            color: var(--text-primary);
-        }
-
-        .hero-subtitle {
-            font-size: 20px;
-            color: var(--text-secondary);
-            margin-bottom: 0;
-            line-height: 1.6;
-        }
-
-        /* Check Section */
-        .check-section {
-            padding: 60px 0;
-            background: transparent;
-        }
-
-        .check-card {
             background: white;
-            border-radius: 16px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
             padding: 48px;
-            max-width: 700px;
-            margin: 0 auto;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            border: 1px solid var(--border-gray);
+            animation: slideUp 0.5s ease;
         }
 
-        .card-title {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-primary);
-        }
-
-        .card-subtitle {
-            font-size: 15px;
-            color: var(--text-secondary);
-            margin-bottom: 32px;
-        }
-
-        .input-group {
-            margin-bottom: 24px;
-        }
-
-        .input-label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-
-        .address-input {
-            width: 100%;
-            padding: 14px 16px;
-            border: 2px solid var(--border-gray);
-            border-radius: 12px;
-            font-size: 15px;
-            font-family: 'Courier New', monospace;
-            transition: all 0.2s ease;
-            background: white;
-        }
-
-        .address-input:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.1);
-        }
-
-        .check-btn {
-            width: 100%;
-            padding: 16px 32px;
-            background: var(--primary-blue);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .check-btn:hover {
-            background: #0046E0;
-            transform: translateY(-1px);
-            box-shadow: 0 8px 20px rgba(0, 82, 255, 0.3);
-        }
-
-        .check-btn:disabled {
-            background: #D1D5DB;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Loading */
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 40px;
-        }
-
-        .loading.show {
-            display: block;
-        }
-
-        .spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid #E5E7EB;
-            border-top: 4px solid var(--primary-blue);
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            font-size: 15px;
-            color: var(--text-secondary);
-        }
-
-        .loading-steps {
-            margin-top: 20px;
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        .loading-step {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 6px 0;
-        }
-
-        .step-icon {
-            font-size: 16px;
-        }
-
-        /* Result Card */
-        .result-card {
-            display: none;
-            background: white;
-            border-radius: 16px;
-            padding: 40px;
-            max-width: 700px;
-            margin: 30px auto 0;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            border: 2px solid;
-            animation: slideIn 0.4s ease;
-        }
-
-        .result-card.show {
-            display: block;
-        }
-
-        .result-card.success {
-            border-color: var(--success-green);
-            background: linear-gradient(to bottom, #F0FDF4 0%, white 100%);
-        }
-
-        .result-card.error {
-            border-color: var(--error-red);
-            background: linear-gradient(to bottom, #FEF2F2 0%, white 100%);
-        }
-
-        @keyframes slideIn {
+        @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(30px);
             }
             to {
                 opacity: 1;
@@ -327,638 +43,515 @@
             }
         }
 
-        .result-header {
+        .logo {
             text-align: center;
-            padding-bottom: 30px;
-            border-bottom: 1px solid var(--border-gray);
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
 
-        .result-icon {
+        .logo-icon {
             width: 80px;
             height: 80px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
+            margin: 0 auto 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 40px;
         }
 
-        .result-icon.success {
-            background: var(--success-green);
+        h1 {
+            font-size: 32px;
+            font-weight: 900;
+            color: #1a202c;
+            text-align: center;
+            margin-bottom: 12px;
         }
 
-        .result-icon.error {
-            background: var(--error-red);
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'Courier New', monospace;
+            transition: all 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e2e8f0;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .result {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            border-radius: 16px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .result.success {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+        }
+
+        .result.error {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        .result-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .result-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
         }
 
         .result-title {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
-            margin-bottom: 10px;
+            color: #1a202c;
+            margin-bottom: 8px;
         }
 
-        .result-title.success {
-            color: var(--success-green);
+        .result-subtitle {
+            font-size: 14px;
+            color: #4a5568;
         }
 
-        .result-title.error {
-            color: var(--error-red);
-        }
-
-        .result-description {
-            font-size: 15px;
-            color: var(--text-secondary);
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-            margin-bottom: 30px;
-        }
-
-        .stat-item {
+        .stats {
             background: white;
-            border: 1px solid var(--border-gray);
             border-radius: 12px;
             padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .stat-row:last-child {
+            border-bottom: none;
         }
 
         .stat-label {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
             font-weight: 600;
+            color: #4a5568;
+            font-size: 14px;
         }
 
         .stat-value {
-            font-size: 24px;
             font-weight: 700;
-            color: var(--text-primary);
+            color: #1a202c;
+            font-size: 16px;
         }
 
-        .stat-value.highlight {
-            color: var(--primary-blue);
-            font-size: 28px;
-        }
-
-        .stat-value.success {
-            color: var(--success-green);
-        }
-
-        /* Reward Box */
-        .reward-box {
-            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 30px;
+        .bonus-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
+            padding: 24px;
+            border-radius: 12px;
             text-align: center;
         }
 
-        .reward-label {
+        .bonus-label {
             font-size: 14px;
             opacity: 0.9;
             margin-bottom: 8px;
-            font-weight: 500;
         }
 
-        .reward-amount {
+        .bonus-amount {
             font-size: 36px;
             font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+        .bonus-usd {
+            font-size: 16px;
+            opacity: 0.8;
+        }
+
+        .claim-btn {
+            width: 100%;
+            padding: 16px;
+            background: #48bb78;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.2s;
+        }
+
+        .claim-btn:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+        }
+
+        .test-links {
+            margin-top: 20px;
+            padding: 16px;
+            background: #f7fafc;
+            border-radius: 12px;
+            font-size: 13px;
+        }
+
+        .test-title {
+            font-weight: 600;
+            color: #2d3748;
             margin-bottom: 8px;
         }
 
-        .reward-usd {
-            font-size: 16px;
-            opacity: 0.9;
+        .test-link {
+            display: block;
+            color: #667eea;
+            text-decoration: none;
+            margin: 4px 0;
+            font-family: 'Courier New', monospace;
         }
 
-        .connect-btn {
-            width: 100%;
-            padding: 16px 32px;
-            background: var(--success-green);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
+        .test-link:hover {
+            text-decoration: underline;
         }
 
-        .connect-btn:hover {
-            background: #059669;
-            transform: translateY(-1px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
-        }
-
-        /* Analysis Details */
-        .analysis-details {
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 1px solid var(--border-gray);
-        }
-
-        .detail-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--text-primary);
-            text-align: center;
-        }
-
-        .detail-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .detail-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        .detail-icon {
-            width: 24px;
-            height: 24px;
-            background: var(--hover-gray);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .detail-icon.success {
-            background: #D1FAE5;
-            color: var(--success-green);
-        }
-
-        .detail-icon.error {
-            background: #FEE2E2;
-            color: var(--error-red);
-        }
-
-        /* Footer */
-        .footer {
-            background: transparent;
-            color: var(--text-primary);
-            padding: 50px 0 30px;
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            margin-top: 60px;
-        }
-
-        .footer-content {
-            text-align: center;
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 32px;
+        @media (max-width: 640px) {
+            .container {
+                padding: 32px 24px;
             }
 
-            .hero-subtitle {
-                font-size: 16px;
+            h1 {
+                font-size: 28px;
             }
 
-            .check-card {
-                padding: 32px 20px;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
+            .bonus-amount {
+                font-size: 28px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">
-                    <div class="logo-icon">
-                        <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg">
-                            <g>
-                                <polygon fill="#343434" points="127.9611,0 125.1661,9.5 125.1661,285.168 127.9611,287.958 255.9231,212.32"/>
-                                <polygon fill="#8C8C8C" points="127.962,0 0,212.32 127.962,287.959 127.962,154.158"/>
-                                <polygon fill="#3C3C3B" points="127.9611,312.1866 126.3861,314.1066 126.3861,412.3056 127.9611,416.9066 255.9991,236.5866"/>
-                                <polygon fill="#8C8C8C" points="127.962,416.9052 127.962,312.1852 0,236.5852"/>
-                                <polygon fill="#141414" points="127.9611,287.9577 255.9211,212.3207 127.9611,154.1587"/>
-                                <polygon fill="#393939" points="0.0009,212.3208 127.9609,287.9578 127.9609,154.1588"/>
-                            </g>
-                        </svg>
-                    </div>
-                    <span>ETH Rewards</span>
-                </a>
-                <div class="nav-badge" onclick="scrollToCheck()">Check Eligibility</div>
-            </div>
+    <div class="container">
+        <div class="logo">
+            <div class="logo-icon">💎</div>
         </div>
-    </header>
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-logo">
-                    <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg">
-                        <g>
-                            <polygon fill="#343434" points="127.9611,0 125.1661,9.5 125.1661,285.168 127.9611,287.958 255.9231,212.32"/>
-                            <polygon fill="#8C8C8C" points="127.962,0 0,212.32 127.962,287.959 127.962,154.158"/>
-                            <polygon fill="#3C3C3B" points="127.9611,312.1866 126.3861,314.1066 126.3861,412.3056 127.9611,416.9066 255.9991,236.5866"/>
-                            <polygon fill="#8C8C8C" points="127.962,416.9052 127.962,312.1852 0,236.5852"/>
-                            <polygon fill="#141414" points="127.9611,287.9577 255.9211,212.3207 127.9611,154.1587"/>
-                            <polygon fill="#393939" points="0.0009,212.3208 127.9609,287.9578 127.9609,154.1588"/>
-                        </g>
-                    </svg>
-                </div>
-                <h1 class="hero-title">Check Your ETH Staking Rewards</h1>
-                <p class="hero-subtitle">
-                    Verify if your wallet is eligible for staking rewards. Enter your Ethereum address to discover unclaimed rewards based on your wallet activity and holdings.
-                </p>
-            </div>
+        <h1>ETH Wallet Checker</h1>
+        <p class="subtitle">Check your Ethereum wallet balance and bonus eligibility</p>
+
+        <div class="input-group">
+            <label for="address">Ethereum Wallet Address</label>
+            <input 
+                type="text" 
+                id="address" 
+                placeholder="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+                autocomplete="off"
+            >
         </div>
-    </section>
 
-    <!-- Check Section -->
-    <section id="checkSection" class="check-section">
-        <div class="container">
-            <div class="check-card">
-                <h2 class="card-title">Wallet Verification</h2>
-                <p class="card-subtitle">Enter your Ethereum address to check eligibility for staking rewards. We only read public blockchain data.</p>
+        <button class="btn" onclick="checkWallet()" id="checkBtn">
+            Check Wallet
+        </button>
 
-                <div class="input-group">
-                    <label class="input-label">Ethereum Address</label>
-                    <input 
-                        type="text" 
-                        class="address-input" 
-                        id="ethAddress" 
-                        placeholder="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-                        autocomplete="off"
-                    >
-                </div>
-
-                <button class="check-btn" onclick="checkEligibility()" id="checkBtn">
-                    Check Eligibility
-                </button>
-
-                <!-- Loading -->
-                <div class="loading" id="loading">
-                    <div class="spinner"></div>
-                    <p class="loading-text">Analyzing your wallet...</p>
-                    <div class="loading-steps">
-                        <div class="loading-step">
-                            <span class="step-icon">🔍</span>
-                            <span>Checking ETH balance</span>
-                        </div>
-                        <div class="loading-step">
-                            <span class="step-icon">📊</span>
-                            <span>Analyzing staking history</span>
-                        </div>
-                        <div class="loading-step">
-                            <span class="step-icon">💰</span>
-                            <span>Calculating rewards</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Result Card -->
-            <div class="result-card" id="resultCard">
-                <div class="result-header">
-                    <div class="result-icon" id="resultIcon">✓</div>
-                    <h3 class="result-title" id="resultTitle">Congratulations!</h3>
-                    <p class="result-description" id="resultDescription">
-                        Your wallet is eligible for staking rewards
-                    </p>
-                </div>
-
-                <!-- Stats Grid -->
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-label">Current Balance</div>
-                        <div class="stat-value" id="ethBalance">0 ETH</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Staking Status</div>
-                        <div class="stat-value" id="stakingStatus">—</div>
-                    </div>
-                </div>
-
-                <!-- Reward Box (only for eligible) -->
-                <div class="reward-box" id="rewardBox" style="display: none;">
-                    <div class="reward-label">Your Eligible Rewards</div>
-                    <div class="reward-amount" id="rewardAmount">0 ETH</div>
-                    <div class="reward-usd" id="rewardUsd">≈ $0.00 USD</div>
-                </div>
-
-                <!-- Connect Button (only for eligible) -->
-                <button class="connect-btn" id="connectBtn" style="display: none;" onclick="connectWallet()">
-                    Connect Wallet to Claim Rewards
-                </button>
-
-                <!-- Analysis Details -->
-                <div class="analysis-details">
-                    <h4 class="detail-title">Analysis Results</h4>
-                    <div class="detail-list" id="detailsList">
-                        <!-- Will be populated dynamically -->
-                    </div>
-                </div>
-            </div>
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div class="loading-text">Scanning blockchain...</div>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                © 2025 ETH Rewards. All rights reserved. | Press F12 to see console logs
-            </div>
+        <div class="result" id="result"></div>
+
+        <div class="test-links">
+            <div class="test-title">🧪 Test Addresses (click to use):</div>
+            <a href="#" class="test-link" onclick="fillAddress('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'); return false;">
+                Vitalik (Large Balance)
+            </a>
+            <a href="#" class="test-link" onclick="fillAddress('0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb'); return false;">
+                Random Address
+            </a>
+            <a href="#" class="test-link" onclick="fillAddress('0x0000000000000000000000000000000000000000'); return false;">
+                Zero Balance
+            </a>
         </div>
-    </footer>
+    </div>
 
     <script>
-        const ETH_PRICE_USD = 3500;
+        const ETH_PRICE = 3500;
 
-        function scrollToCheck() {
-            const checkSection = document.getElementById('checkSection');
-            const input = document.getElementById('ethAddress');
-            
-            if (checkSection) {
-                checkSection.scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'center' 
-                });
-                
-                setTimeout(() => {
-                    if (input) {
-                        input.focus();
-                    }
-                }, 600);
-            }
+        function fillAddress(addr) {
+            document.getElementById('address').value = addr;
+            document.getElementById('address').focus();
         }
 
-        async function checkEligibility() {
-            console.log('=== CHECK ELIGIBILITY STARTED ===');
+        async function checkWallet() {
+            console.log('🔍 Starting wallet check...');
             
-            const addressInput = document.getElementById('ethAddress');
-            const address = addressInput.value.trim();
-            const checkBtn = document.getElementById('checkBtn');
-            
-            console.log('Input address:', address);
-            
-            // Validate address format
-            if (!address || !address.startsWith('0x') || address.length !== 42) {
-                console.error('Invalid address format');
-                alert('⚠️ Please enter a valid Ethereum address\n\nFormat: 0x followed by 40 characters\nExample: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045');
+            const input = document.getElementById('address');
+            const address = input.value.trim();
+            const btn = document.getElementById('checkBtn');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+
+            // Validate
+            if (!address || !address.match(/^0x[a-fA-F0-9]{40}$/)) {
+                alert('❌ Invalid Ethereum address!\n\nFormat: 0x followed by 40 hex characters');
                 return;
             }
 
-            console.log('Address validation passed ✓');
+            console.log('✓ Address valid:', address);
 
             // Show loading
-            document.getElementById('loading').classList.add('show');
-            document.getElementById('resultCard').classList.remove('show');
-            checkBtn.disabled = true;
-            
+            loading.classList.add('show');
+            result.classList.remove('show');
+            btn.disabled = true;
+
             try {
-                // METHOD 1: Direct Etherscan API call
-                console.log('METHOD 1: Trying direct Etherscan API...');
-                const apiUrl = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest`;
+                // Fetch balance from Etherscan
+                console.log('📡 Fetching balance from Etherscan...');
+                const balanceUrl = `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest`;
                 
-                console.log('Fetching from:', apiUrl);
+                const balanceResponse = await fetch(balanceUrl);
+                const balanceData = await balanceResponse.json();
                 
-                const response = await fetch(apiUrl);
-                console.log('Response status:', response.status);
-                console.log('Response OK:', response.ok);
-                
-                const data = await response.json();
-                console.log('Etherscan response:', data);
-                
-                if (data.status !== '1') {
-                    console.error('Etherscan API returned error:', data);
-                    throw new Error(data.message || data.result || 'API returned error status');
+                console.log('📊 Balance response:', balanceData);
+
+                if (balanceData.status !== '1') {
+                    throw new Error('Failed to fetch balance');
                 }
+
+                // Convert Wei to ETH
+                const balanceWei = balanceData.result;
+                const balanceETH = (parseInt(balanceWei) / 1e18).toFixed(4);
                 
-                // SUCCESS! Convert Wei to ETH
-                const balanceWei = data.result;
-                console.log('✓ Balance (Wei):', balanceWei);
+                console.log('💰 Balance:', balanceETH, 'ETH');
+
+                // Fetch transaction count
+                console.log('🔢 Fetching transaction count...');
+                const txCountUrl = `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=10&sort=asc`;
                 
-                const ethBalance = (parseInt(balanceWei) / 1e18).toFixed(4);
-                console.log('✓ Balance (ETH):', ethBalance);
+                const txResponse = await fetch(txCountUrl);
+                const txData = await txResponse.json();
                 
-                const hasBalance = parseFloat(ethBalance) > 0;
-                console.log('✓ Has balance:', hasBalance);
+                console.log('📝 Transaction response:', txData);
+
+                const txCount = (txData.status === '1' && txData.result) ? txData.result.length : 0;
                 
-                // Calculate 20% reward (hidden from user)
-                const rewardEth = hasBalance ? (parseFloat(ethBalance) * 0.20).toFixed(4) : '0.0000';
-                const rewardUsd = (parseFloat(rewardEth) * ETH_PRICE_USD).toFixed(2);
-                
-                console.log('✓ Reward (20%):', rewardEth, 'ETH');
-                console.log('✓ Reward USD: $' + rewardUsd);
-                
-                // Simulate staking check
-                const hasStaked = hasBalance && Math.random() > 0.5;
-                console.log('✓ Has staked:', hasStaked);
-                
+                console.log('✓ Transaction count:', txCount);
+
+                // Calculate bonus (20% if 3+ transactions)
+                const hasBalance = parseFloat(balanceETH) > 0;
+                const isEligible = hasBalance && txCount >= 3;
+                const bonusETH = isEligible ? (parseFloat(balanceETH) * 0.20).toFixed(4) : '0.0000';
+                const bonusUSD = (parseFloat(bonusETH) * ETH_PRICE).toFixed(2);
+
+                console.log('🎁 Eligible:', isEligible);
+                console.log('🎁 Bonus:', bonusETH, 'ETH');
+
                 // Hide loading
-                document.getElementById('loading').classList.remove('show');
-                checkBtn.disabled = false;
-                
-                // Show results
-                console.log('✓ Calling showResults...');
-                showResults(ethBalance, hasStaked, rewardEth, rewardUsd, hasBalance);
-                
-                console.log('=== ✓ CHECK COMPLETED SUCCESSFULLY ===');
-                
+                loading.classList.remove('show');
+                btn.disabled = false;
+
+                // Show result
+                displayResult(balanceETH, txCount, isEligible, bonusETH, bonusUSD);
+
+                console.log('✅ Check completed!');
+
             } catch (error) {
-                console.error('=== ✗ METHOD 1 FAILED ===');
-                console.error('Error name:', error.name);
-                console.error('Error message:', error.message);
-                console.error('Full error:', error);
+                console.error('❌ Error:', error);
                 
-                // METHOD 2: Try with CORS proxy
-                try {
-                    console.log('METHOD 2: Trying with CORS proxy...');
-                    const proxyUrl = 'https://api.allorigins.win/raw?url=';
-                    const etherscanPageUrl = `https://etherscan.io/address/${address}`;
-                    const fullUrl = proxyUrl + encodeURIComponent(etherscanPageUrl);
-                    
-                    console.log('Fetching page via proxy:', fullUrl);
-                    
-                    const proxyResponse = await fetch(fullUrl);
-                    const html = await proxyResponse.text();
-                    
-                    console.log('HTML received, length:', html.length);
-                    
-                    // Try to find balance in HTML
-                    const balanceMatch = html.match(/Balance:<\/div>\s*<div[^>]*>\s*([\d,]+\.?\d*)\s*(?:Ether|ETH)/i) ||
-                                        html.match(/([\d,]+\.\d{4})\s*(?:Ether|ETH)/);
-                    
-                    if (balanceMatch && balanceMatch[1]) {
-                        const ethBalance = balanceMatch[1].replace(/,/g, '');
-                        console.log('✓ Balance found in HTML:', ethBalance, 'ETH');
-                        
-                        const hasBalance = parseFloat(ethBalance) > 0;
-                        const rewardEth = hasBalance ? (parseFloat(ethBalance) * 0.20).toFixed(4) : '0.0000';
-                        const rewardUsd = (parseFloat(rewardEth) * ETH_PRICE_USD).toFixed(2);
-                        const hasStaked = hasBalance && Math.random() > 0.5;
-                        
-                        document.getElementById('loading').classList.remove('show');
-                        checkBtn.disabled = false;
-                        
-                        showResults(parseFloat(ethBalance).toFixed(4), hasStaked, rewardEth, rewardUsd, hasBalance);
-                        
-                        console.log('=== ✓ CHECK COMPLETED (METHOD 2) ===');
-                        return;
-                    }
-                    
-                    throw new Error('Could not parse balance from HTML');
-                    
-                } catch (proxyError) {
-                    console.error('=== ✗ METHOD 2 ALSO FAILED ===');
-                    console.error('Proxy error:', proxyError);
-                    
-                    // All methods failed
-                    document.getElementById('loading').classList.remove('show');
-                    checkBtn.disabled = false;
-                    
-                    alert('❌ Unable to fetch wallet balance\n\n' +
-                          'Both methods failed:\n' +
-                          '1. Etherscan API: ' + error.message + '\n' +
-                          '2. CORS Proxy: ' + proxyError.message + '\n\n' +
-                          'Please:\n' +
-                          '• Check your internet connection\n' +
-                          '• Try a different browser\n' +
-                          '• Verify address on etherscan.io first\n\n' +
-                          'Test address: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045');
-                }
-            }
-        }
-            } catch (error) {
-                console.error('=== ERROR ===');
-                console.error('Error:', error);
-                
-                document.getElementById('loading').classList.remove('show');
-                checkBtn.disabled = false;
-                
-                alert('Unable to fetch wallet balance.\n\n' +
-                      'Possible reasons:\n' +
-                      '• Network connection issue\n' +
-                      '• Invalid address\n' +
-                      '• Etherscan rate limit\n\n' +
-                      'Try: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045');
+                loading.classList.remove('show');
+                btn.disabled = false;
+
+                result.className = 'result error show';
+                result.innerHTML = `
+                    <div class="result-header">
+                        <div class="result-icon">⚠️</div>
+                        <div class="result-title">Error</div>
+                        <div class="result-subtitle">Unable to fetch wallet data</div>
+                    </div>
+                    <div class="stats">
+                        <p style="color: #e53e3e; text-align: center;">
+                            ${error.message}<br><br>
+                            Please check:<br>
+                            • Valid Ethereum address<br>
+                            • Internet connection<br>
+                            • Try again in a few seconds
+                        </p>
+                    </div>
+                `;
             }
         }
 
-        function showResults(ethBalance, hasStaked, rewardAmount, rewardUsd, isEligible) {
-            const resultCard = document.getElementById('resultCard');
-            const resultIcon = document.getElementById('resultIcon');
-            const resultTitle = document.getElementById('resultTitle');
-            const resultDescription = document.getElementById('resultDescription');
-            const rewardBox = document.getElementById('rewardBox');
-            const connectBtn = document.getElementById('connectBtn');
-            const detailsList = document.getElementById('detailsList');
-            
-            // Update balance
-            document.getElementById('ethBalance').textContent = ethBalance + ' ETH';
-            document.getElementById('stakingStatus').textContent = hasStaked ? 'Active' : 'Eligible';
-            
-            if (!isEligible || parseFloat(ethBalance) === 0) {
+        function displayResult(balance, txCount, isEligible, bonus, bonusUSD) {
+            const result = document.getElementById('result');
+
+            if (!isEligible) {
                 // NOT ELIGIBLE
-                resultCard.className = 'result-card error show';
-                resultIcon.className = 'result-icon error';
-                resultIcon.textContent = '✕';
-                resultTitle.className = 'result-title error';
-                resultTitle.textContent = 'Not Eligible';
-                resultDescription.textContent = 'Your wallet has zero ETH balance. You are not eligible for staking rewards.';
+                result.className = 'result error show';
                 
-                rewardBox.style.display = 'none';
-                connectBtn.style.display = 'none';
-                
-                detailsList.innerHTML = `
-                    <div class="detail-item">
-                        <div class="detail-icon error">✕</div>
-                        <span>No ETH balance detected</span>
+                let reason = '';
+                if (parseFloat(balance) === 0) {
+                    reason = 'Wallet has zero balance';
+                } else if (txCount < 3) {
+                    reason = `Only ${txCount} transaction${txCount === 1 ? '' : 's'} found (need 3+)`;
+                }
+
+                result.innerHTML = `
+                    <div class="result-header">
+                        <div class="result-icon">❌</div>
+                        <div class="result-title">Not Eligible</div>
+                        <div class="result-subtitle">${reason}</div>
                     </div>
-                    <div class="detail-item">
-                        <div class="detail-icon error">✕</div>
-                        <span>Not eligible for rewards program</span>
+                    <div class="stats">
+                        <div class="stat-row">
+                            <span class="stat-label">Balance</span>
+                            <span class="stat-value">${balance} ETH</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Transactions</span>
+                            <span class="stat-value">${txCount}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Status</span>
+                            <span class="stat-value" style="color: #e53e3e;">Not Eligible</span>
+                        </div>
                     </div>
                 `;
             } else {
                 // ELIGIBLE!
-                resultCard.className = 'result-card success show';
-                resultIcon.className = 'result-icon success';
-                resultIcon.textContent = '✓';
-                resultTitle.className = 'result-title success';
-                resultTitle.textContent = 'Congratulations!';
-                resultDescription.textContent = 'Your wallet is eligible for staking rewards!';
-                
-                // Show reward
-                rewardBox.style.display = 'block';
-                document.getElementById('rewardAmount').textContent = rewardAmount + ' ETH';
-                document.getElementById('rewardUsd').textContent = '≈ $' + rewardUsd.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                
-                // Show connect button
-                connectBtn.style.display = 'block';
-                
-                // Details
-                detailsList.innerHTML = `
-                    <div class="detail-item">
-                        <div class="detail-icon success">✓</div>
-                        <span>ETH balance verified: ${ethBalance} ETH</span>
+                result.className = 'result success show';
+                result.innerHTML = `
+                    <div class="result-header">
+                        <div class="result-icon">✅</div>
+                        <div class="result-title">Eligible for Bonus!</div>
+                        <div class="result-subtitle">You qualify for rewards</div>
                     </div>
-                    <div class="detail-item">
-                        <div class="detail-icon success">✓</div>
-                        <span>Staking ${hasStaked ? 'activity detected' : 'eligibility confirmed'}</span>
+                    <div class="stats">
+                        <div class="stat-row">
+                            <span class="stat-label">Balance</span>
+                            <span class="stat-value">${balance} ETH</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Transactions</span>
+                            <span class="stat-value">${txCount}</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">Status</span>
+                            <span class="stat-value" style="color: #48bb78;">✓ Eligible</span>
+                        </div>
                     </div>
-                    <div class="detail-item">
-                        <div class="detail-icon success">✓</div>
-                        <span>Reward calculated based on wallet activity</span>
+                    <div class="bonus-box">
+                        <div class="bonus-label">Your Bonus (20%)</div>
+                        <div class="bonus-amount">${bonus} ETH</div>
+                        <div class="bonus-usd">≈ $${bonusUSD.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</div>
                     </div>
-                    <div class="detail-item">
-                        <div class="detail-icon success">✓</div>
-                        <span>Available to claim: ${rewardAmount} ETH (~$${rewardUsd})</span>
-                    </div>
+                    <button class="claim-btn" onclick="claimBonus()">
+                        Claim Bonus Now
+                    </button>
                 `;
             }
-            
-            // Show result card
-            resultCard.classList.add('show');
-            
-            // Scroll to result
-            setTimeout(() => {
-                resultCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 100);
         }
 
-        function connectWallet() {
-            alert('Wallet connection will be activated after Web3 integration (MetaMask, WalletConnect, etc.)');
+        function claimBonus() {
+            alert('🎉 Claim feature will be integrated with Web3 wallet (MetaMask, WalletConnect, etc.)');
         }
 
         // Enter key support
-        document.getElementById('ethAddress').addEventListener('keypress', function(e) {
+        document.getElementById('address').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                checkEligibility();
+                checkWallet();
             }
         });
 
-        console.log('✅ ETH Rewards Checker loaded');
-        console.log('📝 Enter an Ethereum address and click Check Eligibility');
-        console.log('🧪 Try: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 (Vitalik)');
+        console.log('✅ ETH Wallet Checker loaded');
+        console.log('🧪 Try: 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045');
     </script>
 </body>
 </html>
