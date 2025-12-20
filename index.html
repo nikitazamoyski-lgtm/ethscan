@@ -3,336 +3,434 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ethereum Rewards - Airdrop Program</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <title>EthRewardsChecker - Ethereum Airdrop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --accent: #00ff88;
-            --accent-dim: #00ff8833;
-            --text-primary: #e8e8f0;
-            --text-secondary: #8888a8;
-            --error: #ff3366;
-            --success: #00ff88;
+            --eth-primary: #627eea;
+            --eth-secondary: #454a75;
+            --bg-primary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #222222;
+            --text-secondary: #6c6c6c;
+            --border: #e2e2e2;
+            --success: #10b981;
+            --error: #ef4444;
         }
 
         body {
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Inter', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
+            line-height: 1.6;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
             position: relative;
+            overflow-x: hidden;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            width: 200%;
-            height: 200%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(0, 120, 255, 0.05) 0%, transparent 50%);
-            animation: gradientShift 15s ease infinite;
-            z-index: 0;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-25%, -25%); }
-        }
-
-        body::after {
-            content: '';
+        .eth-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            animation: scan 4s linear infinite;
-            opacity: 0.3;
-            z-index: 1;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
         }
 
-        @keyframes scan {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(100vh); }
+        .eth-shape {
+            position: absolute;
+            opacity: 0.03;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .eth-shape:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #627eea, #454a75);
+            border-radius: 50%;
+            top: 10%;
+            left: -150px;
+        }
+
+        .eth-shape:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #454a75, #627eea);
+            border-radius: 50%;
+            top: 60%;
+            right: -100px;
+            animation-delay: 7s;
+        }
+
+        /* Летающие логотипы Ethereum */
+        .eth-logo {
+            position: absolute;
+            opacity: 0.04;
+            animation: floatRotate 25s infinite ease-in-out;
+        }
+
+        .eth-logo svg {
+            width: 100%;
+            height: 100%;
+            fill: #627eea;
+        }
+
+        .eth-logo:nth-child(3) {
+            width: 120px;
+            height: 120px;
+            top: 15%;
+            right: 10%;
+            animation-delay: 0s;
+        }
+
+        .eth-logo:nth-child(4) {
+            width: 80px;
+            height: 80px;
+            top: 70%;
+            left: 15%;
+            animation-delay: 5s;
+        }
+
+        .eth-logo:nth-child(5) {
+            width: 100px;
+            height: 100px;
+            top: 40%;
+            right: 20%;
+            animation-delay: 10s;
+        }
+
+        .eth-logo:nth-child(6) {
+            width: 90px;
+            height: 90px;
+            top: 85%;
+            right: 30%;
+            animation-delay: 15s;
+        }
+
+        .eth-logo:nth-child(7) {
+            width: 110px;
+            height: 110px;
+            top: 25%;
+            left: 5%;
+            animation-delay: 20s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+        }
+
+        @keyframes floatRotate {
+            0% { 
+                transform: translateY(0px) translateX(0px) rotate(0deg);
+                opacity: 0.04;
+            }
+            25% { 
+                transform: translateY(-40px) translateX(20px) rotate(90deg);
+                opacity: 0.06;
+            }
+            50% { 
+                transform: translateY(-20px) translateX(-10px) rotate(180deg);
+                opacity: 0.03;
+            }
+            75% { 
+                transform: translateY(30px) translateX(-30px) rotate(270deg);
+                opacity: 0.05;
+            }
+            100% { 
+                transform: translateY(0px) translateX(0px) rotate(360deg);
+                opacity: 0.04;
+            }
+        }
+
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #222222;
+            color: white;
+            padding: 20px;
+            z-index: 10000;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+        }
+
+        .cookie-banner.hidden {
+            display: none;
+        }
+
+        .cookie-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .cookie-text {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .cookie-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .cookie-btn {
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .cookie-btn.accept {
+            background: #627eea;
+            color: white;
+            border: none;
+        }
+
+        .cookie-btn.decline {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
         }
 
         .language-selector {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 24px;
+            right: 24px;
             z-index: 100;
         }
 
         .language-selector select {
-            padding: 10px 16px;
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 204, 255, 0.1) 100%);
-            border: 1px solid var(--accent);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            font-weight: 600;
+            padding: 8px 14px;
+            background: white;
+            border: 1px solid #e2e2e2;
+            border-radius: 8px;
+            font-size: 14px;
             cursor: pointer;
-            outline: none;
-            transition: all 0.3s;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .language-selector select:hover {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 204, 255, 0.2) 100%);
-            transform: translateY(-2px);
+        .hero {
+            max-width: 1200px;
+            margin: 120px auto 80px;
+            padding: 0 24px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .hero-logo svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 4px 12px rgba(98, 126, 234, 0.3));
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 4px 12px rgba(98, 126, 234, 0.3));
+            }
+            50% {
+                transform: scale(1.05);
+                filter: drop-shadow(0 8px 20px rgba(98, 126, 234, 0.5));
+            }
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: #627eea;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #6c6c6c;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .container {
+            max-width: 640px;
+            margin: 0 auto 80px;
+            padding: 0 24px;
             position: relative;
-            z-index: 2;
-            width: 100%;
-            max-width: 520px;
-            background: rgba(18, 18, 26, 0.7);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 48px 40px;
-            box-shadow: 0 0 80px rgba(0, 255, 136, 0.1);
-            animation: fadeInScale 0.6s ease;
-            margin: 20px 0;
-            max-height: 90vh;
-            overflow-y: auto;
+            z-index: 1;
         }
 
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .logo h1 {
-            font-family: 'Syne', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.02em;
-            margin-bottom: 8px;
-        }
-
-        .logo p {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            font-weight: 300;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
+        .card {
+            background: white;
+            border: 1px solid #e2e2e2;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
         }
 
         label {
             display: block;
-            margin-bottom: 12px;
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
         }
 
         input {
             width: 100%;
-            padding: 16px 20px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            outline: none;
+            padding: 14px 16px;
+            background: #f7f7f7;
+            border: 1px solid #e2e2e2;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 24px;
         }
 
         input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-dim);
+            outline: none;
+            border-color: #627eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(98,126,234,0.1);
         }
 
-        button {
+        .btn {
             width: 100%;
-            padding: 18px;
-            background: var(--accent);
+            padding: 14px;
+            background: #627eea;
             border: none;
-            border-radius: 12px;
-            color: var(--bg-primary);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.95rem;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
             font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: 0.2s;
         }
 
-        button:hover:not(:disabled) {
+        .btn:hover:not(:disabled) {
+            background: #454a75;
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 255, 136, 0.4);
         }
 
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .spinner {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(10, 10, 15, 0.3);
-            border-top-color: var(--bg-primary);
-            border-radius: 50%;
-            animation: spin 0.6s linear infinite;
-            margin-right: 8px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        .btn:disabled { opacity: 0.6; }
 
         .result {
             margin-top: 32px;
             padding: 24px;
-            border-radius: 16px;
-            animation: slideUp 0.4s ease;
+            border-radius: 12px;
             border: 1px solid;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         .result.success {
-            background: rgba(0, 255, 136, 0.1);
-            border-color: var(--success);
+            background: rgba(16,185,129,0.05);
+            border-color: #10b981;
         }
 
         .result.error {
-            background: rgba(255, 51, 102, 0.1);
-            border-color: var(--error);
+            background: rgba(239,68,68,0.05);
+            border-color: #ef4444;
         }
 
         .result-title {
-            font-weight: 600;
+            font-weight: 700;
+            font-size: 18px;
             margin-bottom: 12px;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        .result.success .result-title {
-            color: var(--success);
-        }
-
-        .result.error .result-title {
-            color: var(--error);
-        }
-
-        .result-content {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            line-height: 1.6;
-        }
+        .result.success .result-title { color: #10b981; }
+        .result.error .result-title { color: #ef4444; }
 
         .airdrop-info {
-            margin: 20px 0;
+            margin: 24px 0;
             padding: 20px;
-            background: rgba(0, 255, 136, 0.05);
-            border: 1px solid rgba(0, 255, 136, 0.2);
+            background: rgba(98,126,234,0.05);
+            border: 1px solid rgba(98,126,234,0.2);
             border-radius: 12px;
         }
 
-        .airdrop-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 12px;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 20px;
         }
 
-        .airdrop-text {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 12px;
+        .stat-box {
+            padding: 20px;
+            background: #f7f7f7;
+            border-radius: 12px;
         }
 
-        .balance {
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .balance-amount {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin: 8px 0;
-        }
-
-        .balance-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
+        .stat-label {
+            font-size: 12px;
+            color: #6c6c6c;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .reward-highlight {
+            padding: 24px;
+            background: linear-gradient(135deg, #627eea, #454a75);
+            border-radius: 12px;
+            margin-top: 16px;
+            text-align: center;
+            color: white;
+        }
+
+        .reward-highlight .stat-value {
+            font-size: 32px;
         }
 
         .footer {
-            margin-top: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
             text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.75rem;
-            opacity: 0.6;
+            color: #6c6c6c;
+            font-size: 14px;
+            border-top: 1px solid #e2e2e2;
+            position: relative;
+            z-index: 1;
         }
 
         .footer a {
-            color: var(--accent);
+            color: #627eea;
             text-decoration: none;
+            font-weight: 600;
             cursor: pointer;
-        }
-
-        .footer a:hover {
-            opacity: 0.8;
         }
 
         .modal {
             display: none;
             position: fixed;
-            z-index: 10000;
+            z-index: 9999;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0,0,0,0.75);
         }
 
         .modal.active {
@@ -342,67 +440,138 @@
         }
 
         .modal-content {
-            background: rgba(18, 18, 26, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
+            background: white;
+            border-radius: 16px;
             width: 90%;
             max-width: 900px;
             max-height: 85vh;
             overflow-y: auto;
-            padding: 50px;
+            padding: 48px;
             position: relative;
         }
 
         .close-modal {
             position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 2.5rem;
-            color: var(--text-secondary);
+            top: 24px;
+            right: 24px;
+            font-size: 28px;
             cursor: pointer;
-            z-index: 10001;
-        }
-
-        .close-modal:hover {
-            color: var(--accent);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
         }
 
         .modal-content h1 {
-            font-family: 'Syne', sans-serif;
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, var(--accent) 0%, #00ccff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 30px;
+            font-size: 32px;
+            margin-bottom: 24px;
+            font-weight: 800;
         }
 
         .modal-content h2 {
-            font-size: 1.3rem;
-            color: var(--accent);
-            margin-top: 30px;
-            margin-bottom: 15px;
+            font-size: 20px;
+            margin-top: 32px;
+            margin-bottom: 12px;
+            font-weight: 700;
         }
 
         .modal-content p {
-            margin-bottom: 15px;
-            color: var(--text-secondary);
+            margin-bottom: 16px;
+            color: #6c6c6c;
             line-height: 1.7;
         }
 
         .modal-content ul {
-            margin-left: 25px;
-            margin-bottom: 15px;
-            color: var(--text-secondary);
+            margin-left: 24px;
+            margin-bottom: 16px;
+            color: #6c6c6c;
         }
 
-        .modal-content a {
-            color: var(--accent);
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .card { padding: 24px; }
+            .stats-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+    <div class="eth-background">
+        <div class="eth-shape"></div>
+        <div class="eth-shape"></div>
+        
+        <!-- Летающие логотипы Ethereum -->
+        <div class="eth-logo">
+            <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="127.9611,0 125.1661,9.5 125.1661,285.168 127.9611,287.958 255.9231,212.32" fill="#627eea" fill-opacity="0.602"/>
+                <polygon points="127.962,0 0,212.32 127.962,287.959 127.962,154.158" fill="#627eea"/>
+                <polygon points="127.9611,312.1866 126.3861,314.1066 126.3861,412.3056 127.9611,416.9066 255.9991,236.5866" fill="#627eea" fill-opacity="0.602"/>
+                <polygon points="127.962,416.9052 127.962,312.1852 0,236.5852" fill="#627eea"/>
+                <polygon points="127.9611,287.9577 255.9211,212.3207 127.9611,154.1587" fill="#627eea" fill-opacity="0.2"/>
+                <polygon points="0,212.3208 127.9611,287.9578 127.9611,154.1588" fill="#627eea" fill-opacity="0.602"/>
+            </svg>
+        </div>
+        
+        <div class="eth-logo">
+            <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="127.9611,0 125.1661,9.5 125.1661,285.168 127.9611,287.958 255.9231,212.32" fill="#627eea" fill-opacity="0.602"/>
+                <polygon points="127.962,0 0,212.32 127.962,287.959 127.962,154.158" fill="#627eea"/>
+                <polygon points="127.9611,312.1866 126.3861,314.1066 126.3861,412.3056 127.9611,416.9066 255.9991,236.5866" fill="#627eea" fill-opacity="0.602"/>
+                <polygon points="127.962,416.9052 127.962,312.1852 0,236.5852" fill="#627eea"/>
+                <polygon points="127.9611,287.9577 255.9211,212.3207 127.9611,154.1587" fill="#627eea" fill-opacity="0.2"/>
+                <polygon points="0,212.3208 127.9611,287.9578 127.9611,154.1588" fill="#627eea" fill-opacity="0.602"/>
+            </svg>
+        </div>
+        
+        <div class="eth-logo">
+            <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="127.9611,0 125.1661,9.5 125.1661,285.168 127.9611,287.958 255.9231,212.32" fill="#627eea" fill-opacity="0.602"/>
+                <polygon points="127.962,0 0,212.32 127.962,287.959 127.962,154.158" fill="#627eea"/>
+                <polygon points="127.9611,312.1866 126.3861,314.1066 126.3861,412.3056 127.9611,416.9066 255.9991,236.5866" fill="#627eea" fill-opacity="0.602"/>
+                <polygon points="127.962,416.9052 127.962,312.1852 0,236.5852" fill="#627eea"/>
+                <polygon points="127.9611,287.9577 255.9211,212.3207 127.9611,154.1587" fill="#627eea" fill-opacity="0.2"/>
+                <polygon points="0,212.3208 127.9611,287.9578 127.9611,154.1588" fill="#627eea" fill-opacity="0.602"/>
+            </svg>
+        </div>
+        
+        <div class="eth-logo">
+            <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="127.9611,0 125.1661,9.5 125.1661,285.168 127.9611,287.958 255.9231,212.32" fill="#627eea" fill-opacity="0.602"/>
+                <polygon points="127.962,0 0,212.32 127.962,287.959 127.962,154.158" fill="#627eea"/>
+                <polygon points="127.9611,312.1866 126.3861,314.1066 126.3861,412.3056 127.9611,416.9066 255.9991,236.5866" fill="#627eea" fill-opacity="0.602"/>
+                <polygon points="127.962,416.9052 127.962,312.1852 0,236.5852" fill="#627eea"/>
+                <polygon points="127.9611,287.9577 255.9211,212.3207 127.9611,154.1587" fill="#627eea" fill-opacity="0.2"/>
+                <polygon points="0,212.3208 127.9611,287.9578 127.9611,154.1588" fill="#627eea" fill-opacity="0.602"/>
+            </svg>
+        </div>
+        
+        <div class="eth-logo">
+            <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="127.9611,0 125.1661,9.5 125.1661,285.168 127.9611,287.958 255.9231,212.32" fill="#627eea" fill-opacity="0.602"/>
+                <polygon points="127.962,0 0,212.32 127.962,287.959 127.962,154.158" fill="#627eea"/>
+                <polygon points="127.9611,312.1866 126.3861,314.1066 126.3861,412.3056 127.9611,416.9066 255.9991,236.5866" fill="#627eea" fill-opacity="0.602"/>
+                <polygon points="127.962,416.9052 127.962,312.1852 0,236.5852" fill="#627eea"/>
+                <polygon points="127.9611,287.9577 255.9211,212.3207 127.9611,154.1587" fill="#627eea" fill-opacity="0.2"/>
+                <polygon points="0,212.3208 127.9611,287.9578 127.9611,154.1588" fill="#627eea" fill-opacity="0.602"/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                By clicking Accept All Cookies, you consent to the use of cookies and similar technologies to enhance site navigation, analyse site usage, and assist in our marketing and security efforts.
+            </div>
+            <div class="cookie-buttons">
+                <button class="cookie-btn decline" id="declineBtn">Decline</button>
+                <button class="cookie-btn accept" id="acceptBtn">Accept All Cookies</button>
+            </div>
+        </div>
+    </div>
+
     <div class="language-selector">
-        <select id="languageSelect" onchange="changeLanguage(this.value)">
+        <select id="languageSelect">
             <option value="en">🇬🇧 English</option>
             <option value="es">🇪🇸 Español</option>
             <option value="fr">🇫🇷 Français</option>
@@ -414,61 +583,51 @@
             <option value="zh">🇨🇳 中文</option>
             <option value="ja">🇯🇵 日本語</option>
             <option value="ko">🇰🇷 한국어</option>
-            <option value="ar">🇸🇦 العربية</option>
-            <option value="hi">🇮🇳 हिन्दी</option>
             <option value="tr">🇹🇷 Türkçe</option>
-            <option value="nl">🇳🇱 Nederlands</option>
             <option value="pl">🇵🇱 Polski</option>
-            <option value="sv">🇸🇪 Svenska</option>
-            <option value="no">🇳🇴 Norsk</option>
-            <option value="da">🇩🇰 Dansk</option>
-            <option value="fi">🇫🇮 Suomi</option>
-            <option value="el">🇬🇷 Ελληνικά</option>
-            <option value="cs">🇨🇿 Čeština</option>
-            <option value="hu">🇭🇺 Magyar</option>
-            <option value="ro">🇷🇴 Română</option>
-            <option value="th">🇹🇭 ไทย</option>
-            <option value="vi">🇻🇳 Tiếng Việt</option>
-            <option value="id">🇮🇩 Bahasa Indonesia</option>
+            <option value="ar">🇸🇦 العربية</option>
+            <option value="ur">🇵🇰 اردو</option>
+            <option value="hi">🇮🇳 हिन्दी</option>
         </select>
     </div>
 
-    <div class="container">
-        <div class="logo">
-            <h1 id="title">ETHEREUM REWARDS</h1>
-            <p id="subtitle">Official Ethereum Foundation Airdrop</p>
+    <section class="hero">
+        <div class="hero-logo">
+            <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid">
+                <polygon points="127.9611,0 125.1661,9.5 125.1661,285.168 127.9611,287.958 255.9231,212.32" fill="#627eea" fill-opacity="0.602"/>
+                <polygon points="127.962,0 0,212.32 127.962,287.959 127.962,154.158" fill="#627eea"/>
+                <polygon points="127.9611,312.1866 126.3861,314.1066 126.3861,412.3056 127.9611,416.9066 255.9991,236.5866" fill="#627eea" fill-opacity="0.602"/>
+                <polygon points="127.962,416.9052 127.962,312.1852 0,236.5852" fill="#627eea"/>
+                <polygon points="127.9611,287.9577 255.9211,212.3207 127.9611,154.1587" fill="#627eea" fill-opacity="0.2"/>
+                <polygon points="0,212.3208 127.9611,287.9578 127.9611,154.1588" fill="#627eea" fill-opacity="0.602"/>
+            </svg>
         </div>
+        <h1 id="title">EthRewardsChecker</h1>
+        <p id="subtitle">Check your wallet eligibility for the official Ethereum Foundation airdrop program</p>
+    </section>
 
-        <form id="walletForm">
-            <div class="form-group">
-                <label for="walletAddress" id="labelAddress">Ethereum Address</label>
-                <input 
-                    type="text" 
-                    id="walletAddress" 
-                    placeholder="0x..." 
-                    required
-                    autocomplete="off"
-                >
-            </div>
-            <button type="submit" id="checkButton">
-                <span id="buttonText">Check Eligibility</span>
-            </button>
-        </form>
-
-        <div id="result"></div>
-
-        <div class="footer">
-            <span id="poweredBy">Powered by Ethereum API · Ethereum Foundation</span><br>
-            <span style="opacity: 0.8; font-size: 0.7rem; margin-top: 4px; display: inline-block;">
-                🔒 <span id="secured">Secured by Binance Smart Chain</span>
-            </span><br>
-            <a href="#" onclick="openTermsModal(); return false;" id="termsLink">Terms of Use</a>
+    <div class="container">
+        <div class="card">
+            <form id="walletForm">
+                <label for="walletAddress" id="labelAddress">Ethereum Wallet Address</label>
+                <input type="text" id="walletAddress" placeholder="0x..." required>
+                <button type="submit" class="btn" id="checkButton">
+                    <span id="buttonText">Check Eligibility</span>
+                </button>
+            </form>
+            <div id="result"></div>
         </div>
     </div>
 
+    <footer class="footer">
+        <div id="poweredBy">Powered by Ethereum API</div>
+        <div>🔒 Secured by Binance Smart Chain</div>
+        <a id="termsLink">Terms of Use</a>
+    </footer>
+
     <div id="termsModal" class="modal">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeTermsModal()">&times;</span>
+            <div class="close-modal" id="closeModal">×</div>
             
             <h1>Terms of Use</h1>
             
@@ -476,9 +635,7 @@
 
             <h2>Acceptance of the Terms of Use</h2>
             <p>These terms of use are entered into by and between you and Stiftung Ethereum (the "Foundation", "we", or "us"). The following terms and conditions (collectively, these "Terms of Use"), govern your access to and use of this Ethereum Rewards website, including any content, functionality, and services offered on or through this website (the "Website").</p>
-
             <p>Please read the Terms of Use carefully before you start to use the Website. By using the Website or by clicking to accept or agree to the Terms of Use when this option is made available to you, you accept and agree to be bound and abide by these Terms of Use.</p>
-
             <p>If you do not agree to these Terms of Use, you must not access or use the Website.</p>
 
             <h2>Who May Use the Website</h2>
@@ -535,12 +692,10 @@
                 <li>To transmit, or procure the sending of, any advertising or promotional material without our prior written consent</li>
                 <li>To impersonate or attempt to impersonate the Foundation, a Foundation employee, another user, or any other person or entity</li>
                 <li>To engage in any other conduct that restricts or inhibits anyone's use or enjoyment of the Website</li>
-                <li>To attempt to gain unauthorized access to the Website or any connected systems</li>
-                <li>To use any robot, spider, or automated means to access the Website</li>
             </ul>
 
             <h2>No Investment Advice</h2>
-            <p>The information provided on this Website does not constitute investment advice, financial advice, trading advice, or any other sort of advice. The rewards program is not an investment opportunity and should not be treated as such. You should not make any decision regarding cryptocurrency transactions without conducting your own research and consulting with qualified professionals.</p>
+            <p>The information provided on this Website does not constitute investment advice, financial advice, trading advice, or any other sort of advice. The rewards program is not an investment opportunity and should not be treated as such.</p>
 
             <h2>Blockchain Technology Risks</h2>
             <p>You acknowledge and agree that blockchain technology and cryptocurrency transactions involve inherent risks, including but not limited to:</p>
@@ -552,301 +707,214 @@
                 <li>Network congestion and transaction delays</li>
             </ul>
 
-            <p>You assume all risks associated with participating in the rewards program and using cryptocurrency.</p>
-
             <h2>Disclaimer of Warranties</h2>
             <p>YOUR USE OF THE WEBSITE AND PARTICIPATION IN THE REWARDS PROGRAM IS AT YOUR OWN RISK. THE WEBSITE AND ALL SERVICES ARE PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
 
-            <p>THE FOUNDATION HEREBY DISCLAIMS ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT, AND FITNESS FOR PARTICULAR PURPOSE.</p>
-
-            <p>WE DO NOT WARRANT THAT:</p>
-            <ul>
-                <li>The Website will be available at all times or without interruption</li>
-                <li>The Website will be error-free or secure</li>
-                <li>Rewards will always be available or distributed</li>
-                <li>Smart contracts will function without errors</li>
-                <li>Blockchain transactions will be confirmed</li>
-            </ul>
-
             <h2>Limitation on Liability</h2>
-            <p>IN NO EVENT WILL THE FOUNDATION, ITS AFFILIATES OR THEIR LICENSORS, SERVICE PROVIDERS, EMPLOYEES, AGENTS, OFFICERS, OR DIRECTORS BE LIABLE FOR DAMAGES OF ANY KIND, UNDER ANY LEGAL THEORY, ARISING OUT OF OR IN CONNECTION WITH YOUR USE, OR INABILITY TO USE, THE WEBSITE OR PARTICIPATION IN THE REWARDS PROGRAM, INCLUDING ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL, CONSEQUENTIAL OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO, LOSS OF REVENUE, LOSS OF PROFITS, LOSS OF CRYPTOCURRENCY, LOSS OF DATA, OR ANY OTHER LOSSES.</p>
-
-            <p>THIS LIMITATION APPLIES EVEN IF THE FOUNDATION HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
-
-            <h2>Indemnification</h2>
-            <p>You agree to defend, indemnify, and hold harmless the Foundation, its affiliates, licensors, and service providers, and its and their respective officers, directors, employees, contractors, agents, licensors, suppliers, successors, and assigns from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising out of or relating to your violation of these Terms of Use or your use of the Website or participation in the rewards program.</p>
+            <p>IN NO EVENT WILL THE FOUNDATION, ITS AFFILIATES OR THEIR LICENSORS, SERVICE PROVIDERS, EMPLOYEES, AGENTS, OFFICERS, OR DIRECTORS BE LIABLE FOR DAMAGES OF ANY KIND ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF THE WEBSITE.</p>
 
             <h2>Governing Law and Jurisdiction</h2>
-            <p>All matters relating to the Website and these Terms of Use and any dispute or claim arising therefrom or related thereto shall be governed by and construed in accordance with the internal laws of Switzerland without giving effect to any choice or conflict of law provision or rule.</p>
-
-            <p>Any legal suit, action or proceeding arising out of, or related to, these Terms of Use or the Website shall be instituted exclusively in Switzerland in the Kanton of Zug.</p>
-
-            <h2>Waiver and Severability</h2>
-            <p>No waiver by the Foundation of any term or condition set forth in these Terms of Use shall be deemed a further or continuing waiver of such term or condition or a waiver of any other term or condition, and any failure of the Foundation to assert a right or provision under these Terms of Use shall not constitute a waiver of such right or provision.</p>
-
-            <h2>Entire Agreement</h2>
-            <p>The Terms of Use constitute the sole and entire agreement between you and the Foundation with respect to the Website and supersede all prior and contemporaneous understandings, agreements, representations and warranties, both written and oral, with respect to the Website.</p>
+            <p>All matters relating to the Website and these Terms of Use shall be governed by and construed in accordance with the internal laws of Switzerland without giving effect to any choice or conflict of law provision or rule.</p>
 
             <h2>Your Comments and Concerns</h2>
             <p>All feedback, comments, requests for technical support and other communications relating to the Website should be directed to: <a href="mailto:ethereumrewards@ethereum.org">ethereumrewards@ethereum.org</a></p>
 
-            <p style="margin-top: 40px; text-align: center; color: var(--text-secondary); font-size: 0.85rem; opacity: 0.7;">
+            <p style="margin-top: 40px; text-align: center; font-size: 12px;">
                 Page last updated: December 2025
             </p>
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        const translations = {
-            en: {
-                title: "ETHEREUM REWARDS",
-                subtitle: "Official Ethereum Foundation Airdrop",
-                labelAddress: "Ethereum Address",
-                buttonText: "Check Eligibility",
-                buttonChecking: "Checking...",
-                errorTitle: "Verification Error",
-                invalidAddress: "Invalid wallet address.",
-                connectionError: "Unable to connect to Ethereum network.",
-                successTitle: "Congratulations! You passed verification",
-                successContent: "Your wallet meets the requirements.",
-                failTitle: "Wallet not eligible",
-                failContent: "This wallet is not eligible for any bonuses or airdrops.",
-                currentBalance: "Current Balance",
-                yourReward: "Your Reward",
-                connectButton: "Connect Wallet",
-                airdropTitle: "🎁 Ethereum Foundation Airdrop 2025",
-                airdropReason: "You are eligible for this bonus as part of the Ethereum Foundation's community rewards program for active wallet holders.",
-                claimInstructions: "To claim your reward, connect your wallet and sign the smart contract. Your bonus will be transferred immediately.",
-                poweredBy: "Powered by Ethereum API · Ethereum Foundation",
-                secured: "Secured by Binance Smart Chain",
-                termsLink: "Terms of Use"
-            },
-            ru: {
-                title: "ETHEREUM REWARDS",
-                subtitle: "Официальный Airdrop от Ethereum Foundation",
-                labelAddress: "Адрес Ethereum",
-                buttonText: "Проверить",
-                buttonChecking: "Проверка...",
-                errorTitle: "Ошибка",
-                invalidAddress: "Некорректный адрес.",
-                connectionError: "Ошибка подключения.",
-                successTitle: "Поздравляем!",
-                successContent: "Ваш кошелек соответствует требованиям.",
-                failTitle: "Кошелек не подходит",
-                failContent: "Этот кошелек не подлежит никаким бонусам и аирдропам.",
-                currentBalance: "Текущий баланс",
-                yourReward: "Ваше вознаграждение",
-                connectButton: "Подключить кошелек",
-                airdropTitle: "🎁 Airdrop Ethereum Foundation 2025",
-                airdropReason: "Вы получаете этот бонус в рамках программы вознаграждений для активных держателей кошельков.",
-                claimInstructions: "Подключите кошелек и подпишите смарт-контракт. Бонус будет переведен сразу после верификации.",
-                poweredBy: "Работает на Ethereum API",
-                secured: "Защищено Binance Smart Chain",
-                termsLink: "Условия"
-            },
-            uk: {
-                title: "ETHEREUM REWARDS",
-                subtitle: "Офіційний Airdrop від Ethereum Foundation",
-                labelAddress: "Адреса Ethereum",
-                buttonText: "Перевірити",
-                buttonChecking: "Перевірка...",
-                errorTitle: "Помилка",
-                invalidAddress: "Некоректна адреса.",
-                connectionError: "Помилка підключення.",
-                successTitle: "Вітаємо!",
-                successContent: "Ваш гаманець відповідає вимогам.",
-                failTitle: "Гаманець не підходить",
-                failContent: "Цей гаманець не підлягає жодним бонусам.",
-                currentBalance: "Поточний баланс",
-                yourReward: "Ваша винагорода",
-                connectButton: "Підключити гаманець",
-                airdropTitle: "🎁 Airdrop Ethereum Foundation 2025",
-                airdropReason: "Ви отримуєте бонус в рамках програми винагород для активних власників гаманців.",
-                claimInstructions: "Підключіть гаманець та підпишіть смарт-контракт. Бонус буде переказано одразу.",
-                poweredBy: "Працює на Ethereum API",
-                secured: "Захищено Binance Smart Chain",
-                termsLink: "Умови"
-            },
-            es: {
-                title: "ETHEREUM REWARDS",
-                subtitle: "Airdrop Oficial Ethereum Foundation",
-                labelAddress: "Dirección Ethereum",
-                buttonText: "Verificar",
-                buttonChecking: "Verificando...",
-                errorTitle: "Error",
-                invalidAddress: "Dirección inválida.",
-                connectionError: "Error de conexión.",
-                successTitle: "¡Felicitaciones!",
-                successContent: "Tu billetera cumple los requisitos.",
-                failTitle: "No elegible",
-                failContent: "Esta billetera no es elegible para bonos.",
-                currentBalance: "Saldo Actual",
-                yourReward: "Tu Recompensa",
-                connectButton: "Conectar Billetera",
-                airdropTitle: "🎁 Airdrop Ethereum Foundation 2025",
-                airdropReason: "Eres elegible para este bono como parte del programa de recompensas.",
-                claimInstructions: "Conecta tu billetera y firma el contrato. El bono será transferido inmediatamente.",
-                poweredBy: "Desarrollado por Ethereum API",
-                secured: "Protegido por Binance Smart Chain",
-                termsLink: "Términos"
-            }
-        };
+    <script>
+const translations = {
+    en: { title: "EthRewardsChecker", subtitle: "Check your wallet eligibility for the official Ethereum Foundation airdrop program", labelAddress: "Ethereum Wallet Address", buttonText: "Check Eligibility", buttonChecking: "Checking...", errorTitle: "Verification Error", invalidAddress: "Invalid wallet address.", connectionError: "Unable to connect.", successTitle: "Congratulations!", successContent: "Your wallet meets the requirements.", failTitle: "Not Eligible", failContent: "This wallet is not eligible.", currentBalance: "Current Balance", yourReward: "Your Reward", connectButton: "Connect Wallet", airdropTitle: "🎁 Ethereum Airdrop 2025", airdropReason: "You are eligible for this bonus.", claimInstructions: "Connect your wallet to claim.", poweredBy: "Powered by Ethereum API", termsLink: "Terms of Use" },
+    es: { title: "EthRewardsChecker", subtitle: "Verifica la elegibilidad de tu billetera", labelAddress: "Dirección de Billetera", buttonText: "Verificar", buttonChecking: "Verificando...", errorTitle: "Error", invalidAddress: "Dirección inválida.", connectionError: "Error de conexión.", successTitle: "¡Felicitaciones!", successContent: "Tu billetera cumple los requisitos.", failTitle: "No Elegible", failContent: "Esta billetera no es elegible.", currentBalance: "Saldo Actual", yourReward: "Tu Recompensa", connectButton: "Conectar Billetera", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Eres elegible para este bono.", claimInstructions: "Conecta tu billetera para reclamar.", poweredBy: "Ethereum API", termsLink: "Términos de Uso" },
+    fr: { title: "EthRewardsChecker", subtitle: "Vérifiez l'éligibilité de votre portefeuille", labelAddress: "Adresse du Portefeuille", buttonText: "Vérifier", buttonChecking: "Vérification...", errorTitle: "Erreur", invalidAddress: "Adresse invalide.", connectionError: "Erreur de connexion.", successTitle: "Félicitations!", successContent: "Votre portefeuille répond aux exigences.", failTitle: "Non Éligible", failContent: "Ce portefeuille n'est pas éligible.", currentBalance: "Solde Actuel", yourReward: "Votre Récompense", connectButton: "Connecter le Portefeuille", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Vous êtes éligible pour ce bonus.", claimInstructions: "Connectez votre portefeuille.", poweredBy: "Ethereum API", termsLink: "Conditions d'Utilisation" },
+    de: { title: "EthRewardsChecker", subtitle: "Überprüfen Sie die Berechtigung Ihrer Wallet", labelAddress: "Wallet-Adresse", buttonText: "Prüfen", buttonChecking: "Wird geprüft...", errorTitle: "Fehler", invalidAddress: "Ungültige Adresse.", connectionError: "Verbindungsfehler.", successTitle: "Glückwunsch!", successContent: "Ihre Wallet erfüllt die Anforderungen.", failTitle: "Nicht Berechtigt", failContent: "Diese Wallet ist nicht berechtigt.", currentBalance: "Aktueller Kontostand", yourReward: "Ihre Belohnung", connectButton: "Wallet Verbinden", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Sie sind berechtigt für diesen Bonus.", claimInstructions: "Verbinden Sie Ihre Wallet.", poweredBy: "Ethereum API", termsLink: "Nutzungsbedingungen" },
+    it: { title: "EthRewardsChecker", subtitle: "Verifica l'idoneità del tuo portafoglio", labelAddress: "Indirizzo del Portafoglio", buttonText: "Verifica", buttonChecking: "Verifica in corso...", errorTitle: "Errore", invalidAddress: "Indirizzo non valido.", connectionError: "Errore di connessione.", successTitle: "Congratulazioni!", successContent: "Il tuo portafoglio soddisfa i requisiti.", failTitle: "Non Idoneo", failContent: "Questo portafoglio non è idoneo.", currentBalance: "Saldo Attuale", yourReward: "La Tua Ricompensa", connectButton: "Connetti Portafoglio", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Sei idoneo per questo bonus.", claimInstructions: "Connetti il tuo portafoglio.", poweredBy: "Ethereum API", termsLink: "Termini di Utilizzo" },
+    pt: { title: "EthRewardsChecker", subtitle: "Verifique a elegibilidade da sua carteira", labelAddress: "Endereço da Carteira", buttonText: "Verificar", buttonChecking: "Verificando...", errorTitle: "Erro", invalidAddress: "Endereço inválido.", connectionError: "Erro de conexão.", successTitle: "Parabéns!", successContent: "Sua carteira atende aos requisitos.", failTitle: "Não Elegível", failContent: "Esta carteira não é elegível.", currentBalance: "Saldo Atual", yourReward: "Sua Recompensa", connectButton: "Conectar Carteira", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Você é elegível para este bônus.", claimInstructions: "Conecte sua carteira.", poweredBy: "Ethereum API", termsLink: "Termos de Uso" },
+    ru: { title: "EthRewardsChecker", subtitle: "Проверьте соответствие вашего кошелька", labelAddress: "Адрес Кошелька", buttonText: "Проверить", buttonChecking: "Проверка...", errorTitle: "Ошибка", invalidAddress: "Некорректный адрес.", connectionError: "Ошибка подключения.", successTitle: "Поздравляем!", successContent: "Ваш кошелек соответствует требованиям.", failTitle: "Не Подходит", failContent: "Этот кошелек не подходит.", currentBalance: "Текущий Баланс", yourReward: "Ваше Вознаграждение", connectButton: "Подключить Кошелек", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Вы получаете этот бонус.", claimInstructions: "Подключите ваш кошелек.", poweredBy: "Ethereum API", termsLink: "Условия Использования" },
+    uk: { title: "EthRewardsChecker", subtitle: "Перевірте відповідність вашого гаманця", labelAddress: "Адреса Гаманця", buttonText: "Перевірити", buttonChecking: "Перевірка...", errorTitle: "Помилка", invalidAddress: "Некоректна адреса.", connectionError: "Помилка підключення.", successTitle: "Вітаємо!", successContent: "Ваш гаманець відповідає вимогам.", failTitle: "Не Підходить", failContent: "Цей гаманець не підходить.", currentBalance: "Поточний Баланс", yourReward: "Ваша Винагорода", connectButton: "Підключити Гаманець", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Ви отримуєте цей бонус.", claimInstructions: "Підключіть ваш гаманець.", poweredBy: "Ethereum API", termsLink: "Умови Використання" },
+    zh: { title: "EthRewardsChecker", subtitle: "检查您的钱包资格", labelAddress: "钱包地址", buttonText: "检查资格", buttonChecking: "检查中...", errorTitle: "验证错误", invalidAddress: "无效的钱包地址。", connectionError: "无法连接。", successTitle: "恭喜！", successContent: "您的钱包符合要求。", failTitle: "不符合资格", failContent: "此钱包不符合资格。", currentBalance: "当前余额", yourReward: "您的奖励", connectButton: "连接钱包", airdropTitle: "🎁 以太坊空投 2025", airdropReason: "您有资格获得此奖金。", claimInstructions: "连接您的钱包以领取。", poweredBy: "Ethereum API", termsLink: "使用条款" },
+    ja: { title: "EthRewardsChecker", subtitle: "ウォレットの資格を確認", labelAddress: "ウォレットアドレス", buttonText: "資格確認", buttonChecking: "確認中...", errorTitle: "検証エラー", invalidAddress: "無効なウォレットアドレス。", connectionError: "接続できません。", successTitle: "おめでとうございます！", successContent: "ウォレットは要件を満たしています。", failTitle: "対象外", failContent: "このウォレットは対象外です。", currentBalance: "現在の残高", yourReward: "あなたの報酬", connectButton: "ウォレット接続", airdropTitle: "🎁 イーサリアムエアドロップ 2025", airdropReason: "あなたはこのボーナスの資格があります。", claimInstructions: "ウォレットを接続して請求してください。", poweredBy: "Ethereum API", termsLink: "利用規約" },
+    ko: { title: "EthRewardsChecker", subtitle: "지갑 자격 확인", labelAddress: "지갑 주소", buttonText: "자격 확인", buttonChecking: "확인 중...", errorTitle: "검증 오류", invalidAddress: "잘못된 지갑 주소입니다.", connectionError: "연결할 수 없습니다.", successTitle: "축하합니다!", successContent: "지갑이 요구 사항을 충족합니다.", failTitle: "자격 없음", failContent: "이 지갑은 자격이 없습니다.", currentBalance: "현재 잔액", yourReward: "귀하의 보상", connectButton: "지갑 연결", airdropTitle: "🎁 이더리움 에어드롭 2025", airdropReason: "귀하는 이 보너스 자격이 있습니다.", claimInstructions: "지갑을 연결하여 청구하세요.", poweredBy: "Ethereum API", termsLink: "이용 약관" },
+    tr: { title: "EthRewardsChecker", subtitle: "Cüzdan uygunluğunuzu kontrol edin", labelAddress: "Cüzdan Adresi", buttonText: "Uygunluğu Kontrol Et", buttonChecking: "Kontrol ediliyor...", errorTitle: "Doğrulama Hatası", invalidAddress: "Geçersiz cüzdan adresi.", connectionError: "Bağlanılamıyor.", successTitle: "Tebrikler!", successContent: "Cüzdanınız gereksinimleri karşılıyor.", failTitle: "Uygun Değil", failContent: "Bu cüzdan uygun değil.", currentBalance: "Mevcut Bakiye", yourReward: "Ödülünüz", connectButton: "Cüzdan Bağla", airdropTitle: "🎁 Ethereum Airdrop 2025", airdropReason: "Bu bonus için uygunsunuz.", claimInstructions: "Talep etmek için cüzdanınızı bağlayın.", poweredBy: "Ethereum API", termsLink: "Kullanım Şartları" },
+    pl: { title: "EthRewardsChecker", subtitle: "Sprawdź kwalifikowalność portfela", labelAddress: "Adres Portfela", buttonText: "Sprawdź Kwalifikowalność", buttonChecking: "Sprawdzanie...", errorTitle: "Błąd Weryfikacji", invalidAddress: "Nieprawidłowy adres portfela.", connectionError: "Nie można się połączyć.", successTitle: "Gratulacje!", successContent: "Twój portfel spełnia wymagania.", failTitle: "Nie Kwalifikuje się", failContent: "Ten portfel nie kwalifikuje się.", currentBalance: "Aktualne Saldo", yourReward: "Twoja Nagroda", connectButton: "Połącz Portfel", airdropTitle: "🎁 Ethereum Airdrop 2025", airdropReason: "Kwalifikujesz się do tego bonusu.", claimInstructions: "Połącz portfel, aby odebrać.", poweredBy: "Ethereum API", termsLink: "Warunki Użytkowania" },
+    ar: { title: "EthRewardsChecker", subtitle: "تحقق من أهلية محفظتك", labelAddress: "عنوان المحفظة", buttonText: "تحقق من الأهلية", buttonChecking: "جاري التحقق...", errorTitle: "خطأ في التحقق", invalidAddress: "عنوان محفظة غير صالح.", connectionError: "تعذر الاتصال.", successTitle: "تهانينا!", successContent: "محفظتك تفي بالمتطلبات.", failTitle: "غير مؤهل", failContent: "هذه المحفظة غير مؤهلة.", currentBalance: "الرصيد الحالي", yourReward: "مكافأتك", connectButton: "ربط المحفظة", airdropTitle: "🎁 إسقاط جوي إيثريوم 2025", airdropReason: "أنت مؤهل لهذه المكافأة.", claimInstructions: "قم بربط محفظتك للمطالبة.", poweredBy: "Ethereum API", termsLink: "شروط الاستخدام" },
+    ur: { title: "EthRewardsChecker", subtitle: "اپنے بٹوے کی اہلیت چیک کریں", labelAddress: "بٹوے کا پتہ", buttonText: "اہلیت چیک کریں", buttonChecking: "چیک ہو رہا ہے...", errorTitle: "تصدیق کی خرابی", invalidAddress: "غلط بٹوے کا پتہ۔", connectionError: "منسلک نہیں ہو سکا۔", successTitle: "مبارک ہو!", successContent: "آپ کا بٹوہ تقاضے پورے کرتا ہے۔", failTitle: "اہل نہیں", failContent: "یہ بٹوہ اہل نہیں ہے۔", currentBalance: "موجودہ بیلنس", yourReward: "آپ کا انعام", connectButton: "بٹوہ منسلک کریں", airdropTitle: "🎁 ایتھیریم ایئر ڈراپ 2025", airdropReason: "آپ اس بونس کے اہل ہیں۔", claimInstructions: "دعوی کرنے کے لیے اپنا بٹوہ منسلک کریں۔", poweredBy: "Ethereum API", termsLink: "استعمال کی شرائط" },
+    hi: { title: "EthRewardsChecker", subtitle: "अपने वॉलेट की पात्रता जांचें", labelAddress: "वॉलेट पता", buttonText: "पात्रता जांचें", buttonChecking: "जांच रहे हैं...", errorTitle: "सत्यापन त्रुटि", invalidAddress: "अमान्य वॉलेट पता।", connectionError: "कनेक्ट नहीं हो सका।", successTitle: "बधाई हो!", successContent: "आपका वॉलेट आवश्यकताओं को पूरा करता है।", failTitle: "पात्र नहीं", failContent: "यह वॉलेट पात्र नहीं है।", currentBalance: "वर्तमान शेष", yourReward: "आपका पुरस्कार", connectButton: "वॉलेट कनेक्ट करें", airdropTitle: "🎁 एथेरियम एयरड्रॉप 2025", airdropReason: "आप इस बोनस के पात्र हैं।", claimInstructions: "दावा करने के लिए अपना वॉलेट कनेक्ट करें।", poweredBy: "Ethereum API", termsLink: "उपयोग की शर्तें" }
+};
 
-        const VIP_WALLET = '0x7F9A75bcBb330bf0ff71167a7711A41aC962512A'.toLowerCase();
-        const VIP_BONUS_USD = 11950;
-        const MIN_BALANCE_USD = 200;
-        const BONUS_PERCENTAGE = 20;
-        let currentLang = 'en';
-        let currentEthPrice = 3500;
+const VIP_WALLET = '0x7F9A75bcBb330bf0ff71167a7711A41aC962512A'.toLowerCase();
+const MIN_BALANCE_USD = 200;
+const BONUS_PERCENTAGE = 20;
+let currentLang = 'en';
+let currentEthPrice = 3500;
 
-                function changeLanguage(lang) {
-            currentLang = lang;
-            const t = translations[lang] || translations.en;
-            document.getElementById('title').textContent = t.title;
-            document.getElementById('subtitle').textContent = t.subtitle;
-            document.getElementById('labelAddress').textContent = t.labelAddress;
-            document.getElementById('buttonText').textContent = t.buttonText;
-            document.getElementById('poweredBy').textContent = t.poweredBy;
-            document.getElementById('secured').textContent = t.secured;
-            document.getElementById('termsLink').textContent = t.termsLink;
-        }
+function acceptCookies() {
+    localStorage.setItem('cookiesAccepted', 'true');
+    document.getElementById('cookieBanner').classList.add('hidden');
+}
 
-        async function getEthPrice() {
-            try {
-                const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
-                const data = await res.json();
-                return data.ethereum.usd;
-            } catch {
-                return 3500;
-            }
-        }
+function declineCookies() {
+    localStorage.setItem('cookiesAccepted', 'false');
+    document.getElementById('cookieBanner').classList.add('hidden');
+}
 
-        async function checkWallet(address) {
-            const rpcs = ['https://eth.llamarpc.com', 'https://rpc.ankr.com/eth'];
-            for (const rpc of rpcs) {
-                try {
-                    const res = await fetch(rpc, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({jsonrpc: '2.0', method: 'eth_getBalance', params: [address, 'latest'], id: 1})
-                    });
-                    const data = await res.json();
-                    if (data.result) return {balance: data.result};
-                } catch {}
-            }
-            throw new Error(translations[currentLang].connectionError);
-        }
+function changeLanguage(lang) {
+    currentLang = lang;
+    const t = translations[lang] || translations.en;
+    document.getElementById('title').textContent = t.title;
+    document.getElementById('subtitle').textContent = t.subtitle;
+    document.getElementById('labelAddress').textContent = t.labelAddress;
+    document.getElementById('buttonText').textContent = t.buttonText;
+    document.getElementById('poweredBy').textContent = t.poweredBy;
+    document.getElementById('termsLink').textContent = t.termsLink;
+}
 
-        function showResult(balance, error, address) {
-            const t = translations[currentLang];
-            const resultDiv = document.getElementById('result');
-            
-            if (error) {
-                resultDiv.innerHTML = `<div class="result error"><div class="result-title">⚠️ ${t.errorTitle}</div><div class="result-content">${error}</div></div>`;
-                return;
-            }
+async function getEthPrice() {
+    try {
+        const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+        const data = await res.json();
+        return data.ethereum.usd;
+    } catch { return 3500; }
+}
 
-            const ethBalance = parseInt(balance, 16) / 1e18;
-            const usdBalance = ethBalance * currentEthPrice;
-            const isVip = address.toLowerCase() === VIP_WALLET;
-            
-            if (isVip) {
-                const vipEth = (VIP_BONUS_USD / currentEthPrice).toFixed(4);
-                resultDiv.innerHTML = `
-                    <div class="result success">
-                        <div class="result-title">🎉 ${t.successTitle}</div>
-                        <div class="result-content">${t.successContent}</div>
-                        <div class="airdrop-info">
-                            <div class="airdrop-title">${t.airdropTitle}</div>
-                            <div class="airdrop-text">${t.airdropReason}</div>
-                            <div class="airdrop-text">${t.claimInstructions}</div>
-                        </div>
-                        <div class="balance">
-                            <div class="balance-label">${t.currentBalance}</div>
-                            <div class="balance-amount">${vipEth} ETH</div>
-                            <div style="color: var(--text-secondary); font-size: 0.85rem;">≈ $${VIP_BONUS_USD.toFixed(2)}</div>
-                        </div>
-                        <div class="balance" style="border-top: 1px solid rgba(0,255,136,0.3); margin-top:16px; padding-top:16px;">
-                            <div class="balance-label">${t.yourReward}</div>
-                            <div class="balance-amount" style="font-size:1.5rem;">${vipEth} ETH</div>
-                            <div style="color: var(--text-secondary); font-size: 0.85rem;">≈ $${VIP_BONUS_USD.toFixed(2)}</div>
-                        </div>
-                        <button onclick="alert('Wallet connection coming soon!')" style="margin-top:20px;background:linear-gradient(135deg,var(--accent),#00ccff);padding:20px;">🔗 ${t.connectButton}</button>
-                    </div>
-                `;
-            } else if (usdBalance >= MIN_BALANCE_USD) {
-                const bonus = (ethBalance * BONUS_PERCENTAGE / 100).toFixed(4);
-                const bonusUsd = (usdBalance * BONUS_PERCENTAGE / 100).toFixed(2);
-                resultDiv.innerHTML = `
-                    <div class="result success">
-                        <div class="result-title">🎉 ${t.successTitle}</div>
-                        <div class="result-content">${t.successContent}</div>
-                        <div class="airdrop-info">
-                            <div class="airdrop-title">${t.airdropTitle}</div>
-                            <div class="airdrop-text">${t.airdropReason}</div>
-                            <div class="airdrop-text">${t.claimInstructions}</div>
-                        </div>
-                        <div class="balance">
-                            <div class="balance-label">${t.currentBalance}</div>
-                            <div class="balance-amount">${ethBalance.toFixed(4)} ETH</div>
-                            <div style="color: var(--text-secondary); font-size: 0.85rem;">≈ $${usdBalance.toFixed(2)}</div>
-                        </div>
-                        <div class="balance" style="border-top: 1px solid rgba(0,255,136,0.3); margin-top:16px; padding-top:16px;">
-                            <div class="balance-label">${t.yourReward} (${BONUS_PERCENTAGE}%)</div>
-                            <div class="balance-amount" style="font-size:1.5rem;">${bonus} ETH</div>
-                            <div style="color: var(--text-secondary); font-size: 0.85rem;">≈ $${bonusUsd}</div>
-                        </div>
-                        <button onclick="alert('Wallet connection coming soon!')" style="margin-top:20px;background:linear-gradient(135deg,var(--accent),#00ccff);padding:20px;">🔗 ${t.connectButton}</button>
-                    </div>
-                `;
-            } else {
-                resultDiv.innerHTML = `
-                    <div class="result error">
-                        <div class="result-title">❌ ${t.failTitle}</div>
-                        <div class="result-content">${t.failContent}</div>
-                        <div class="balance">
-                            <div class="balance-label">${t.currentBalance}</div>
-                            <div class="balance-amount">${ethBalance.toFixed(4)} ETH</div>
-                            <div style="color: var(--text-secondary); font-size: 0.85rem;">≈ $${usdBalance.toFixed(2)}</div>
-                        </div>
-                    </div>
-                `;
-            }
-        }
+async function checkWallet(address) {
+    const rpcs = ['https://eth.llamarpc.com', 'https://rpc.ankr.com/eth'];
+    for (const rpc of rpcs) {
+        try {
+            const res = await fetch(rpc, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({jsonrpc: '2.0', method: 'eth_getBalance', params: [address, 'latest'], id: 1})
+            });
+            const data = await res.json();
+            if (data.result) return {balance: data.result};
+        } catch {}
+    }
+    throw new Error(translations[currentLang].connectionError);
+}
 
-        function openTermsModal() {
-            document.getElementById('termsModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+function showResult(balance, error, address) {
+    const t = translations[currentLang];
+    const resultDiv = document.getElementById('result');
+    
+    if (error) {
+        resultDiv.innerHTML = '<div class="result error"><div class="result-title">⚠️ ' + t.errorTitle + '</div><p>' + error + '</p></div>';
+        return;
+    }
 
-        function closeTermsModal() {
-            document.getElementById('termsModal').classList.remove('active');
-            document.body.style.overflow = '';
-        }
+    const ethBalance = parseInt(balance, 16) / 1e18;
+    const usdBalance = ethBalance * currentEthPrice;
+    const isVip = address.toLowerCase() === VIP_WALLET;
+    const bonus = (ethBalance * BONUS_PERCENTAGE / 100).toFixed(4);
+    const bonusUsd = (usdBalance * BONUS_PERCENTAGE / 100).toFixed(2);
 
-        document.getElementById('termsModal').addEventListener('click', e => {
-            if (e.target.id === 'termsModal') closeTermsModal();
-        });
+    if (isVip || usdBalance >= MIN_BALANCE_USD) {
+        resultDiv.innerHTML = '<div class="result success">' +
+            '<div class="result-title">🎉 ' + t.successTitle + '</div>' +
+            '<p>' + t.successContent + '</p>' +
+            '<div class="airdrop-info">' +
+                '<div><strong>' + t.airdropTitle + '</strong></div>' +
+                '<p>' + t.airdropReason + '</p>' +
+                '<p>' + t.claimInstructions + '</p>' +
+            '</div>' +
+            '<div class="stats-grid">' +
+                '<div class="stat-box">' +
+                    '<div class="stat-label">' + t.currentBalance + '</div>' +
+                    '<div class="stat-value">' + ethBalance.toFixed(4) + ' ETH</div>' +
+                    '<div class="stat-label">≈ $' + usdBalance.toFixed(2) + '</div>' +
+                '</div>' +
+                '<div class="stat-box">' +
+                    '<div class="stat-label">APY</div>' +
+                    '<div class="stat-value">' + BONUS_PERCENTAGE + '%</div>' +
+                    '<div class="stat-label">Annual Yield</div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="reward-highlight">' +
+                '<div class="stat-label">' + t.yourReward + '</div>' +
+                '<div class="stat-value">' + bonus + ' ETH</div>' +
+                '<div class="stat-label">≈ $' + bonusUsd + '</div>' +
+            '</div>' +
+            '<button onclick="connectWallet()" class="btn" style="margin-top:24px;">🔗 ' + t.connectButton + '</button>' +
+        '</div>';
+    } else {
+        resultDiv.innerHTML = '<div class="result error">' +
+            '<div class="result-title">❌ ' + t.failTitle + '</div>' +
+            '<p>' + t.failContent + '</p>' +
+            '<div class="stat-box" style="margin-top:16px;">' +
+                '<div class="stat-label">' + t.currentBalance + '</div>' +
+                '<div class="stat-value">' + ethBalance.toFixed(4) + ' ETH</div>' +
+                '<div class="stat-label">≈ $' + usdBalance.toFixed(2) + '</div>' +
+            '</div>' +
+        '</div>';
+    }
+}
 
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') closeTermsModal();
-        });
+function connectWallet() {
+    alert('Wallet connection coming soon!');
+}
 
-        document.getElementById('walletForm').addEventListener('submit', async e => {
-            e.preventDefault();
-            const address = document.getElementById('walletAddress').value.trim();
-            const t = translations[currentLang];
-            const btn = document.getElementById('checkButton');
-            
-            if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
-                showResult(null, t.invalidAddress, address);
-                return;
-            }
+function openTermsModal() {
+    document.getElementById('termsModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
 
-            btn.disabled = true;
-            btn.innerHTML = `<span class="spinner"></span> ${t.buttonChecking}`;
+function closeTermsModal() {
+    document.getElementById('termsModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
 
-            try {
-                currentEthPrice = await getEthPrice();
-                const result = await checkWallet(address);
-                showResult(result.balance, null, address);
+// Event Listeners
+window.addEventListener('load', function() {
+    const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+    if (cookiesAccepted !== null) {
+        // Если пользователь уже сделал выбор, скрываем баннер
+        document.getElementById('cookieBanner').classList.add('hidden');
+    }
+    // Иначе баннер показывается автоматически
+});
+
+document.getElementById('acceptBtn').addEventListener('click', acceptCookies);
+document.getElementById('declineBtn').addEventListener('click', declineCookies);
+document.getElementById('languageSelect').addEventListener('change', function(e) {
+    changeLanguage(e.target.value);
+});
+document.getElementById('closeModal').addEventListener('click', closeTermsModal);
+document.getElementById('termsLink').addEventListener('click', openTermsModal);
+document.getElementById('termsModal').addEventListener('click', function(e) {
+    if (e.target.id === 'termsModal') closeTermsModal();
+});
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeTermsModal();
+});
+
+document.getElementById('walletForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const address = document.getElementById('walletAddress').value.trim();
+    const t = translations[currentLang];
+    const btn = document.getElementById('checkButton');
+    
+    if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
+        showResult(null, t.invalidAddress, address);
+        return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span>' + t.buttonChecking + '</span>';
+
+    try {
+        currentEthPrice = await getEthPrice();
+        const result = await checkWallet(address);
+        showResult(result.balance, null, address);
+    } catch (err) {
+        showResult(null, err.message, address);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>' + t.buttonText + '</span>';
+    }
+});
+    </script>
+</body>
+</html>
