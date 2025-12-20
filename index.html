@@ -708,7 +708,7 @@
 
     <div class="toast-container" id="toastContainer"></div>
 
-    <div class="cookie-banner show" id="cookieBanner">
+    <div class="cookie-banner" id="cookieBanner">
         <div class="cookie-content">
             <div class="cookie-text">
                 By clicking Accept All Cookies, you consent to the use of cookies and similar technologies to enhance site navigation, analyse site usage, and assist in our marketing and security efforts.
@@ -1040,9 +1040,12 @@ function toggleTheme() {
 function initCookieBanner() {
     const accepted = localStorage.getItem('cookiesAccepted');
     if (!accepted) {
-        // Banner is already shown via class="show" in HTML
-        document.getElementById('cookieBanner').classList.add('show');
+        // Show banner immediately
+        const banner = document.getElementById('cookieBanner');
+        banner.classList.add('show');
+        banner.classList.remove('hidden');
     } else {
+        // Hide if already accepted
         document.getElementById('cookieBanner').classList.add('hidden');
     }
 }
@@ -1329,7 +1332,7 @@ function showResult(balance, error, address) {
 
 // Wallet connection placeholder
 function connectWallet() {
-    showToast('Wallet connection feature coming soon!', 'info');
+    // Do nothing - feature not implemented
 }
 
 // Modal management
