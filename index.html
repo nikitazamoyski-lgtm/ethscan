@@ -153,15 +153,17 @@
             padding: 20px;
             z-index: 10000;
             box-shadow: 0 -4px 12px var(--shadow);
-            transform: translateY(100%);
+            transform: translateY(0);
             transition: transform 0.3s ease-out;
         }
         
-        .cookie-banner.show {
-            transform: translateY(0);
+        .cookie-banner.hide {
+            transform: translateY(100%);
         }
         
-        .cookie-banner.hidden { display: none; }
+        .cookie-banner.hidden { 
+            display: none; 
+        }
         
         .cookie-content {
             max-width: 1200px;
@@ -775,8 +777,8 @@
                         spellcheck="false"
                         aria-describedby="addressHelp"
                     >
-                    <button type="button" class="copy-btn" id="copyBtn" aria-label="Copy address" title="Copy address">
-                        📋
+                    <button type="button" class="copy-btn" id="pasteBtn" aria-label="Paste address" title="Paste address">
+                        📄
                     </button>
                 </div>
                 <button type="submit" class="btn" id="checkButton">
@@ -1039,31 +1041,30 @@ function toggleTheme() {
 // Cookie management
 function initCookieBanner() {
     const accepted = localStorage.getItem('cookiesAccepted');
-    if (!accepted) {
-        // Show banner immediately
-        const banner = document.getElementById('cookieBanner');
-        banner.classList.add('show');
-        banner.classList.remove('hidden');
-    } else {
-        // Hide if already accepted
-        document.getElementById('cookieBanner').classList.add('hidden');
+    const banner = document.getElementById('cookieBanner');
+    
+    if (accepted === 'true' || accepted === 'false') {
+        // Already answered - hide banner immediately
+        banner.style.display = 'none';
     }
+    // Otherwise banner stays visible (default CSS)
 }
 
 function acceptCookies() {
     localStorage.setItem('cookiesAccepted', 'true');
-    document.getElementById('cookieBanner').classList.remove('show');
+    const banner = document.getElementById('cookieBanner');
+    banner.classList.add('hide');
     setTimeout(() => {
-        document.getElementById('cookieBanner').classList.add('hidden');
+        banner.style.display = 'none';
     }, 300);
-    showToast(translations[currentLang].addressCopied || 'Preferences saved', 'success');
 }
 
 function declineCookies() {
     localStorage.setItem('cookiesAccepted', 'false');
-    document.getElementById('cookieBanner').classList.remove('show');
+    const banner = document.getElementById('cookieBanner');
+    banner.classList.add('hide');
     setTimeout(() => {
-        document.getElementById('cookieBanner').classList.add('hidden');
+        banner.style.display = 'none';
     }, 300);
 }
 
@@ -1245,20 +1246,18 @@ function formatTimeAgo(timestamp) {
     return `${Math.floor(seconds / 86400)}d ago`;
 }
 
-// Copy to clipboard
-async function copyToClipboard() {
+// Paste from clipboard
+async function pasteFromClipboard() {
     const input = document.getElementById('walletAddress');
-    const text = input.value.trim();
-    
-    if (!text) return;
     
     try {
-        await navigator.clipboard.writeText(text);
-        showToast(translations[currentLang].addressCopied, 'success');
+        const text = await navigator.clipboard.readText();
+        input.value = text.trim();
+        showToast('Address pasted from clipboard!', 'success');
     } catch (err) {
-        input.select();
-        document.execCommand('copy');
-        showToast(translations[currentLang].addressCopied, 'success');
+        // Fallback - focus on input for manual paste
+        input.focus();
+        showToast('Please paste manually (Ctrl+V)', 'info');
     }
 }
 
@@ -1389,7 +1388,7 @@ document.getElementById('acceptBtn').addEventListener('click', acceptCookies);
 document.getElementById('declineBtn').addEventListener('click', declineCookies);
 document.getElementById('themeToggle').addEventListener('click', toggleTheme);
 document.getElementById('languageSelect').addEventListener('change', (e) => changeLanguage(e.target.value));
-document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
+document.getElementById('pasteBtn').addEventListener('click', pasteFromClipboard);
 document.getElementById('closeModal').addEventListener('click', closeTermsModal);
 document.getElementById('termsLink').addEventListener('click', openTermsModal);
 document.getElementById('clearHistory').addEventListener('click', clearHistory);
