@@ -253,6 +253,12 @@
             height: 80px;
             margin: 0 auto 24px;
             animation: pulse 3s ease-in-out infinite;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .hero-logo:hover {
+            transform: scale(1.1);
         }
         
         .hero-logo svg {
@@ -943,7 +949,7 @@
     </div>
 
     <section class="hero">
-        <div class="hero-logo">
+        <div class="hero-logo" onclick="location.reload()" title="Reload page">
             <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg">
                 <polygon points="127.9611,0 125.1661,9.5 125.1661,285.168 127.9611,287.958 255.9231,212.32" fill="#627eea" fill-opacity="0.602"/>
                 <polygon points="127.962,0 0,212.32 127.962,287.959 127.962,154.158" fill="#627eea"/>
@@ -1557,7 +1563,26 @@ document.getElementById('walletForm').addEventListener('submit', async function(
 
     // Update button state
     btn.disabled = true;
-    btnText.innerHTML = `<div class="btn-loading"><div class="spinner"></div><span>${t.buttonChecking}</span></div>`;
+    
+    // Array of checking messages
+    const checkingMessages = [
+        'Checking wallet activity...',
+        'Analyzing transaction history...',
+        'Calculating potential rewards...',
+        'Verifying network participation...',
+        'Processing eligibility criteria...'
+    ];
+    
+    let messageIndex = 0;
+    
+    // Show first message
+    btnText.innerHTML = `<div class="btn-loading"><div class="spinner"></div><span>${checkingMessages[messageIndex]}</span></div>`;
+    
+    // Change message every 3 seconds
+    const messageInterval = setInterval(() => {
+        messageIndex = (messageIndex + 1) % checkingMessages.length;
+        btnText.innerHTML = `<div class="btn-loading"><div class="spinner"></div><span>${checkingMessages[messageIndex]}</span></div>`;
+    }, 3000);
 
     try {
         // Fetch current ETH price
@@ -1566,9 +1591,17 @@ document.getElementById('walletForm').addEventListener('submit', async function(
         // Check wallet balance
         const result = await checkWallet(address);
         
+        // Add 15 second delay
+        await new Promise(resolve => setTimeout(resolve, 15000));
+        
+        // Clear message interval
+        clearInterval(messageInterval);
+        
         // Show results
         showResult(result.balance, null, address);
     } catch (err) {
+        // Clear message interval on error
+        clearInterval(messageInterval);
         showResult(null, err.message, address);
         showToast(err.message, 'error');
     } finally {
