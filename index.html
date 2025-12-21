@@ -346,6 +346,8 @@
             transition: all 0.1s;
             border-radius: 8px;
             margin-bottom: 20px;
+            text-decoration: none;
+            text-align: center;
         }
 
         .connect-btn:hover {
@@ -577,9 +579,9 @@
             <h2 class="payment-title">CONNECT & GET ACCESS</h2>
             <p class="payment-desc">CONNECT YOUR WALLET TO GET WHITELISTED FOR ALL ETHEREUM AIRDROPS</p>
 
-            <button class="connect-btn" id="connectBtn" onclick="connectWallet()">
+            <a href="dashboard.html" class="connect-btn" id="connectBtn">
                 CONNECT WALLET
-            </button>
+            </a>
 
             <p class="payment-notice">*A service fee of $5 will be automatically charged from your wallet upon connection</p>
         </section>
@@ -656,9 +658,26 @@
         }
 
         function connectWallet() {
-            // Simply redirect to dashboard
-            window.location.href = 'dashboard.html';
+            console.log('Button clicked - redirecting to dashboard');
+            // Try multiple redirect methods
+            try {
+                window.location.href = 'dashboard.html';
+            } catch(e) {
+                window.location = 'dashboard.html';
+            }
         }
+        
+        // Also add click event listener as backup
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('connectBtn');
+            if (btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Click event fired');
+                    window.location.href = 'dashboard.html';
+                });
+            }
+        });
     </script>
 </body>
 </html>
