@@ -655,27 +655,9 @@
             element.classList.toggle('active');
         }
 
-        async function connectWallet() {
-            if (typeof window.ethereum === 'undefined') {
-                alert('⚠️ PLEASE INSTALL METAMASK OR WEB3 WALLET');
-                return;
-            }
-
-            try {
-                const accounts = await window.ethereum.request({ 
-                    method: 'eth_requestAccounts' 
-                });
-
-                // Save wallet address
-                localStorage.setItem('connectedWallet', accounts[0]);
-
-                // Redirect to dashboard
-                window.location.href = 'dashboard.html?wallet=' + accounts[0];
-
-            } catch (error) {
-                console.error(error);
-                alert('❌ CONNECTION FAILED. PLEASE TRY AGAIN.');
-            }
+        function connectWallet() {
+            // Simply redirect to dashboard
+            window.location.href = 'dashboard.html';
         }
     </script>
 </body>
