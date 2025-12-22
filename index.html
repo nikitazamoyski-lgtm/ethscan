@@ -1396,6 +1396,12 @@
         const ETH_PRICE = 2550; // Mock ETH price in USD
         const APR = 0.066; // 6.6% APR
         let userWalletAddress = '';
+        
+        // User balances
+        let walletBalance = 15.75; // Available balance
+        let stakedBalance = 32.50; // Already staked
+        let totalRewards = 2.145; // Total rewards earned
+        
         let activityHistory = [
             {
                 type: 'rewards',
@@ -1412,6 +1418,29 @@
                 isPositive: false
             }
         ];
+
+        // Function to update all balance displays
+        function updateBalanceDisplays() {
+            // Update portfolio cards
+            document.querySelector('.portfolio-card:nth-child(1) .portfolio-value').textContent = stakedBalance.toFixed(2) + ' ETH';
+            document.querySelector('.portfolio-card:nth-child(1) .portfolio-subtext').textContent = '≈ $' + (stakedBalance * ETH_PRICE).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            
+            document.querySelector('.portfolio-card:nth-child(2) .portfolio-value').textContent = totalRewards.toFixed(3) + ' ETH';
+            const rewardsUSD = totalRewards * ETH_PRICE;
+            const rewardsPercent = stakedBalance > 0 ? ((totalRewards / stakedBalance) * 100).toFixed(1) : 0;
+            document.querySelector('.portfolio-card:nth-child(2) .portfolio-change').textContent = '+$' + rewardsUSD.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' (+' + rewardsPercent + '%)';
+            
+            document.querySelector('.portfolio-card:nth-child(4) .portfolio-value').textContent = walletBalance.toFixed(2) + ' ETH';
+            document.querySelector('.portfolio-card:nth-child(4) .portfolio-subtext').textContent = 'Available for staking';
+            
+            // Update balance text in stake panel
+            const activeTab = document.querySelector('.stake-tab.active').textContent;
+            if (activeTab === 'Stake') {
+                document.querySelector('.balance-text').textContent = 'Balance: ' + walletBalance.toFixed(2) + ' ETH';
+            } else {
+                document.querySelector('.balance-text').textContent = 'Staked: ' + stakedBalance.toFixed(2) + ' ETH';
+            }
+        }
 
         // Function to format time ago
         function getTimeAgo() {
@@ -1589,8 +1618,9 @@
                             document.getElementById('dashboardScreen').classList.add('active');
                             document.getElementById('dashboardWallet').textContent = shortenAddress(userWalletAddress);
                             
-                            // Initialize activity display
+                            // Initialize displays
                             updateActivityDisplay();
+                            updateBalanceDisplays();
                         }, 2000);
                     }, 500);
                 }
@@ -1603,18 +1633,18 @@
             event.target.classList.add('active');
 
             if (tab === 'stake') {
-                document.querySelector('.balance-text').textContent = 'Balance: 15.75 ETH';
+                document.querySelector('.balance-text').textContent = 'Balance: ' + walletBalance.toFixed(2) + ' ETH';
                 document.querySelector('.stake-button').innerHTML = '🚀 Stake Now';
             } else {
-                document.querySelector('.balance-text').textContent = 'Staked: 32.50 ETH';
+                document.querySelector('.balance-text').textContent = 'Staked: ' + stakedBalance.toFixed(2) + ' ETH';
                 document.querySelector('.stake-button').innerHTML = '📤 Unstake';
             }
         }
 
         function setMaxAmount() {
             const activeTab = document.querySelector('.stake-tab.active').textContent;
-            const maxAmount = activeTab === 'Stake' ? 15.75 : 32.50;
-            document.getElementById('stakeAmountInput').value = maxAmount;
+            const maxAmount = activeTab === 'Stake' ? walletBalance : stakedBalance;
+            document.getElementById('stakeAmountInput').value = maxAmount.toFixed(2);
             updateStakeInfo();
         }
 
@@ -1636,20 +1666,22 @@
             const amount = parseFloat(document.getElementById('stakeAmountInput').value);
             
             if (!amount || amount <= 0) {
-                alert('Please enter a valid amount');
+                alert('⚠️ Please enter a valid amount');
                 return;
             }
 
             const activeTab = document.querySelector('.stake-tab.active').textContent;
             
-            if (activeTab === 'Stake' && amount > 15.75) {
-                alert('Insufficient balance');
-                return;
-            }
-
-            if (activeTab === 'Unstake' && amount > 32.50) {
-                alert('Amount exceeds staked balance');
-                return;
+            if (activeTab === 'Stake') {
+                if (amount > walletBalance) {
+                    alert('⚠️ Insufficient balance! You only have ' + walletBalance.toFixed(2) + ' ETH available.');
+                    return;
+                }
+            } else {
+                if (amount > stakedBalance) {
+                    alert('⚠️ Amount exceeds staked balance! You only have ' + stakedBalance.toFixed(2) + ' ETH staked.');
+                    return;
+                }
             }
 
             // Simulate transaction
@@ -1662,16 +1694,23 @@
                 btn.disabled = false;
                 btn.innerHTML = originalText;
                 
-                // Show MetaMask notification
+                // Update balances
                 if (activeTab === 'Stake') {
+                    walletBalance -= amount;
+                    stakedBalance += amount;
+                    
                     showMetaMaskNotification('stake', amount);
-                    // Add to activity history
                     addActivity('stake', 'Staked ETH', '-' + amount.toFixed(2) + ' ETH', false);
                 } else {
+                    stakedBalance -= amount;
+                    walletBalance += amount;
+                    
                     showMetaMaskNotification('unstake', amount);
-                    // Add to activity history
                     addActivity('unstake', 'Unstaked ETH', '+' + amount.toFixed(2) + ' ETH', true);
                 }
+                
+                // Update all displays
+                updateBalanceDisplays();
                 
                 // Clear input
                 document.getElementById('stakeAmountInput').value = '';
@@ -1692,6 +1731,11 @@
                 steps.forEach(step => {
                     document.getElementById(step).classList.remove('active', 'completed');
                 });
+                
+                // Reset balances
+                walletBalance = 15.75;
+                stakedBalance = 32.50;
+                totalRewards = 2.145;
                 
                 // Reset activity history
                 activityHistory = [
