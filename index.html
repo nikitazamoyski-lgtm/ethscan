@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>PULSE - Crypto Prediction Protocol</title>
+<title>PULSE — Crypto Prediction Protocol</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -205,12 +205,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .ctstep b{color:var(--txt);font-family:'Orbitron';font-weight:700;font-size:12px}
 .deploybar{height:6px;border-radius:5px;background:#0b1018;border:1px solid var(--line);overflow:hidden;margin:6px 0 4px}
 .deploybar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--up),var(--up-glow));transition:width .3s}
-
 .toast{position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-20px);z-index:80;opacity:0;pointer-events:none;background:var(--bg2);border:1px solid var(--line);padding:12px 20px;border-radius:14px;font-weight:700;font-size:13px;transition:all .3s;box-shadow:0 10px 30px rgba(0,0,0,.6);max-width:90%;text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .toast.up{border-color:var(--up);color:var(--up-glow)} .toast.down{border-color:var(--down);color:var(--down-glow)} .toast.gold{border-color:var(--gold);color:var(--gold-glow)}
 .hidden{display:none!important}
-.simbar{position:sticky;top:0;z-index:25;text-align:center;font-size:10px;font-weight:700;letter-spacing:.5px;color:#1a1200;background:linear-gradient(90deg,var(--gold),var(--gold-glow));padding:7px 10px;line-height:1.4;font-family:'Rajdhani'}
 .login{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:24px;background:radial-gradient(120% 90% at 50% 0%,rgba(22,224,196,.12),transparent 60%),linear-gradient(180deg,#05080d,#020305)}
 .login.gone{display:none}
 .loginbox{width:100%;max-width:360px;text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:36px 26px;backdrop-filter:blur(14px);box-shadow:0 20px 60px rgba(0,0,0,.6)}
@@ -268,7 +266,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 </head>
 <body>
 <div class="bgfx"><div class="grid"></div><div class="orb g"></div><div class="orb r"></div><div class="scan"></div></div>
-
+<div class="app">
+  <div class="ptr" id="ptr"><div class="spin"></div><span class="pulltxt" id="pulltxt">Refreshing…</span></div>
+  <header>
+    <div class="logo" onclick="goTab('home')"><div class="m">P</div><div><b>PULSE</b><span>PREDICTION PROTOCOL</span></div></div>
+    <button class="wbtn" id="wbtn"><span class="dot" style="display:none"></span><span id="wtxt">CONNECT</span></button>
+  </header>
   <!-- ===== HOME ===== -->
   <div class="page on" id="tab-home">
     <div class="bal">
@@ -304,7 +307,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
         <div class="fline">Pulse Labs Pte. Ltd. · UEN 202418837K</div>
         <div class="fline">8 Marina Boulevard, Marina Bay Financial Centre Tower 1, #11-02, Singapore 018981</div>
         <div class="flinks"><a onclick="goTab('terms')">Terms of Service</a> · <a onclick="goTab('privacy')">Privacy Policy</a></div>
-        <div class="fdisc">© 2026 Pulse Labs. Trading digital assets involves risk. 18+.</div>
+        <div class="fdisc">© 2026 Pulse Labs. Demo prototype — not a live financial service. Trading digital assets involves risk. 18+.</div>
       </div>
     </div>
   </div>
